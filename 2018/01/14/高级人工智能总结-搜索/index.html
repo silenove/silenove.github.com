@@ -6,15 +6,39 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>集成学习 | silenove blogs</title>
+  <title>高级人工智能总结--搜索 | silenove blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="集成学习">
-<meta property="og:url" content="http://yoursite.com/2018/01/14/集成学习/index.html">
+  <meta name="description" content="高级人工智能总结–搜索###1. 搜索问题搜索问题的构成：状态空间、后继函数（actions + costs）、初始状态和目标测试。解是一个行动序列，将初始状态转换成目标状态。搜索问题是对原问题的建模。 ####1.1. 状态空间状态空间包含环境中的每一个细节，搜索状态只保留行动需要的细节。  状态空间  世界状态：  Agent positions : 120 Food count : 30 G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高级人工智能总结--搜索">
+<meta property="og:url" content="http://yoursite.com/2018/01/14/高级人工智能总结-搜索/index.html">
 <meta property="og:site_name" content="silenove blogs">
-<meta property="og:updated_time" content="2018-01-14T02:01:43.091Z">
+<meta property="og:description" content="高级人工智能总结–搜索###1. 搜索问题搜索问题的构成：状态空间、后继函数（actions + costs）、初始状态和目标测试。解是一个行动序列，将初始状态转换成目标状态。搜索问题是对原问题的建模。 ####1.1. 状态空间状态空间包含环境中的每一个细节，搜索状态只保留行动需要的细节。  状态空间  世界状态：  Agent positions : 120 Food count : 30 G">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.37.46.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/15159185547339.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/15159195372056.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.48.58.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.49.38.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.53.49.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.11.51.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.21.39.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.28.25.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%886.48.00.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/15159278235849.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.10.40.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.12.54.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.17.24.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/15159318240227.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.29.20.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%888.25.10.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/15159329856156.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/15159330910647.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/01/14/media/15158483614585/15159333571429.jpg">
+<meta property="og:updated_time" content="2018-01-14T15:22:18.326Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="集成学习">
+<meta name="twitter:title" content="高级人工智能总结--搜索">
+<meta name="twitter:description" content="高级人工智能总结–搜索###1. 搜索问题搜索问题的构成：状态空间、后继函数（actions + costs）、初始状态和目标测试。解是一个行动序列，将初始状态转换成目标状态。搜索问题是对原问题的建模。 ####1.1. 状态空间状态空间包含环境中的每一个细节，搜索状态只保留行动需要的细节。  状态空间  世界状态：  Agent positions : 120 Food count : 30 G">
+<meta name="twitter:image" content="http://yoursite.com/2018/01/14/media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.37.46.png">
   
     <link rel="alternative" href="/atom.xml" title="silenove blogs" type="application/atom+xml">
   
@@ -154,27 +178,164 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-集成学习" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-高级人工智能总结-搜索" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      集成学习
+      高级人工智能总结--搜索
     </h1>
   
 
         
-        <a href="/2018/01/14/集成学习/" class="archive-article-date">
-  	<time datetime="2018-01-14T02:01:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-14</time>
+        <a href="/2018/01/14/高级人工智能总结-搜索/" class="archive-article-date">
+  	<time datetime="2018-01-14T15:16:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="高级人工智能总结–搜索"><a href="#高级人工智能总结–搜索" class="headerlink" title="高级人工智能总结–搜索"></a>高级人工智能总结–搜索</h1><p>###1. 搜索问题<br>搜索问题的构成：状态空间、后继函数（actions + costs）、初始状态和目标测试。<br>解是一个行动序列，将初始状态转换成目标状态。<br>搜索问题是对原问题的建模。</p>
+<p>####1.1. 状态空间<br>状态空间包含环境中的每一个细节，搜索状态只保留行动需要的细节。</p>
+<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.37.46.png" alt="屏幕快照 2018-01-14 下午4.37.46"></p>
+<p>状态空间</p>
+<p><img src="../media/15158483614585/15159185547339.jpg" alt="-c"></p>
+<p>世界状态：</p>
+<ul>
+<li>Agent positions : 120</li>
+<li>Food count : 30</li>
+<li>Ghost positions : 12</li>
+<li>Agent facing : NSEW</li>
+</ul>
+<p>状态数量：</p>
+<ul>
+<li>世界状态：$120 \times 2^{30} \times 12^{2} \times 4$</li>
+<li>路线规划状态：120</li>
+</ul>
+<p>####1.2. 状态空间图<br>搜索问题的数学表示：</p>
+<ul>
+<li>Nodes are world configurations(abstracted)；</li>
+<li>Arcs represent successors(action results)；</li>
+<li>The goal test is a set of goal nodes(maybe only one)。</li>
+</ul>
+<p><img src="../media/15158483614585/15159195372056.jpg" alt="-c"></p>
+<p>状态空间图中每种状态只出现一次。<br>几乎不在内存中构建完整的状态空间图。</p>
+<p>####1.3. 搜索树<br>搜索树：</p>
+<ul>
+<li>根节点对应初始节点；</li>
+<li>子节点对应父节点的后继；</li>
+<li>节点显示状态，对应的是到达这些状态的行动；</li>
+<li><strong>对于大多数问题，实际上不会构建完整的搜索树。</strong></li>
+</ul>
+<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.48.58.png" alt="屏幕快照 2018-01-14 下午4.48.58"></p>
+<center>状态空间图 vs 搜索树</center>
+
+<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.49.38.png" alt="屏幕快照 2018-01-14 下午4.49.38"></p>
+<p><br><br><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.53.49.png" alt="屏幕快照 2018-01-14 下午4.53.49"></p>
+<p><br><br>基于搜索树的搜索：</p>
+<ul>
+<li>扩展出潜在的行动（tree nodes）；</li>
+<li>维护所考虑行动的边缘节点；</li>
+<li>试图扩展尽可能少的树节点。</li>
+</ul>
+<p>边缘节点：树中未处理的子节点。<br>处理过程是扫描叶子节点并做判断，在未找到目标节点并且叶节点可扩展的情况下扩展出新的叶子节点，即产生边缘节点。</p>
+<p>重要的ideas：</p>
+<ul>
+<li>Fringe</li>
+<li>Expansion</li>
+<li>Exploration strategy</li>
+</ul>
+<p><strong>主要问题：对哪一个边缘节点进行扩展？？</strong></p>
+<p>####1.4. 搜索算法特性<br>特性：</p>
+<ul>
+<li>完备性：当问题有解时，是否能保证找到一个解；</li>
+<li>最优性：保证能找到最优解（最小耗散路径）；</li>
+<li>时间复杂度</li>
+<li>空间复杂度</li>
+</ul>
+<p>###2. 无信息搜索</p>
+<p>####2.1. 深度优先搜索（DFS）</p>
+<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.11.51.png" alt="-c500"></p>
+<p>DFS会优先扩展树中靠左的节点，直到遍历树中所有节点。<br>利用栈结构实现（LIFO）。<br>时间复杂度：$O(b^m)$<br>空间复杂度：$O(bm)$（只需保留路径上的节点和它们的兄弟节点）<br>完备性：具备，如果状态图中不含有环，那么m是有限的。<br>最优性：不具备，会找到搜索树中最左边的目标节点，不考虑搜索深度和代价。</p>
+<p>####2.2. 广度优先搜索（BFS）</p>
+<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.21.39.png" alt="-c500"></p>
+<p>BFS优先扩展树中最浅的节点，直到遍历树中的所有节点。<br>利用队列实现（FIFO）。<br>时间复杂度：$O(b^s)$<br>空间复杂度：$O(b^s)$（大约需要保存最后一层的所有节点）<br>完备性：具备，如果存在路径，那么s一定是有限的。<br>最优性：只有在每一步行动的代价为1时最优。（路径最短）</p>
+<p>####2.3. 迭代深入搜索（Iterative Deepening）</p>
+<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.28.25.png" alt="-c350"></p>
+<p>思想：结合DFS的空间优势和BFS的时间优势。</p>
+<ul>
+<li>在搜索深度限制为1的情况下运行DFS，如果没有结果…</li>
+<li>在搜索深度限制为2的情况下运行DFS，如果没有结果…</li>
+<li>在搜索深度限制为3的情况下运行DFS，…</li>
+</ul>
+<p>存在浪费冗余现象，即上层节点多次遍历，但是大部分节点都在底层，所以上层节点生成多次影响不大。</p>
+<p>####2.4. 代价一致搜索（Uniform Cost Search）</p>
+<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%886.48.00.png" alt="-c500"></p>
+<p>策略：寻找代价最小的节点进行扩展。<br>利用优先队列实现。</p>
+<p>会遍历所有搜索代价小于最优路径所需代价的节点。<br>如果最优路径的代价为$C^<em>$，图中边的最小代价为$\varepsilon$，则搜索的有效深度为$C^</em>/ \varepsilon$。<br>时间复杂度：$O(b^{C^<em>/ \varepsilon})$<br>空间复杂度：$O(b^{C^</em>/ \varepsilon})$<br>完备性：具备（条件：最优路径的代价有限并且图中边的最小代价为正值）<br>最优性：具备<br>优点：完备性，最优性<br>缺点：（i）在每一个方向上进行搜索  （ii）没有关于目标的信息</p>
+<p>####2.5. 搜索算法的比较<br>（1）所有的搜索算法都是相同的，除了对边缘的处理策略；<br>（2）从概念上说，所有的边缘都是优先队列（即附加优先级的节点集合）；<br>（3）对于DFS和BFS，可使用栈和队列代替优先队列，减少log(n)的开支；<br>（4）比较：<br><img src="../media/15158483614585/15159278235849.jpg" alt="-c500"></p>
+<p>###3. 启发式搜索<br>启发策略：</p>
+<ul>
+<li>估计一个状态到目标距离的函数；</li>
+<li>问题给予算法的额外信息，为特定搜索问题设计；</li>
+<li>例如：曼哈顿距离，欧氏距离。</li>
+</ul>
+<p>示例：<br><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.10.40.png" alt="-c500"></p>
+<p>####3.1. 贪婪搜索<br><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.12.54.png" alt="-c350"><br>策略：扩展离目标状态最接近的节点（估计）</p>
+<ul>
+<li>启发式：对每个状态估计到最近目标的距离；</li>
+<li>只使用启发函数$f(n)=h(n)$来评价节点。</li>
+</ul>
+<p>通常情况：选择最佳路线到达目标节点。<br>最坏情况：类似于DFS。</p>
+<p>####3.2. $A^*$搜索<br><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.17.24.png" alt="-c500"></p>
+<p>结合UCS和Greedy：</p>
+<ul>
+<li>Uniform cost：已经历过的路径的代价，backward cost g(n)；</li>
+<li>Greedy：距离目标节点的估计距离，forward cost h(n)。</li>
+</ul>
+<p>结束条件：当目标节点出优先队列时停止。</p>
+<p>#####3.2.1. 可采纳启发<br>启发函数$h$是可采纳的，那么：<br>$$0 \leq h(n) \leq h^<em>(n)$$<br>其中$h^</em>(n)$是到最近目标节点的真实代价。<br>可采纳的启发函数是$A^*$算法实际使用中的重点。<br>通常，可采纳启发函数是松弛问题的解的代价。</p>
+<p>#####3.2.2 启发函数<br><img src="../media/15158483614585/15159318240227.jpg" alt="-c120"></p>
+<p>底层：零启发式<br>占优势：$h_a \geq h_c$ if $\forall n:h_a(n) \geq h_c(n)$<br>可采纳的启发函数组合：$h(n)=\max({h_a(n),h_b(n)})$<br>顶层：精确启发式</p>
+<p>#####3.2.3 $A^*$算法最优性证明<br><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.29.20.png" alt="-c350"><br>嘉定A是最优目标节点，B是次优目标节点，h是可采纳的，证明A在B之前离开边缘集合。</p>
+<p><strong>证明：</strong><br>假设B在边缘集合上，A的某个祖先节点n也在边缘集合上，定义目标节点的h(n)值为0：<br>$$\begin{eqnarray}<br>        f(n)&amp;=&amp;g(n)+h(n) \nonumber \<br>        f(n) &amp;\leq&amp; g(A) \nonumber \<br>        g(A)&amp;=&amp;f(A) \nonumber<br>        \end{eqnarray}$$<br> 所以有：<br> $$f(n) \leq f(A)$$<br> 又因为：<br> $$\begin{eqnarray}<br> g(A) &lt; g(B) \nonumber \<br> f(A) &lt; f(B) \nonumber<br>    \end{eqnarray}$$<br>得到：<br>$$f(n) \leq f(A) &lt; f(B)$$<br>那么n将在B之前扩展，A的所有祖先将在B之前扩展，A也将在B之前扩展，<br>所以$A^*$是最优的。</p>
+<p>#####3.2.4 $A^*$算法和UCS算法的比较<br>比较：</p>
+<ul>
+<li>代价一致搜索在所有方向上等可能的扩展；</li>
+<li>$A^*$算法主要是朝着目标扩展，而且能够保证最优性。</li>
+</ul>
+<p>####3.3 图搜索<br>（1）主要思想：不要扩展一个状态两次；<br>（2）执行：</p>
+<ul>
+<li>树搜索 + 扩展过的状态集（closed set）；</li>
+<li>按节点扩展搜索树；</li>
+<li>扩展节点之前，确保它之前没有被扩展过；</li>
+<li>如果不是新的状态，忽略；如果是新的，加入closed set。</li>
+</ul>
+<p>#####3.3.1. $A^*$图搜索<br>启发式的一致性：<br><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%888.25.10.png" alt="-c500"></p>
+<p>###4. 局部搜索<br>树搜索在边缘集合中保留未探索的替代路径（确保完备性）；<br>局部搜索：改进单一选项知道不能再改进为止；<br>新的后继函数：局部改变；<br>通常更快，内存使用更有效。（不完备，次优）</p>
+<p>####4.1. 爬山法搜索<br>简单通用的想法：</p>
+<ul>
+<li>可在任意位置开始；</li>
+<li>重复：移动到最好的相邻状态；</li>
+<li>如果没有比当前更好的状态，停止。</li>
+</ul>
+<p><img src="../media/15158483614585/15159329856156.jpg" alt="-c500"></p>
+<p>####4.2. 模拟退火搜索<br>思想：避免局部最大（允许向山下移动）；<br>伪代码：<br><img src="../media/15158483614585/15159330910647.jpg" alt="-c500"><br>理论保证：</p>
+<ul>
+<li>静态分布：$p(x) \propto e^{\frac{E(x)}{kT}}$；</li>
+<li>如果温度T下降的足够慢，将收敛到最优状态。</li>
+</ul>
+<p>####4.3. 遗传算法<br><img src="../media/15158483614585/15159333571429.jpg" alt="-c500"></p>
+<p>遗传算法–自然选择：</p>
+<ul>
+<li>基于适应度函数，在每步中保留N个最好的状态；</li>
+<li>配对杂交操作；</li>
+<li>产生可选的变异。</li>
+</ul>
+
       
 
       
@@ -253,7 +414,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/01/14/集成学习/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/01/14/高级人工智能总结-搜索/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -267,18 +428,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/01/14/高级人工智能总结-搜索/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          高级人工智能总结--搜索
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/01/14/统计学习方法概论/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">统计学习方法概论</div>
+    <a href="/2018/01/14/集成学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">集成学习</div>
       <i class="icon-circle-right"></i>
     </a>
   
