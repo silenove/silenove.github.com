@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="">
+<html class="theme-next muse use-motion" lang="zh-EN">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -107,6 +107,7 @@
 <meta property="og:title" content="silenove blogs">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="silenove blogs">
+<meta property="og:locale" content="zh-EN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="silenove blogs">
 
@@ -158,7 +159,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
 
   
   
@@ -254,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/14/高级人工智能总结-搜索/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/14/高级人工智能总结/高级人工智能总结-搜索/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="silen Zhou">
@@ -273,7 +274,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/14/高级人工智能总结-搜索/" itemprop="url">高级人工智能总结--搜索</a></h1>
+                <a class="post-title-link" href="/2018/01/14/高级人工智能总结/高级人工智能总结-搜索/" itemprop="url">高级人工智能总结--搜索</a></h1>
         
 
         <div class="post-meta">
@@ -324,201 +325,24 @@
       
         
           
-            <h1 id="高级人工智能总结--搜索">高级人工智能总结--搜索</h1>
-<h3 id="搜索问题">1. 搜索问题</h3>
-<p>搜索问题的构成：状态空间、后继函数（actions + costs）、初始状态和目标测试。 解是一个行动序列，将初始状态转换成目标状态。 搜索问题是对原问题的建模。 #### 1.1. 状态空间 状态空间包含环境中的每一个细节，搜索状态只保留行动需要的细节。</p>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.37.46.png" alt="屏幕快照 2018-01-14 下午4.37.46">
-<p class="caption">屏幕快照 2018-01-14 下午4.37.46</p>
-</div>
-<p>状态空间</p>
-<div class="figure">
-<img src="../media/15158483614585/15159185547339.jpg" alt="-c">
-<p class="caption">-c</p>
-</div>
-<p>世界状态：</p>
-<ul>
-<li>Agent positions : 120</li>
-<li>Food count : 30</li>
-<li>Ghost positions : 12</li>
-<li>Agent facing : NSEW</li>
-</ul>
-<p>状态数量：</p>
-<ul>
-<li>世界状态：<span class="math inline">\(120 \times 2^{30} \times 12^{2} \times 4\)</span></li>
-<li>路线规划状态：120</li>
-</ul>
-<h4 id="状态空间图">1.2. 状态空间图</h4>
-<p>搜索问题的数学表示：</p>
-<ul>
-<li>Nodes are world configurations(abstracted)；</li>
-<li>Arcs represent successors(action results)；</li>
-<li>The goal test is a set of goal nodes(maybe only one)。</li>
-</ul>
-<div class="figure">
-<img src="../media/15158483614585/15159195372056.jpg" alt="-c">
-<p class="caption">-c</p>
-</div>
-<p>状态空间图中每种状态只出现一次。 几乎不在内存中构建完整的状态空间图。</p>
-<h4 id="搜索树">1.3. 搜索树</h4>
-<p>搜索树：</p>
-<ul>
-<li>根节点对应初始节点；</li>
-<li>子节点对应父节点的后继；</li>
-<li>节点显示状态，对应的是到达这些状态的行动；</li>
-<li><strong>对于大多数问题，实际上不会构建完整的搜索树。</strong></li>
-</ul>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.48.58.png" alt="屏幕快照 2018-01-14 下午4.48.58">
-<p class="caption">屏幕快照 2018-01-14 下午4.48.58</p>
-</div>
-<center>
-状态空间图 vs 搜索树
-</center>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.49.38.png" alt="屏幕快照 2018-01-14 下午4.49.38">
-<p class="caption">屏幕快照 2018-01-14 下午4.49.38</p>
-</div>
-<p><br> <img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%884.53.49.png" alt="屏幕快照 2018-01-14 下午4.53.49"></p>
-<p><br> 基于搜索树的搜索：</p>
-<ul>
-<li>扩展出潜在的行动（tree nodes）；</li>
-<li>维护所考虑行动的边缘节点；</li>
-<li>试图扩展尽可能少的树节点。</li>
-</ul>
-<p>边缘节点：树中未处理的子节点。 处理过程是扫描叶子节点并做判断，在未找到目标节点并且叶节点可扩展的情况下扩展出新的叶子节点，即产生边缘节点。</p>
-<p>重要的ideas：</p>
-<ul>
-<li>Fringe</li>
-<li>Expansion</li>
-<li>Exploration strategy</li>
-</ul>
-<p><strong>主要问题：对哪一个边缘节点进行扩展？？</strong></p>
-<h4 id="搜索算法特性">1.4. 搜索算法特性</h4>
-<p>特性：</p>
-<ul>
-<li>完备性：当问题有解时，是否能保证找到一个解；</li>
-<li>最优性：保证能找到最优解（最小耗散路径）；</li>
-<li>时间复杂度</li>
-<li>空间复杂度</li>
-</ul>
-<h3 id="无信息搜索">2. 无信息搜索</h3>
-<h4 id="深度优先搜索dfs">2.1. 深度优先搜索（DFS）</h4>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.11.51.png" alt="-c500">
-<p class="caption">-c500</p>
-</div>
-<p>DFS会优先扩展树中靠左的节点，直到遍历树中所有节点。 利用栈结构实现（LIFO）。 时间复杂度：<span class="math inline">\(O(b^m)\)</span> 空间复杂度：<span class="math inline">\(O(bm)\)</span>（只需保留路径上的节点和它们的兄弟节点） 完备性：具备，如果状态图中不含有环，那么m是有限的。 最优性：不具备，会找到搜索树中最左边的目标节点，不考虑搜索深度和代价。</p>
-<h4 id="广度优先搜索bfs">2.2. 广度优先搜索（BFS）</h4>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.21.39.png" alt="-c500">
-<p class="caption">-c500</p>
-</div>
-<p>BFS优先扩展树中最浅的节点，直到遍历树中的所有节点。 利用队列实现（FIFO）。 时间复杂度：<span class="math inline">\(O(b^s)\)</span> 空间复杂度：<span class="math inline">\(O(b^s)\)</span>（大约需要保存最后一层的所有节点） 完备性：具备，如果存在路径，那么s一定是有限的。 最优性：只有在每一步行动的代价为1时最优。（路径最短）</p>
-<h4 id="迭代深入搜索iterative-deepening">2.3. 迭代深入搜索（Iterative Deepening）</h4>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%885.28.25.png" alt="-c350">
-<p class="caption">-c350</p>
-</div>
-<p>思想：结合DFS的空间优势和BFS的时间优势。</p>
-<ul>
-<li>在搜索深度限制为1的情况下运行DFS，如果没有结果...</li>
-<li>在搜索深度限制为2的情况下运行DFS，如果没有结果...</li>
-<li>在搜索深度限制为3的情况下运行DFS，...</li>
-</ul>
-<p>存在浪费冗余现象，即上层节点多次遍历，但是大部分节点都在底层，所以上层节点生成多次影响不大。</p>
-<h4 id="代价一致搜索uniform-cost-search">2.4. 代价一致搜索（Uniform Cost Search）</h4>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%886.48.00.png" alt="-c500">
-<p class="caption">-c500</p>
-</div>
-<p>策略：寻找代价最小的节点进行扩展。 利用优先队列实现。</p>
-<p>会遍历所有搜索代价小于最优路径所需代价的节点。 如果最优路径的代价为<span class="math inline">\(C^*\)</span>，图中边的最小代价为<span class="math inline">\(\varepsilon\)</span>，则搜索的有效深度为<span class="math inline">\(C^*/ \varepsilon\)</span>。 时间复杂度：<span class="math inline">\(O(b^{C^*/ \varepsilon})\)</span> 空间复杂度：<span class="math inline">\(O(b^{C^*/ \varepsilon})\)</span> 完备性：具备（条件：最优路径的代价有限并且图中边的最小代价为正值） 最优性：具备 优点：完备性，最优性 缺点：（i）在每一个方向上进行搜索 （ii）没有关于目标的信息</p>
-<h4 id="搜索算法的比较">2.5. 搜索算法的比较</h4>
-<p>（1）所有的搜索算法都是相同的，除了对边缘的处理策略； （2）从概念上说，所有的边缘都是优先队列（即附加优先级的节点集合）； （3）对于DFS和BFS，可使用栈和队列代替优先队列，减少log(n)的开支； （4）比较： <img src="../media/15158483614585/15159278235849.jpg" alt="-c500"></p>
-<h3 id="启发式搜索">3. 启发式搜索</h3>
-<p>启发策略：</p>
-<ul>
-<li>估计一个状态到目标距离的函数；</li>
-<li>问题给予算法的额外信息，为特定搜索问题设计；</li>
-<li>例如：曼哈顿距离，欧氏距离。</li>
-</ul>
-<p>示例： <img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.10.40.png" alt="-c500"></p>
-<h4 id="贪婪搜索">3.1. 贪婪搜索</h4>
-<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.12.54.png" alt="-c350"> 策略：扩展离目标状态最接近的节点（估计）</p>
-<ul>
-<li>启发式：对每个状态估计到最近目标的距离；</li>
-<li>只使用启发函数<span class="math inline">\(f(n)=h(n)\)</span>来评价节点。</li>
-</ul>
-<p>通常情况：选择最佳路线到达目标节点。 最坏情况：类似于DFS。</p>
-<h4 id="a搜索">3.2. <span class="math inline">\(A^*\)</span>搜索</h4>
-<div class="figure">
-<img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.17.24.png" alt="-c500">
-<p class="caption">-c500</p>
-</div>
-<p>结合UCS和Greedy：</p>
-<ul>
-<li>Uniform cost：已经历过的路径的代价，backward cost g(n)；</li>
-<li>Greedy：距离目标节点的估计距离，forward cost h(n)。</li>
-</ul>
-<p>结束条件：当目标节点出优先队列时停止。 ##### 3.2.1. 可采纳启发 启发函数<span class="math inline">\(h\)</span>是可采纳的，那么： <span class="math display">\[0 \leq h(n) \leq h^*(n)\]</span> 其中<span class="math inline">\(h^*(n)\)</span>是到最近目标节点的真实代价。 可采纳的启发函数是<span class="math inline">\(A^*\)</span>算法实际使用中的重点。 通常，可采纳启发函数是松弛问题的解的代价。 ##### 3.2.2 启发函数 <img src="../media/15158483614585/15159318240227.jpg" alt="-c120"></p>
-<p>底层：零启发式 占优势：<span class="math inline">\(h_a \geq h_c\)</span> if <span class="math inline">\(\forall n:h_a(n) \geq h_c(n)\)</span> 可采纳的启发函数组合：<span class="math inline">\(h(n)=\max({h_a(n),h_b(n)})\)</span> 顶层：精确启发式</p>
-<h5 id="a算法最优性证明">3.2.3 <span class="math inline">\(A^*\)</span>算法最优性证明</h5>
-<p><img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%887.29.20.png" alt="-c350"> 嘉定A是最优目标节点，B是次优目标节点，h是可采纳的，证明A在B之前离开边缘集合。</p>
-<p><strong>证明：</strong> 假设B在边缘集合上，A的某个祖先节点n也在边缘集合上，定义目标节点的h(n)值为0： <span class="math display">\[\begin{eqnarray}
-        f(n)&amp;=&amp;g(n)+h(n) \nonumber \\
-        f(n) &amp;\leq&amp; g(A) \nonumber \\
-        g(A)&amp;=&amp;f(A) \nonumber 
-        \end{eqnarray}\]</span> 所以有： <span class="math display">\[f(n) \leq f(A)\]</span> 又因为： <span class="math display">\[\begin{eqnarray} 
- g(A) &lt; g(B) \nonumber \\
- f(A) &lt; f(B) \nonumber
-    \end{eqnarray}\]</span> 得到： <span class="math display">\[f(n) \leq f(A) &lt; f(B)\]</span> 那么n将在B之前扩展，A的所有祖先将在B之前扩展，A也将在B之前扩展， 所以<span class="math inline">\(A^*\)</span>是最优的。</p>
-<h5 id="a算法和ucs算法的比较">3.2.4 <span class="math inline">\(A^*\)</span>算法和UCS算法的比较</h5>
-<p>比较：</p>
-<ul>
-<li>代价一致搜索在所有方向上等可能的扩展；</li>
-<li><span class="math inline">\(A^*\)</span>算法主要是朝着目标扩展，而且能够保证最优性。</li>
-</ul>
-<h4 id="图搜索">3.3 图搜索</h4>
-<p>（1）主要思想：不要扩展一个状态两次； （2）执行：</p>
-<ul>
-<li>树搜索 + 扩展过的状态集（closed set）；</li>
-<li>按节点扩展搜索树；</li>
-<li>扩展节点之前，确保它之前没有被扩展过；</li>
-<li>如果不是新的状态，忽略；如果是新的，加入closed set。</li>
-</ul>
-<h5 id="a图搜索">3.3.1. <span class="math inline">\(A^*\)</span>图搜索</h5>
-<p>启发式的一致性： <img src="../media/15158483614585/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-01-14%20%E4%B8%8B%E5%8D%888.25.10.png" alt="-c500"></p>
-<h3 id="局部搜索">4. 局部搜索</h3>
-<p>树搜索在边缘集合中保留未探索的替代路径（确保完备性）； 局部搜索：改进单一选项知道不能再改进为止； 新的后继函数：局部改变； 通常更快，内存使用更有效。（不完备，次优） #### 4.1. 爬山法搜索 简单通用的想法：</p>
-<ul>
-<li>可在任意位置开始；</li>
-<li>重复：移动到最好的相邻状态；</li>
-<li>如果没有比当前更好的状态，停止。</li>
-</ul>
-<div class="figure">
-<img src="../media/15158483614585/15159329856156.jpg" alt="-c500">
-<p class="caption">-c500</p>
-</div>
-<h4 id="模拟退火搜索">4.2. 模拟退火搜索</h4>
-<p>思想：避免局部最大（允许向山下移动）； 伪代码： <img src="../media/15158483614585/15159330910647.jpg" alt="-c500"> 理论保证：</p>
-<ul>
-<li>静态分布：<span class="math inline">\(p(x) \propto e^{\frac{E(x)}{kT}}\)</span>；</li>
-<li>如果温度T下降的足够慢，将收敛到最优状态。</li>
-</ul>
-<h4 id="遗传算法">4.3. 遗传算法</h4>
-<div class="figure">
-<img src="../media/15158483614585/15159333571429.jpg" alt="-c500">
-<p class="caption">-c500</p>
-</div>
-<p>遗传算法--自然选择：</p>
-<ul>
-<li>基于适应度函数，在每步中保留N个最好的状态；</li>
-<li>配对杂交操作；</li>
-<li>产生可选的变异。</li>
-</ul>
+          高级人工智能总结--搜索
+1. 搜索问题
+搜索问题的构成：状态空间、后继函数（actions + costs）、初始状态和目标测试。 解是一个行动序列，将初始状态转换成目标状态。 搜索问题是对原问题的建模。
+1.1. 状态空间
+状态空间包含环境中的每一个细节，搜索状态只保留行动需要的细节。
 
-          
+
+
+
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/14/高级人工智能总结/高级人工智能总结-搜索/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -567,7 +391,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/14/集成学习/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/14/机器学习/集成学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="silen Zhou">
@@ -586,7 +410,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/14/集成学习/" itemprop="url">集成学习</a></h1>
+                <a class="post-title-link" href="/2018/01/14/机器学习/集成学习/" itemprop="url">集成学习</a></h1>
         
 
         <div class="post-meta">
@@ -637,13 +461,16 @@
       
         
           
-            <span class="math display">\[\begin{align} 
-x &amp;= a +b+c+d\\
- &amp;= e +f\\
- &amp;= g
-\end{align}\]</span>
+          
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/14/机器学习/集成学习/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -692,7 +519,7 @@ x &amp;= a +b+c+d\\
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/14/统计学习方法概论/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/14/机器学习/统计学习方法概论/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="silen Zhou">
@@ -711,7 +538,7 @@ x &amp;= a +b+c+d\\
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/14/统计学习方法概论/" itemprop="url">统计学习方法概论</a></h1>
+                <a class="post-title-link" href="/2018/01/14/机器学习/统计学习方法概论/" itemprop="url">统计学习方法概论</a></h1>
         
 
         <div class="post-meta">
@@ -762,9 +589,22 @@ x &amp;= a +b+c+d\\
       
         
           
-            
-
-          
+          统计学习方法概论
+1. 统计学习
+1.1. 对象及方法
+（1）统计学习的对象：数据
+（2）关于数据的基本假设：同类数据具有一定的统计规律性
+（3）统计学习的方法：基于数据构建统计模型从而对数据进行预测与分析
+（4）组成：监督学习，非监督学习，半监督学习，强化学习
+（5）统计学习方法三要素：模型，策略
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/14/机器学习/统计学习方法概论/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -813,7 +653,7 @@ x &amp;= a +b+c+d\\
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/起点/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/想法/起点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="silen Zhou">
@@ -832,7 +672,7 @@ x &amp;= a +b+c+d\\
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/13/起点/" itemprop="url">又一个起点</a></h1>
+                <a class="post-title-link" href="/2018/01/13/想法/起点/" itemprop="url">又一个起点</a></h1>
         
 
         <div class="post-meta">
@@ -883,10 +723,17 @@ x &amp;= a +b+c+d\\
       
         
           
-            <p>hexo玩坏了，全都删了。。。</p>
-<p>重新开始吧！</p>
+          hexo玩坏了，全都删了。。。
+重新开始吧！
 
           
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/13/想法/起点/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -976,7 +823,7 @@ x &amp;= a +b+c+d\\
                 
                 <div class="site-state-item site-state-tags">
                   
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -1132,24 +979,7 @@ x &amp;= a +b+c+d\\
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
 
 
 
@@ -1208,6 +1038,46 @@ x &amp;= a +b+c+d\\
     
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
   
 
 
