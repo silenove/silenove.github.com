@@ -100,17 +100,24 @@
 
 
   
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习,算法," />
 
 
+<meta name="description" content="EM算法 1. 概念 概率模型有时既含有观测变量（observable variable），又含有隐变量（hidden variable）或潜在变量（latent variable），如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计法，或者贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单的使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计法，或极">
+<meta name="keywords" content="机器学习,算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EM算法">
 <meta property="og:url" content="http://yoursite.com/2018/01/29/机器学习/EM算法/index.html">
 <meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="EM算法 1. 概念 概率模型有时既含有观测变量（observable variable），又含有隐变量（hidden variable）或潜在变量（latent variable），如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计法，或者贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单的使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计法，或极">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:updated_time" content="2018-01-29T07:05:32.108Z">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-02%20下午4.30.54.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-03%20下午11.06.02.png">
+<meta property="og:updated_time" content="2018-02-03T15:08:33.644Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EM算法">
+<meta name="twitter:description" content="EM算法 1. 概念 概率模型有时既含有观测变量（observable variable），又含有隐变量（hidden variable）或潜在变量（latent variable），如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计法，或者贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单的使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计法，或极">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-02%20下午4.30.54.png">
 
 
 
@@ -205,13 +212,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
         </li>
       
 
@@ -282,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-29T15:05:32+08:00">2018-01-29</time>
             
@@ -321,7 +328,93 @@
       
 
       
-        
+        <h1 id="em算法">EM算法</h1>
+<h2 id="概念">1. 概念</h2>
+<p>概率模型有时既含有观测变量（observable variable），又含有隐变量（hidden variable）或潜在变量（latent variable），如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计法，或者贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单的使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计法，或极大后验概率估计法，是一种迭代算法。<br>
+EM算法与初值的选择有关，选择不同的初值可能得到不同的参数估计值。<br>
+用<span class="math inline">\(Y\)</span>表示观测随机变量的数据，<span class="math inline">\(Z\)</span>表示隐随机变量的数据，<span class="math inline">\(Y\)</span>和<span class="math inline">\(Z\)</span>连在一起称为完全数据（complete-data），观测数据<span class="math inline">\(Y\)</span>又称为不完全数据（incomplete-data）。不完全数据的对数似然函数是<span class="math inline">\(L(\theta) = \log{P(Y| \theta)}\)</span>，完全数据的对数似然函数为<span class="math inline">\(\log{P(Y,Z| \theta )}\)</span>。<br>
+EM算法通过迭代求<span class="math inline">\(L(\theta)=\log{P(Y| \theta )}\)</span>。每次迭代包含两步：E步，求期望；M步，求极大化。<br>
+<strong>EM算法：</strong><br>
+输入：观测变量数据<span class="math inline">\(Y\)</span>，隐变量数据<span class="math inline">\(Z\)</span>，联合分布<span class="math inline">\(P(Y,Z| \theta )\)</span>，条件分布<span class="math inline">\(P(Z|Y, \theta )\)</span>；<br>
+输出：模型参数<span class="math inline">\(\theta\)</span>。<br>
+（1）选择参数的初始值<span class="math inline">\(\theta^{(0)}\)</span>，开始迭代；<br>
+（2）E步：记<span class="math inline">\(\theta^{(i)}\)</span>为第<span class="math inline">\(i\)</span>次迭代参数<span class="math inline">\(\theta\)</span>的估计值，在第<span class="math inline">\(i+1\)</span>次迭代的E步，计算： <span class="math display">\[\begin{align}
+    Q(\theta,\theta^{(i)}) &amp;= E_Z[\log{P(Y,Z|\theta)|Y,\theta^{(i)}}] \nonumber \\
+    &amp;= \sum_Z \log{P(Y,Z|\theta)P(Z|Y,\theta^{(i)})} \nonumber
+    \end{align}\]</span> <span class="math inline">\(P(Z|Y, \theta^{(i)})\)</span>是在给定观测数据<span class="math inline">\(Y\)</span>和当前的参数估计<span class="math inline">\(\theta^{(i)}\)</span>下隐变量数据<span class="math inline">\(Z\)</span>的条件概率分布；<br>
+（3）M步：求使<span class="math inline">\(Q(\theta,\theta^{(i)})\)</span>极大化的<span class="math inline">\(\theta\)</span>，确定第<span class="math inline">\(i+1\)</span>次迭代的参数的估计值<span class="math inline">\(\theta^{(i+1)}\)</span>： <span class="math display">\[\theta^{(i+1)} = \arg \max_{\theta} Q(\theta, \theta^{(i)})\]</span> （4）重复第（2）步和第（3）步，直到收敛。<br>
+<strong>Q函数：</strong>完全数据的对数似然函数<span class="math inline">\(\log{P(Y,Z|\theta)}\)</span>关于在给定观测数据<span class="math inline">\(Y\)</span>和当前参数<span class="math inline">\(\theta^{(i)}\)</span>下对未观测数据<span class="math inline">\(Z\)</span>的条件概率分布<span class="math inline">\(P(Z|Y,\theta^{(i)})\)</span>的期望称为Q函数，即： <span class="math display">\[Q(\theta,\theta^{(i)}) = E_Z[\log{P(Y,Z|\theta)|Y,\theta^{(i)}}]\]</span> <span class="math inline">\(Q(\theta, \theta^{(i)})\)</span>的第1个变元表示要极大化的参数，第2个变元表示参数当前估计值，每次迭代实际在求Q函数及其极大。<br>
+一个直观了解EM算法思路的例子就是K-Means算法：在K-Means聚类时，每个聚类簇的质心是隐变量。假设K个初始化质心，即EM算法中的E步；然后计算得到每个样本最近的质心，并把样本积累到这个质心，即EM算法中的M步；重复E步和M步，直到质心不在改变。 ## 2. 导出<br>
+关于EM算法的导出一般有两种方式： ### 2.1. “通俗”方式 通俗角度的话，求极大就是求似然函数的极大，一般都是对数似然。通常的做法是对似然函数求偏导，然后令偏导等于0，即求得参数的近似最优值，但是包含隐变量的模型不能直接进行似然函数的偏导，如果假设已经知道隐变量的值，就可以将似然函数简化，并求偏导。<br>
+对于<span class="math inline">\(m\)</span>个样本观察数据<span class="math inline">\(x=(x^{(1)},x^{(2)},\cdots, x^{(m)})\)</span>，找出样本的模型参数<span class="math inline">\(\theta\)</span>，极大化模型分布的对数似然函数： <span class="math display">\[\theta = \arg \max_{\theta} \sum_{i=1}^m \log{P(x^{(i)}| \theta)}\]</span> 如果观察数据中包含为观测到的隐变量<span class="math inline">\(z=(z^{(1)},z^{(2)},\cdots,z^{(m)})\)</span>，此时极大化模型分布的对数似然函数如下： <span class="math display">\[\theta  =\arg \max_{\theta} \sum_{i=1}^m \log{P(x^{(i)}| \theta) = \arg \max_{\theta} \sum_{i=1}^m} \log{\sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)}\]</span> 上式无法直接求出<span class="math inline">\(\theta\)</span>，首先利用Jensen不等式对式子进行缩放： <span class="math display">\[\begin{align}
+    \sum_{i=1}^m \log{\sum_{z^{(i)}} P(x^{(i)},z^{(i)}|\theta)} &amp;= \sum_{i=1}^m \log{\sum_{z^{(i)}} [Q_i(z^{(i)}) \frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}]} \nonumber \\
+    &amp;\geq \sum_{i=1}^m \sum_{z^{(i)}}[Q_i(z^{(i)}) \log{\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}}] \nonumber
+    \end{align}\]</span> 上式中引入一个未知的新的分布<span class="math inline">\(Q_i(z^{(i)})\)</span>，注意这个函数并不是Q函数，其中Jensen不等式：由于对数函数是凹函数，所以有<span class="math inline">\(f(E[X]) \geq E[f(X)]\)</span>，其中要满足Jensen不等式中的等号，那么有： <span class="math display">\[\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})} = c\]</span> 其中<span class="math inline">\(c\)</span>为常数，并且<span class="math inline">\(Q_i(z^{(i)})\)</span>是一个分布，满足： <span class="math display">\[\sum_z Q_i(z^{(i)}) = 1\]</span> 从上面两式可以得到： <span class="math display">\[Q_i(z^{(i)}) = \frac{P(x^{(i)},z^{(i)}|\theta)}{\sum_z P(x^{(i)},z^{(i)}|\theta)} = \frac{P(x^{(i)},z^{(i)}|\theta)}{P(x^{(i)}|\theta)} = P(z^{(i)}|x^{(i)},\theta)\]</span> 如果<span class="math inline">\(Q_i(z^{(i)}) = P(z^{(i)}|x^{(i)},\theta^{(i)})\)</span>，则<span class="math inline">\(\sum_{i=1}^m \sum_{z^{(i)}}[Q_i(z^{(i)}) \log{\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}}]\)</span>是包含隐变量的对数似然的一个下界，如果能极大化这个下界，也是在尝试极大化对数似然，即需要极大化下式： <span class="math display">\[\arg \max \sum_{i=1}^m \sum_{z{(i)}}[Q_i(z^{(i)}) \log{\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}}]\]</span> 去掉上式中的常数部分，需要极大化的对数似然的下界为： <span class="math display">\[\arg \max_{\theta} \sum_{i=1}^m \sum_{z^{(i)}} [Q_i(z^{(i)}) \log{P(x^{(i)},z^{(i)}|\theta)}]\]</span> 上式就是EM算法中的M步，而<span class="math inline">\(\sum_{z^{(i)}} [Q_i(z^{(i)}) \log{P(x^{(i)},z^{(i)}|\theta)}]\)</span>就是Q函数所定义的式子。 ### 2.2. ”正式“方式 通过近似求解观测数据的对数似然函数的极大化问题来导出EM算法。当面对一个含有隐变量的概率模型，目标是极大化观测数据（不完全数据）<span class="math inline">\(Y\)</span>关于参数<span class="math inline">\(\theta\)</span>的对数似然函数，即极大化 <span class="math display">\[\begin{align}
+    L(\theta) &amp;= \log{P(Y|\theta)} = \log{\sum_Z P(Y,Z|\theta)} \nonumber \\
+    &amp;= \log{\{\sum_Z P(Y|Z,\theta)P(Z|\theta)\}} \nonumber
+    \end{align}\]</span> 极大化的主要困难是上式中有未观测数据并包含和的对数。<br>
+EM算法通过迭代逐步近似极大化<span class="math inline">\(L(\theta)\)</span>的，假设在第<span class="math inline">\(i\)</span>次迭代后<span class="math inline">\(\theta\)</span>的估计值是<span class="math inline">\(\theta^{(i)}\)</span>，则希望新估计值<span class="math inline">\(\theta\)</span>能使<span class="math inline">\(L(\theta)\)</span>增加，即<span class="math inline">\(L(\theta) \geq L(\theta^{(i)})\)</span>，并逐步达到极大值，为此考虑两者的差： <span class="math display">\[L(\theta) - L(\theta^{(i)}) = \log{\{\sum_Z P(Y|Z,\theta)P(Z|\theta)\}} - \log{P(Y|\theta^{(i)})}\]</span> 利用Jensen不等式得到其下界： <span class="math display">\[\begin{align}
+    L(\theta) - L(\theta^{(i)}) &amp;= \log{\sum_Z P(Z|Y,\theta^{(i)}) \frac{P(Y|Z,\theta^{(i)})P(Z|\theta)}{P(Z|Y,\theta^{(i)})}} - \log{P(Y|\theta^{(i)})} \nonumber \\
+    &amp;\geq \sum_Z{P(Z|Y,\theta^{(i)}) \log{\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})}}} - \log{P(Y|\theta^{(i)})} \nonumber \\
+    &amp;= \sum_Z P(Z|Y,\theta^{(i)}) \log{\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}} \nonumber
+    \end{align}\]</span> 令 <span class="math display">\[B(\theta,\theta^{(i)}) \hat{=} L(\theta^{(i)})+\sum_Z P(Z|Y,\theta^{(i)}) \log{\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}}\]</span> 则 <span class="math display">\[L(\theta) \geq B(\theta,\theta^{(i)})\]</span> 函数<span class="math inline">\(B(\theta,\theta^{(i)})\)</span>是<span class="math inline">\(L(\theta)\)</span>的一个下界，并且满足： <span class="math display">\[L(\theta^{(i)}) = B(\theta^{(i)},\theta^{(i)})\]</span> 因此，任何可以使<span class="math inline">\(B(\theta,\theta^{(i)})\)</span>增大的<span class="math inline">\(\theta\)</span>，也可以使<span class="math inline">\(L(\theta)\)</span>增大，为了使<span class="math inline">\(L(\theta)\)</span>有尽可能大的增长，选择<span class="math inline">\(\theta^{(i+1)}\)</span>使<span class="math inline">\(B(\theta,\theta^{(i)})\)</span>达到极大，即 <span class="math display">\[\theta^{(i+1)}=\arg \max_{\theta}{B(\theta,\theta^{(i)})}\]</span> 现在求<span class="math inline">\(\theta^{(i+1)}\)</span>的表达式，省去对<span class="math inline">\(\theta\)</span>的极大化而言的常数项，有 <span class="math display">\[\begin{align}
+    \theta^{(i+1)} &amp;= \arg \max_{\theta}\{L(\theta^{(i)})+\sum_Z P(Z|Y,\theta^{(i)}) \log{\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Z|Y,\theta^{(i)})P(Y|\theta^{(i)})}}\} \nonumber \\
+    &amp;= \arg \max_{\theta} \{\sum_Z P(Z|Y,\theta^{(i)}) \log{P(Y|Z,\theta)P(Z|\theta)}\} \nonumber \\
+    &amp;= \arg \max_{\theta} \{\sum_Z P(Z|Y,\theta^{(i)}) \log{P(Y,Z|\theta)}\} \nonumber \\
+    &amp;= \arg \max_{\theta} Q(\theta, \theta^{(i)}) \nonumber
+    \end{align}\]</span> 上式等价于EM算法的一次迭代，即求Q函数及其极大化，EM算法通过不断求解下界的极大化逼近求解对数似然函数极大化的算法。<br>
+EM算法可以用于生成模型的非监督学习。<br>
+下图给出EM算法的直观解释： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-02%20下午4.30.54.png"></p>
+<h2 id="收敛性">3. 收敛性</h2>
+<p><strong>定理1：</strong>设<span class="math inline">\(P(Y|\theta)\)</span>为观测数据的似然函数，<span class="math inline">\(\theta^{(i)}(i=1,2,\cdots)\)</span>为EM算法得到的参数估计序列，<span class="math inline">\(P(Y|\theta^{(i)})(i=1,2,\cdots)\)</span>为对应的似然函数序列，则<span class="math inline">\(P(Y|\theta^{(i)})\)</span>是单调递增的，即 <span class="math display">\[P(Y|\theta^{(i+1)}) \geq P(Y|\theta^{(i)})\]</span> <strong>证明：</strong>由于 <span class="math display">\[P(Y|\theta) = \frac{P(Y,Z|\theta)}{P(Z|Y,\theta)}\]</span> 取对数有 <span class="math display">\[\log{P(Y|\theta)} = \log{P(Y,Z|\theta)} - \log{P(Z|Y,\theta)}\]</span> Q函数定义为： <span class="math display">\[Q(\theta, \theta^{(i)}) = \sum_Z \log{P(Y,Z|\theta)P(Z|Y,\theta^{(i)})}\]</span> 令 <span class="math display">\[H(\theta,\theta^{(i)}) = \sum_Z \log{P(Z|Y,\theta)P(Z,|Y,\theta^{(i)})}\]</span> 于是对数似然函数可以写成 <span class="math display">\[\log{P(Y|\theta)} = Q(\theta,\theta^{(i)}) - H(\theta,\theta^{(i)})\]</span> 将上式中分别取<span class="math inline">\(\theta\)</span>为<span class="math inline">\(\theta^{(i)}\)</span>和<span class="math inline">\(\theta^{(i+1)}\)</span>并相减，有 <span class="math display">\[\log{P(Y|\theta^{(i+1)})} - \log{P(Y|\theta^{(i)})} = [Q(\theta^{(i+1)},\theta^{(i)})-Q(\theta^{(i)},\theta^{(i)})] - [H(\theta^{(i+1)},\theta^{(i)})-H(\theta^{(i)},\theta^{(i)})]\]</span> 为证明定理中的不等式成立，只需证明上式中右端的式子非负，对于第1项，由于<span class="math inline">\(\theta^{(i+1)}\)</span>使<span class="math inline">\(Q(\theta,\theta^{(i)})\)</span>达到极大，所以有 <span class="math display">\[Q(\theta^{(i+1)},\theta^{(i)}) - Q(\theta^{(i)},\theta^{(i)}) \geq 0\]</span> 对于第2项，可得 <span class="math display">\[\begin{align}
+    H(\theta^{(i+1)},\theta^{(i)})-H(\theta^{(i)},\theta^{(i)}) &amp;= \sum_Z \{\log{\frac{P(Z|Y,\theta^{(i+1)})}{P(Z,Y,\theta^{(i)})}}\}P(Z|Y,\theta^{(i)}) \nonumber \\
+    &amp;\leq \log{\{\sum_Z \frac{P(Z|Y,\theta^{(i+1)})}{P(Z|Y,\theta^{(i)})}P(Z|Y,\theta^{(i)})\}} \nonumber \\
+    &amp;= log{\{\sum_Z P(Z|Y,\theta^{(i+1)})\}} = 0 \nonumber
+    \end{align}\]</span> 有此可知右端式子非负。<br>
+<strong>定理2：</strong>设<span class="math inline">\(L(\theta) = \log{P(Y|\theta)}\)</span>为观测数据的对数似然函数，<span class="math inline">\(\theta^{(i)}(i=1,2,\cdots)\)</span>为EM算法得到的参数估计序列，<span class="math inline">\(L(\theta^{(i)})(i=1,2,\cdots)\)</span>为对应的似然函数序列：</p>
+<ul>
+<li>如果<span class="math inline">\(P(Y|\theta)\)</span>有上界，则<span class="math inline">\(L(\theta)=\log{P(Y|\theta^{(i)})}\)</span>收敛到某一值<span class="math inline">\(L^{*}\)</span>；</li>
+<li>在函数<span class="math inline">\(Q(\theta,\theta&#39;)\)</span>与<span class="math inline">\(L(\theta)\)</span>满足一定条件下，由EM算法得到的参数估计序列<span class="math inline">\(\theta^{(i)}\)</span>的收敛值<span class="math inline">\(\theta^{*}\)</span>是<span class="math inline">\(L(\theta)\)</span>的稳定点。</li>
+</ul>
+<p>定理2关于函数<span class="math inline">\(Q(\theta,\theta&#39;)\)</span>与<span class="math inline">\(L(\theta)\)</span>的条件大多数情况下是满足的。EM算法的收敛性包含关于对数似然函数序列<span class="math inline">\(L(\theta^{(i)})\)</span>的收敛性和关于参数估计序列<span class="math inline">\(\theta^{(i)}\)</span>的收敛性两层意思，前者并不蕴含后者。<br>
+定理只能保证参数估计序列收敛到对数似然函数序列的稳定点，不能保证收敛到极大值点，所以初值的选择非常重要。</p>
+<h2 id="em算法在高斯混合模型学习中的应用">4. EM算法在高斯混合模型学习中的应用</h2>
+<p>EM算法是学习高斯混合模型（Gaussian misture model）的有效方法。<br>
+### 4.1. 高斯混合模型 <strong>高斯混合模型：</strong>高斯混合模型是指具有如下形式的概率分布模型： <span class="math display">\[P(y|\theta) = \sum_{k=1}^K \alpha_k \phi(y|\theta_k)\]</span> 其中，<span class="math inline">\(\alpha_k\)</span>是系数，<span class="math inline">\(\alpha_k \geq 0\)</span>，<span class="math inline">\(\sum_{k=1}^K \alpha_k = 1\)</span>；<span class="math inline">\(\phi(y|\theta_k)\)</span>是高斯分布密度，<span class="math inline">\(\theta_k = (\mu_k,\sigma_k^2)\)</span>， <span class="math display">\[\phi(y|\theta_k) = \frac{1}{\sqrt{2 \pi}\sigma_k} \exp(-\frac{(y-y_k)^2}{2\sigma_k^2})\]</span> 称为第k个分模型。<br>
+一般混合模型可以由任意概率分布密度代替上式中的高斯分布密度，这里只介绍最常用的高斯混合模型。<br>
+### 4.2. 高斯混合模型参数估计的EM算法 假设观测数据<span class="math inline">\(y_1,y_2,\cdots,y_N\)</span>由高斯混合模型生成， <span class="math display">\[P(y|\theta) = \sum_{k=1}^K \alpha_k \phi(y|\theta_k)\]</span> 其中，<span class="math inline">\(\theta=(\alpha_1,\alpha_2,\cdots,\alpha_K;\theta_1,\theta_2,\cdots,\theta_K)\)</span>。这里用EM算法估计高斯混合模型的参数<span class="math inline">\(\theta\)</span>。<br>
+观测数据<span class="math inline">\(y_j,j=1,2,\cdots,N\)</span>的产生：依概率<span class="math inline">\(\alpha_k\)</span>选择第k个高斯分布分模型<span class="math inline">\(\phi(y|\theta_k)\)</span>；依第k个分模型的概率分布<span class="math inline">\(\phi(y|\theta_k)\)</span>生成观测数据<span class="math inline">\(y_j,j=1,2,\cdots,N\)</span>。观测数据已知，高斯分布分模型未知，<span class="math inline">\(k=1,2,\cdots,K\)</span>，用隐变量<span class="math inline">\(\gamma_{jk}\)</span>表示，定义如下： <span class="math display">\[\gamma_{jk} =
+\begin{cases}
+1, &amp; 第j个观测来自第k个分模型 \\
+0, &amp; 否则
+\end{cases}\]</span> <span class="math inline">\(\gamma_{jk}\)</span>是0-1随机变量。<br>
+<span class="math inline">\(y_j\)</span>是观测数据，<span class="math inline">\(\gamma_{jk}\)</span>是未观测数据，完全数据是 <span class="math display">\[(y_j,\gamma_1,\gamma_2,\cdots,\gamma_{jk}), j=1,2,\cdots,N\]</span> 完全数据的似然函数： <span class="math display">\[\begin{align}
+    P(y,\gamma|\theta) &amp;= \prod_{j=1}^N P(y_j,\gamma_1,\gamma_2,\cdots,\gamma_{jk}|\theta) \nonumber \\
+    &amp;= \prod_{k=1}^K \prod_{j=1}^N[\alpha_k \phi(y_j|\theta_k)]^{\gamma_{jk}} \nonumber \\
+    &amp;= \prod_{k=1}^K \alpha_k^{n_k} \prod_{j=1}^N[\phi(y_j|\theta)]^{\gamma_{jk}} \nonumber \\
+    &amp;= \prod_{k=1}^K \alpha_k^{n_k} \prod_{j=1}^N[\frac{1}{\sqrt{2\pi}\sigma_k} \exp(-\frac{(y_j-\mu_k)^2}{2\sigma_k^2})]^{\gamma_{jk}} \nonumber
+\end{align}\]</span> 其中，<span class="math inline">\(n_k = \sum_{j=1}^N \gamma_{jk}\)</span>，<span class="math inline">\(\sum_{k=1}^K n_k = N\)</span>。<br>
+那么，完全数据的对数似然函数为 <span class="math display">\[\log{P(y,\gamma|\theta)} = \sum_{k=1}^K\{n_k \log{\alpha_k}+\sum_{j=1}^N \gamma_{jk}[\log{(\frac{1}{\sqrt{2\pi}})}-\log{\sigma_k- \frac{1}{2\sigma_k^2}(y_j-\mu_k)^2}]\}\]</span> <strong>E步：确定Q函数</strong><br>
+<span class="math display">\[\begin{align}
+    Q(\theta,\theta^{(i)}) &amp;= E[\log{P(y,\gamma|\theta)}|y,\theta^{(i)}] \nonumber \\
+    &amp;= E\{\sum_{k=1}^K\{n_k \log{\alpha_k}+\sum_{j=1}^N \gamma_{jk}[\log{(\frac{1}{\sqrt{2\pi}})}-\log{\sigma_k- \frac{1}{2\sigma_k^2}(y_j-\mu_k)^2}]\}\} \nonumber \\
+    &amp;= \sum_{k=1}^K\{\sum_{j=1}^N(E\gamma_{jk}) \log{\alpha_k}+\sum_{j=1}^N (E\gamma_{jk})[\log{(\frac{1}{\sqrt{2\pi}})}-\log{\sigma_k- \frac{1}{2\sigma_k^2}(y_j-\mu_k)^2}]\} \nonumber
+\end{align}\]</span> 这里需要计算<span class="math inline">\(E(\gamma_{jk}|y,\theta)\)</span>，记为<span class="math inline">\(\hat{\gamma}_{jk}\)</span>。 <span class="math display">\[\begin{align}
+    \hat{\gamma}_{jk} &amp;= E(\gamma_{jk}|y,\theta) = P(\gamma_{jk}=1|y,\theta) \nonumber \\
+    &amp;= \frac{P(\gamma_{jk}=1,y_j|\theta)}{\sum_{k=1}^K P(\gamma_{jk}=1,y_j|\theta)} \nonumber \\
+    &amp;= \frac{P(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)}{\sum_{k=1}^KP(y_j|\gamma_{jk}=1,\theta)P(\gamma_{jk}=1|\theta)} \nonumber \\
+    &amp;= \frac{\alpha_k \phi(y_j|\theta_k)}{\sum_{k=1}^K\alpha_k \phi(y_j|\theta_k)} \nonumber , &amp; j=1,2,\cdots,N; k=1,2,\cdots,K
+\end{align}\]</span> <span class="math inline">\(\hat{\gamma}_{jk}\)</span>是在当前模型参数下第<span class="math inline">\(j\)</span>个观测数据来自第<span class="math inline">\(k\)</span>个分模型的概率，称为分模型<span class="math inline">\(k\)</span>对观测数据<span class="math inline">\(y_j\)</span>的响应度。<br>
+将<span class="math inline">\(\hat{\gamma}_{jk} = E\gamma_{jk}\)</span>及<span class="math inline">\(n_k = \sum_{j=1}^N E\gamma_{jk}\)</span>带入Q函数中得 <span class="math display">\[Q(\theta,\theta^{(i)}) = \sum_{k=1}^K\{n_k \log{\alpha_k}+\sum_{j=1}^N \hat{\gamma}_{jk}[\log{(\frac{1}{\sqrt{2\pi}})}-\log{\sigma_k- \frac{1}{2\sigma_k^2}(y_j-\mu_k)^2}]\}\]</span> <strong>M步：求极大值</strong><br>
+求Q函数对<span class="math inline">\(\theta\)</span>的极大值： <span class="math display">\[\theta^{(i+1)} = \arg \max_{\theta} Q(\theta,\theta^{(i)})\]</span> 用<span class="math inline">\(\hat{\mu}_k\)</span>，<span class="math inline">\(\hat{\sigma}_{k}^2\)</span>及<span class="math inline">\(\hat{\alpha}_k\)</span>，<span class="math inline">\(k=1,2,\cdots,K\)</span>，表示<span class="math inline">\(\theta^{(i+1)}\)</span>的各参数，求<span class="math inline">\(\hat{\mu}_k\)</span>，<span class="math inline">\(\hat{\sigma}_{k}^2\)</span>只需分别对Q函数求偏导并令其为0；求<span class="math inline">\(\hat{\alpha}_k\)</span>是在<span class="math inline">\(\sum_{k=1}^K \alpha_k=1\)</span>条件下求偏导并令其为0.结果如下： <span class="math display">\[\begin{equation}
+    \hat{\mu}_k = \frac{\sum_{j=1}^N \hat{\gamma}_{jk}y_j}{\sum_{j=1}^N \hat{\gamma}_{jk}}， k=1,2,\cdots,K  \nonumber \\
+    \hat{\sigma}_k^2 = \frac{\sum_{j=1}^N \hat{\gamma}_{jk}(y_j-\mu_k)^2}{\sum_{j=1}^N \hat{\gamma}_{jk}}，k=1,2,\cdots,K  \nonumber \\
+    \hat{\alpha}_k = \frac{n_k}{N} = \frac{\sum_{j=1}^N \hat{\gamma}_{jk}}{N}，k=1,2,\cdots,K \nonumber
+\end{equation}\]</span> 重复以上计算，直到对数似然函数值不再有明显变化。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-03%20下午11.06.02.png">
+
+</div>
 
       
     </div>
@@ -336,6 +429,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
       
 
       
@@ -407,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,7 +534,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">8</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
               
@@ -436,8 +546,8 @@
                 
                 <div class="site-state-item site-state-tags">
                   
-                    <span class="site-state-item-count">7</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">Tags</span>
                   
                 </div>
               
@@ -462,6 +572,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#em算法"><span class="nav-number">1.</span> <span class="nav-text">EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#收敛性"><span class="nav-number">1.2.</span> <span class="nav-text">3. 收敛性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#em算法在高斯混合模型学习中的应用"><span class="nav-number">1.3.</span> <span class="nav-text">4. EM算法在高斯混合模型学习中的应用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -490,7 +616,7 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
