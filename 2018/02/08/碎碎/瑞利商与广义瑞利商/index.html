@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="瑞利商与广义瑞利商 1. 瑞利商 瑞利商（Rayleigh quotient）是指函数形式如下的函数\(R(A,\pmb{x})\)： \[R(A,\pmb{x}) = \frac{\pmb{x}^HA \pmb{x}}{\pmb{x}^H\pmb{x}}\] 其中\(\pmb{x}\)为非零向量，而\(A\)为\(n \times n\)的Hermitan矩阵。 Hermitan矩阵：满足共轭转">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:updated_time" content="2018-02-08T13:44:04.208Z">
+<meta property="og:updated_time" content="2018-02-08T13:46:26.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="瑞利商与广义瑞利商">
 <meta name="twitter:description" content="瑞利商与广义瑞利商 1. 瑞利商 瑞利商（Rayleigh quotient）是指函数形式如下的函数\(R(A,\pmb{x})\)： \[R(A,\pmb{x}) = \frac{\pmb{x}^HA \pmb{x}}{\pmb{x}^H\pmb{x}}\] 其中\(\pmb{x}\)为非零向量，而\(A\)为\(n \times n\)的Hermitan矩阵。 Hermitan矩阵：满足共轭转">
@@ -209,13 +209,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
         </li>
       
 
@@ -286,7 +286,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-08T21:41:51+08:00">2018-02-08</time>
             
@@ -329,8 +329,9 @@
 <h2 id="瑞利商">1. 瑞利商</h2>
 <p>瑞利商（Rayleigh quotient）是指函数形式如下的函数<span class="math inline">\(R(A,\pmb{x})\)</span>： <span class="math display">\[R(A,\pmb{x}) = \frac{\pmb{x}^HA \pmb{x}}{\pmb{x}^H\pmb{x}}\]</span> 其中<span class="math inline">\(\pmb{x}\)</span>为非零向量，而<span class="math inline">\(A\)</span>为<span class="math inline">\(n \times n\)</span>的Hermitan矩阵。<br>
 Hermitan矩阵：满足共轭转置矩阵和自身相等的矩阵，即<span class="math inline">\(A^H = A\)</span>。若果矩阵<span class="math inline">\(A\)</span>是实矩阵，则满足<span class="math inline">\(A^T = A\)</span>的矩阵即为Hermitan矩阵。<br>
-瑞利商<span class="math inline">\(R(A,\pmb{x})\)</span>一个非常重要的性质：它的最大值等于矩阵<span class="math inline">\(A\)</span>最大的特征值，而最小值等于矩阵<span class="math inline">\(A\)</span>最小的特征值，也就是满足 <span class="math display">\[\lambda_{min} \leq \frac{\pmb{x}^HA \pmb{x}}{\pmb{x}^H\pmb{x}} \leq \lambda_{max}\]</span> 当向量<span class="math inline">\(\pmb{x}\)</span>是标准正交基时，即满足<span class="math inline">\(\pmb{x}^H \pmb{x} = 1\)</span>时，瑞利商退化为：<span class="math inline">\(R(A,\pmb{x}) = \pmb{x}^HA \pmb{x}\)</span>，这个形式在谱聚类和PCA中都有出现。<br>
-## 2. 广义瑞利商 广义瑞利商(generalized Rayleigh quotient)是指函数形式如下的函数<span class="math inline">\(R(A,B,\pmb{x})\)</span>： <span class="math display">\[R(A,B,\pmb{x}) = \frac{\pmb{x}^HA \pmb{x}}{\pmb{x}^HB\pmb{x}}\]</span> 其中<span class="math inline">\(\pmb{x}\)</span>为非零向量，而<span class="math inline">\(A,B\)</span>为<span class="math inline">\(n \times n\)</span>的Hermitan矩阵，并且<span class="math inline">\(B\)</span>为正定矩阵。<br>
+瑞利商<span class="math inline">\(R(A,\pmb{x})\)</span>一个非常重要的性质：它的最大值等于矩阵<span class="math inline">\(A\)</span>最大的特征值，而最小值等于矩阵<span class="math inline">\(A\)</span>最小的特征值，也就是满足 <span class="math display">\[\lambda_{min} \leq \frac{\pmb{x}^HA \pmb{x}}{\pmb{x}^H\pmb{x}} \leq \lambda_{max}\]</span> 当向量<span class="math inline">\(\pmb{x}\)</span>是标准正交基时，即满足<span class="math inline">\(\pmb{x}^H \pmb{x} = 1\)</span>时，瑞利商退化为：<span class="math inline">\(R(A,\pmb{x}) = \pmb{x}^HA \pmb{x}\)</span>，这个形式在谱聚类和PCA中都有出现。</p>
+<h2 id="广义瑞利商">2. 广义瑞利商</h2>
+<p>广义瑞利商(generalized Rayleigh quotient)是指函数形式如下的函数<span class="math inline">\(R(A,B,\pmb{x})\)</span>： <span class="math display">\[R(A,B,\pmb{x}) = \frac{\pmb{x}^HA \pmb{x}}{\pmb{x}^HB\pmb{x}}\]</span> 其中<span class="math inline">\(\pmb{x}\)</span>为非零向量，而<span class="math inline">\(A,B\)</span>为<span class="math inline">\(n \times n\)</span>的Hermitan矩阵，并且<span class="math inline">\(B\)</span>为正定矩阵。<br>
 通过标准化将其转化为瑞利商的形式，令<span class="math inline">\(\pmb{x} = B^{-1/2} \pmb{x}&#39;\)</span>，则分母转化为： <span class="math display">\[\pmb{x}^HB\pmb{x} = \pmb{x}&#39;^{H} (B^{-1/2})^H B B^{-1/2} \pmb{x}&#39; = \pmb{x}&#39;^H \pmb{x}&#39;\]</span> 分子转化为： <span class="math display">\[\pmb{x}^H A \pmb{x} = \pmb{x}&#39;^H B^{-1/2} A B^{-1/2} \pmb{x}&#39;\]</span> 此时<span class="math inline">\(R(A,B,\pmb{x})\)</span>转化为<span class="math inline">\(R(A,B,\pmb{x}&#39;)\)</span>： <span class="math display">\[R(A,B,\pmb{x}&#39;) = \frac{\pmb{x}&#39;^H B^{-1/2} A B^{-1/2} \pmb{x}&#39;}{\pmb{x}&#39;^H \pmb{x}&#39;}\]</span> 根据瑞利商的性质，<span class="math inline">\(R(A,B,\pmb{x})\)</span>的最大值为矩阵<span class="math inline">\(B^{-1/2} A B^{-1/2}\)</span>的最大特征值，或者说矩阵<span class="math inline">\(B^{-1} A\)</span>的最大特征值，而最小值为矩阵<span class="math inline">\(B^{-1} A\)</span>的最小特征值。</p>
 
       
@@ -425,10 +426,10 @@ Hermitan矩阵：满足共轭转置矩阵和自身相等的矩阵，即<span cla
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -449,7 +450,7 @@ Hermitan矩阵：满足共轭转置矩阵和自身相等的矩阵，即<span cla
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">11</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
               
@@ -462,7 +463,7 @@ Hermitan矩阵：满足共轭转置矩阵和自身相等的矩阵，即<span cla
                 <div class="site-state-item site-state-tags">
                   
                     <span class="site-state-item-count">9</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">Tags</span>
                   
                 </div>
               
@@ -497,7 +498,7 @@ Hermitan矩阵：满足共轭转置矩阵和自身相等的矩阵，即<span cla
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#瑞利商与广义瑞利商"><span class="nav-number">1.</span> <span class="nav-text">瑞利商与广义瑞利商</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#瑞利商"><span class="nav-number">1.1.</span> <span class="nav-text">1. 瑞利商</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#瑞利商与广义瑞利商"><span class="nav-number">1.</span> <span class="nav-text">瑞利商与广义瑞利商</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#瑞利商"><span class="nav-number">1.1.</span> <span class="nav-text">1. 瑞利商</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#广义瑞利商"><span class="nav-number">1.2.</span> <span class="nav-text">2. 广义瑞利商</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -531,7 +532,7 @@ Hermitan矩阵：满足共轭转置矩阵和自身相等的矩阵，即<span cla
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
