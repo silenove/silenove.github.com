@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="机器学习,贝叶斯,概率图," />
+
+
+<meta name="description" content="贝叶斯网 贝叶斯网（Bayesian network）也称作“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，CPT）来描述属性之间的联合概率分布。（条件概率表用于属性为离散型的数据，对于连续属性，条件概率表可推广为条件概率密度函">
+<meta name="keywords" content="机器学习,贝叶斯,概率图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贝叶斯网">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/贝叶斯网/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="贝叶斯网 贝叶斯网（Bayesian network）也称作“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，CPT）来描述属性之间的联合概率分布。（条件概率表用于属性为离散型的数据，对于连续属性，条件概率表可推广为条件概率密度函">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.59.39.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午10.05.28.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-21%20下午9.56.33.png">
+<meta property="og:updated_time" content="2018-02-21T14:09:25.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贝叶斯网">
+<meta name="twitter:description" content="贝叶斯网 贝叶斯网（Bayesian network）也称作“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，CPT）来描述属性之间的联合概率分布。（条件概率表用于属性为离散型的数据，对于连续属性，条件概率表可推广为条件概率密度函">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.59.39.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/21/贝叶斯网/"/>
+
+
+  <title>贝叶斯网 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/贝叶斯网/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">贝叶斯网</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-21T10:38:10+08:00">2018-02-21</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="贝叶斯网">贝叶斯网</h1>
+<p>贝叶斯网（Bayesian network）也称作“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，CPT）来描述属性之间的联合概率分布。（条件概率表用于属性为离散型的数据，对于连续属性，条件概率表可推广为条件概率密度函数）<br>
+一个贝叶斯网<span class="math inline">\(B\)</span>由结构<span class="math inline">\(G\)</span>和参数<span class="math inline">\(\Theta\)</span>两部分构成，即<span class="math inline">\(B = &lt;G, \Theta&gt;\)</span>。网络结构<span class="math inline">\(G\)</span>是一个有向无环图，其中每个节点对应一个属性，若两个属性有直接依赖关系，则它们由一条边连接起来；参数<span class="math inline">\(\Theta\)</span>定量描述这种依赖关系，假设属性<span class="math inline">\(x_i\)</span>在<span class="math inline">\(G\)</span>中的父节点集为<span class="math inline">\(\pi_i\)</span>，则<span class="math inline">\(\Theta\)</span>包含了每个属性的条件概率表<span class="math inline">\(\theta_{x_i|\pi_i} = P_B(x_i,|\pi_i)\)</span>。</p>
+<h2 id="结构">1. 结构</h2>
+<p>贝叶斯网结构有效地表达了属性间的条件独立性。给定父节点集，贝叶斯网假设每个属性与它的非后裔属性独立，于是<span class="math inline">\(B = &lt;G, \Theta&gt;\)</span>将属性<span class="math inline">\(x_1,x_2,\cdots,x_d\)</span>的联合概率分布定义为 <span class="math display">\[P_B(x_1,x_2,\cdots,x_d) = \prod_{i=1}^d P_B(x_i|\pi_i) = \prod_{i=1}^d \theta_{x_i|\pi_i}\]</span></p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.59.39.png">
+
+</div>
+<p>以上图为例，联合概率分布定义为 <span class="math display">\[P(x_1,x_2,x_3,x_4,x_5) = P(x_1)P(x_2)P(x_3|x_1)P(x_4|x_1,x_2)P(x_5|x_2)\]</span> 可以看出，<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_4\)</span>在给定<span class="math inline">\(x_1\)</span>的取值时独立，<span class="math inline">\(x_4\)</span>和<span class="math inline">\(x_5\)</span>在给定<span class="math inline">\(x_2\)</span>的取值时独立，分别记为<span class="math inline">\(x_3 \perp x_4 | x_1\)</span>和<span class="math inline">\(x_4 \perp x_5 | x_2\)</span>。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午10.05.28.png">
+
+</div>
+<ul>
+<li>在“同父”（common parent）结构中，给定父节点<span class="math inline">\(x_1\)</span>的取值，则<span class="math inline">\(x_3\)</span>与<span class="math inline">\(x_4\)</span>条件独立。</li>
+<li>在“顺序”结构中，给定<span class="math inline">\(x\)</span>的值，则<span class="math inline">\(y\)</span>与<span class="math inline">\(z\)</span>条件独立。</li>
+<li>V型结构也称作“冲撞”结构，给定子节点<span class="math inline">\(x_4\)</span>的取值，则<span class="math inline">\(x_1\)</span>与<span class="math inline">\(x_2\)</span>必不独立；若<span class="math inline">\(x_4\)</span>的取值完全未知，则V型结构下<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_2\)</span>却是相互独立的。</li>
+</ul>
+<p>验证： <span class="math display">\[\begin{align}
+    P(x_1,x_2) &amp;= \sum_{x_4} P(x_1,x_2,x_4) \nonumber \\
+    &amp;= \sum_{x_4} P(x_4|x_1,x_2)P(x_1)P(x_2) \nonumber \\
+    &amp;= P(x_1)P(x_2) \nonumber
+\end{align}\]</span></p>
+<p>这样的独立性称为“边际独立性”（marginal independence）。<br>
+在同父结构中，如果<span class="math inline">\(x_1\)</span>的取值未知，则<span class="math inline">\(x_3\)</span>和<span class="math inline">\(x_4\)</span>就不独立；在顺序结构中，如果<span class="math inline">\(x\)</span>未知，则<span class="math inline">\(y\)</span>和<span class="math inline">\(z\)</span>不独立。<br>
+为了分析有向图中变量间的条件独立性，可使用“有向分离”（D-separation），先把一个有向图转变为一个无向图：</p>
+<ul>
+<li>找出有向图中的所有V型结构，在V型结构的两个父节点之间加一条无向边；</li>
+<li>将所有的有向边改为无向边。</li>
+</ul>
+<p>由此产生的无向图称为“道德图”（moral graph），令父节点相连的过程称为“道德化”（moralization）。<br>
+基于道德图能直观、迅速地找到变量间的条件独立性。假设道德图中有变量<span class="math inline">\(x,y\)</span>和变量集合<span class="math inline">\(\pmb{z} = \{z_i\}\)</span>，如果把变量集合<span class="math inline">\(\pmb{z}\)</span>去除后，<span class="math inline">\(x\)</span>和<span class="math inline">\(y\)</span>属于两个连通分支，则称变量<span class="math inline">\(x\)</span>和<span class="math inline">\(y\)</span>被<span class="math inline">\(\pmb{z}\)</span>有向分离，<span class="math inline">\(x \perp y | \pmb{z}\)</span>成立。</p>
+<h2 id="学习">2. 学习</h2>
+<p>若果网络结构已知，即属性间的依赖关系已知，则贝叶斯网的学习过程相对简单，只需通过对训练样本“计数”，估计出每个节点的条件概率表即可。但在现实应用中往往不知晓网络结构，于是，贝叶斯网学习的首要任务就是根据训练数据集找出结构最“恰当”的贝叶斯网，“评分搜索”是求解这一问题的常用方法。<br>
+<strong>评分搜索</strong>：先定义一个评分函数，以此来评估贝叶斯网与训练数据的契合程度，然后基于这个评分函数来寻找结构最优的贝叶斯网。显然，评分函数引入了获得怎样的贝叶斯网的归纳偏好。<br>
+常用评分函数通常基于信息论准则，此类准则将学习问题看做一个数据压缩问题，学习的目标是找到一个能以最短编码长度描述数据的模型，此时编码的长度包括了描述模型自身所需的字节长度和使用该模型描述数据所需的字节长度。对于贝叶斯网学习而言，模型就是一个贝叶斯网。同时，每个贝叶斯网描述了一个在训练数据上的概率分布，自有一套编码机制能使那些经常出现的样本有更短的编码。我们应选择综合编码长度（包括描述网络和编码数据）最短的贝叶斯网，这就是“最小描述长度”（Minimal Description Length，MDL）准则。<br>
+给定训练集<span class="math inline">\(D = \{\pmb{x}_1, \pmb{x}_2, \cdots, \pmb{x}_m\}\)</span>，贝叶斯网<span class="math inline">\(B = &lt;G, \Theta&gt;\)</span>在<span class="math inline">\(D\)</span>上的评分函数可写为 <span class="math display">\[s(B|D) = f(\theta)|B| - LL(B|D)\]</span> 其中，<span class="math inline">\(|B|\)</span>是贝叶斯网的参数个数；<span class="math inline">\(f(\theta)\)</span>表示描述每个参数<span class="math inline">\(\theta\)</span>所需的字节数；而 <span class="math display">\[LL(B|D) = \sum_{i=1}^m \log P_B(\pmb{x}_i)\]</span> 是贝叶斯网<span class="math inline">\(B\)</span>的对数似然。显然，公式中的第一项是计算编码贝叶斯网<span class="math inline">\(B\)</span>所需的字节数，第二项是计算<span class="math inline">\(B\)</span>所对应的概率分布<span class="math inline">\(P_B\)</span>对<span class="math inline">\(D\)</span>描述得有多好。此时，学习任务转化为优化任务，寻找一个贝叶斯网<span class="math inline">\(B\)</span>使评分函数<span class="math inline">\(s(B|D)\)</span>最小。<br>
+若<span class="math inline">\(f(\theta) = 1\)</span>，即每个参数用1个字节描述，则得到AIC（Akaike Information Criterion）评分函数： <span class="math display">\[AIC(B|D) = |B| - LL(B|D)\]</span> 若<span class="math inline">\(f(\theta) = \frac{1}{2} \log m\)</span>，即每个参数用<span class="math inline">\(\frac{1}{2} \log m\)</span>字节描述，则得到BIC（Bayesian Information Criterion）评分函数： <span class="math display">\[BIC(B|D) = \frac{\log m}{2} |B| - LL(B|D)\]</span> 若<span class="math inline">\(f(\theta) = 0\)</span>，即不计算对网络进行编码的长度，则评分函数退化为负对数似然，相应的，学习任务退化为极大似然估计。<br>
+如果贝叶斯网<span class="math inline">\(B=&lt;G,\Theta&gt;\)</span>的网络结构<span class="math inline">\(G\)</span>固定，则评分函数的第一项为常数。此时，最小化<span class="math inline">\(s(B|D)\)</span>等价于对参数<span class="math inline">\(\Theta\)</span>的极大似然估计，参数<span class="math inline">\(\theta_{x_i|\pi_i}\)</span>能直接在训练数据<span class="math inline">\(D\)</span>上通过经验估计获得，即 <span class="math display">\[\theta_{x_i|\pi_i} = \hat{P}_D (x_i|\pi_i)\]</span> 其中<span class="math inline">\(\hat{P}_D(·)\)</span>是<span class="math inline">\(D\)</span>上的经验分布，所以为了最小化评分函数<span class="math inline">\(s(B|D)\)</span>，只需对网络结构进行搜索，而候选结构的最优参数可直接在训练集上得到。<br>
+然而，从所有可能的网络结构空间搜索最优贝叶斯网结构是一个NP难问题，难以快速求解。有两种常用的策略能在有限时间内求得近似解：</p>
+<ul>
+<li>贪心法：从某个网络结构出发，每次调整一条边（增加、删除、或调整方向），直到评分函数值不再降低为止；</li>
+<li>通过给网络结构施加约束来削减搜索空间，例如将网络结构限定为树形结构等。</li>
+</ul>
+<h2 id="推断">3. 推断</h2>
+<p>贝叶斯网训练好之后就能用来回答“查询”，即通过一些属性变量的观测值来推测其他属性变量的取值，这样通过已知变量观测值来推测待查询变量的过程称为“推断”，已知变量观测值称为“证据”。<br>
+最理想的是直接根据贝叶斯网定义的联合概率分布来精确计算后验概率，然而这样的“精确判断”已被证明是NP难的。当网络节点较多、链接稠密时，难以进行精确推断，此时需要“近似推断”，通过降低精度要求，在有限时间内求得近似解，在现实应用中，贝叶斯网的近似推断常使用吉布斯采样（Gibbs sampling）来完成，这是一种随机采样方法。<br>
+令<span class="math inline">\(\pmb{Q} = \{Q_1,Q_2,\cdots, Q_n\}\)</span>表示待查询变量，<span class="math inline">\(\pmb{E} = \{E_1,E_2,\cdots,E_k\}\)</span>为证据变量，已知其取值为<span class="math inline">\(\pmb{e} = \{e_1,e_2,\cdots,e_k\}\)</span>，目标是计算后验概率<span class="math inline">\(P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e})\)</span>，其中<span class="math inline">\(\pmb{q} = \{q_1,q_2,\cdots,q_n\}\)</span>是待查询变量的一组取值。以西瓜问题为例，待查询变量为<span class="math inline">\(\pmb{Q}=\{好瓜，甜度\}\)</span>，证据变量为<span class="math inline">\(\pmb{E}=\{色泽，敲声，根蒂\}\)</span>且已知其取值为<span class="math inline">\(\pmb{e}=\{青绿，浊响，蜷缩\}\)</span>，查询的目标值是<span class="math inline">\(\pmb{q}=\{是，高\}\)</span>，即这是好瓜且甜度高的概率有多大。<br>
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-21%20下午9.56.33.png"></p>
+<p>由上图可知，吉布斯采样算法先随机产生一个与证据<span class="math inline">\(\pmb{E} = \pmb{e}\)</span>一致的样本<span class="math inline">\(\pmb{q}^0\)</span>作为初始点，然后每步从当前样本出发产生下一个样本。具体来说，在第<span class="math inline">\(t\)</span>次采样中，算法先假设<span class="math inline">\(\pmb{q}^t = \pmb{q}^{t-1}\)</span>，然后对非证据变量逐个进行采样改变其取值，采样概率根据贝叶斯网<span class="math inline">\(B\)</span>和其他变量的当前取值（即<span class="math inline">\(\pmb{Z} = \pmb{z}\)</span>）计算获得。假定经过<span class="math inline">\(T\)</span>次采样得到的与<span class="math inline">\(\pmb{q}\)</span>一致的样本共有<span class="math inline">\(n_q\)</span>个，则可近似估算出后验概率 <span class="math display">\[P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e}) \simeq \frac{n_q}{T}\]</span> 实质上，吉布斯采样是在贝叶斯网所有变量的联合状态空间与证据<span class="math inline">\(\pmb{E} = \pmb{e}\)</span>一致的子空间中进行“随机漫步”。每一步仅依赖于前一步的状态，这是一个“马尔科夫链”。在一定条件下，无论从什么状态开始，马尔科夫链第<span class="math inline">\(t\)</span>步的状态分布在<span class="math inline">\(t \to \infty\)</span>时必收敛于一个平稳分布；对于吉布斯采样来说，这个分布恰好是<span class="math inline">\(P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e})\)</span>。因此，在<span class="math inline">\(T\)</span>很大时，吉布斯采样相当于根据<span class="math inline">\(P(\pmb{Q}|\pmb{E}=\pmb{e})\)</span>采样，从而保证公式收敛于<span class="math inline">\(P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e})\)</span>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/贝叶斯/" rel="tag"># 贝叶斯</a>
+          
+            <a href="/tags/概率图/" rel="tag"># 概率图</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/12/机器学习/贝叶斯分类器/" rel="next" title="贝叶斯分类器">
+                <i class="fa fa-chevron-left"></i> 贝叶斯分类器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯网"><span class="nav-number">1.</span> <span class="nav-text">贝叶斯网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构"><span class="nav-number">1.1.</span> <span class="nav-text">1. 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习"><span class="nav-number">1.2.</span> <span class="nav-text">2. 学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推断"><span class="nav-number">1.3.</span> <span class="nav-text">3. 推断</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

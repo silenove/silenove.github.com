@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20上午10.47.14.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20上午10.58.24.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.40.00.png">
-<meta property="og:updated_time" content="2018-02-21T02:32:33.510Z">
+<meta property="og:updated_time" content="2018-02-21T02:36:49.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贝叶斯分类器">
 <meta name="twitter:description" content="贝叶斯分类器 1. 贝叶斯决策论 贝叶斯决策论（Bayesian decision theory）是概率框架下实施决策的基本方法。对于分类任务，在所有相关概率都已知的理想情形下，贝叶斯决策论考虑如何基于这些概率和误判损失来选择最优的标记。 假设有\(N\)中可能的类别标记，即\(Y = \{c_1, c_2, \cdots, c_N\}\)，\(\lambda_{ij}\)是将一个真实标记为\(c">
@@ -395,7 +395,8 @@
     g_i(x) &amp;= \ln (p(\pmb{x}|\omega_i)p(\omega_i)) = \ln{p(\pmb{x}|\omega_i)} + \ln{p(\omega_i)} \nonumber \\
     &amp;= \frac{1}{2} (\pmb{x} - \pmb{\mu}_i)^T \Sigma_i^{-1} (\pmb{x} - \pmb{\mu}_i) - \frac{d}{2} \ln{2 \pi} - \frac{1}{2} \ln{|\Sigma_i|} + \ln{p(\omega_i)} \nonumber 
 \end{align}\]</span> 决策函数为<span class="math inline">\(g_{ij} = g_i(\pmb{x}) - g_j(\pmb{x})\)</span>，其中<span class="math inline">\(g_{ij} = 0\)</span>为决策界，如果<span class="math inline">\(g_{ij}(\pmb{x}) \geq 0\)</span>则归为<span class="math inline">\(i\)</span>类，否则为<span class="math inline">\(j\)</span>类。<br>
-根据不同的高斯参数讨论： （1）<span class="math inline">\(\Sigma_i = \sigma^2 I\)</span> <span class="math display">\[\begin{align}
+根据不同的高斯参数讨论：</p>
+<p>（1）<span class="math inline">\(\Sigma_i = \sigma^2 I\)</span> <span class="math display">\[\begin{align}
     g_i(x) &amp;= \frac{1}{2} (\pmb{x} - \pmb{\mu})^T \Sigma_i^{-1} (\pmb{x} - \pmb{\mu}) + \ln{p(\omega_i)} + c_i \nonumber \\ 
     &amp;= - \frac{||\pmb{x} - \pmb{\mu}_i||^2}{2 \sigma^2} + \ln{p(\omega_i)}  \nonumber \\
     &amp;= - \frac{1}{2 \sigma^2} [\pmb{x}^T \pmb{x} - 2 \pmb{\mu}_i^T \pmb{x} + \pmb{\mu}_i^T \pmb{\mu}_i] + \ln{p(\omega_i)}  \nonumber
@@ -478,6 +479,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/02/21/贝叶斯网/" rel="prev" title="贝叶斯网">
+                贝叶斯网 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -550,7 +555,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -563,7 +568,7 @@
                 
                 <div class="site-state-item site-state-tags">
                   
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
