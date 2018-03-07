@@ -100,33 +100,34 @@
 
 
   
-  <meta name="keywords" content="碎碎," />
+  <meta name="keywords" content="机器学习," />
 
 
-<meta name="description" content="Jensen不等式 凸函数（convex function）：设\(f\)是定义域为实数的函数，如果对于所有的实数\(x\)，\(f(x)\)的二次倒数大于0，那么\(f\)是凸函数。 凸函数性质： \[ \lambda f(x_1) + (1 - \lambda) f(x_2) \geq f(\lambda x_1 + (1 - \lambda)x_2)\]   -c500  Jensen不等式">
-<meta name="keywords" content="碎碎">
+<meta name="description" content="偏差与方差 1. 概念 偏差：偏差（Bias）度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力； 方差：方差（Variance）度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的影响； 噪声：噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了问题本身的难度。 当然，只有一个模型是不能得到预测值的平均情况和变化情况的。通常">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jensen不等式">
-<meta property="og:url" content="http://yoursite.com/2018/01/31/碎碎/Jensen不等式/index.html">
+<meta property="og:title" content="偏差与方差">
+<meta property="og:url" content="http://yoursite.com/2018/03/06/机器学习/偏差与方差/index.html">
 <meta property="og:site_name" content="silenove blogs">
-<meta property="og:description" content="Jensen不等式 凸函数（convex function）：设\(f\)是定义域为实数的函数，如果对于所有的实数\(x\)，\(f(x)\)的二次倒数大于0，那么\(f\)是凸函数。 凸函数性质： \[ \lambda f(x_1) + (1 - \lambda) f(x_2) \geq f(\lambda x_1 + (1 - \lambda)x_2)\]   -c500  Jensen不等式">
+<meta property="og:description" content="偏差与方差 1. 概念 偏差：偏差（Bias）度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力； 方差：方差（Variance）度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的影响； 噪声：噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了问题本身的难度。 当然，只有一个模型是不能得到预测值的平均情况和变化情况的。通常">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-01-31%20下午2.33.14.png">
-<meta property="og:updated_time" content="2018-02-21T14:18:41.010Z">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-05%20下午8.23.25.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-06%20下午6.28.08.png">
+<meta property="og:updated_time" content="2018-03-06T10:41:04.342Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jensen不等式">
-<meta name="twitter:description" content="Jensen不等式 凸函数（convex function）：设\(f\)是定义域为实数的函数，如果对于所有的实数\(x\)，\(f(x)\)的二次倒数大于0，那么\(f\)是凸函数。 凸函数性质： \[ \lambda f(x_1) + (1 - \lambda) f(x_2) \geq f(\lambda x_1 + (1 - \lambda)x_2)\]   -c500  Jensen不等式">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-01-31%20下午2.33.14.png">
+<meta name="twitter:title" content="偏差与方差">
+<meta name="twitter:description" content="偏差与方差 1. 概念 偏差：偏差（Bias）度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力； 方差：方差（Variance）度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的影响； 噪声：噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了问题本身的难度。 当然，只有一个模型是不能得到预测值的平均情况和变化情况的。通常">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-05%20下午8.23.25.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/31/碎碎/Jensen不等式/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/06/机器学习/偏差与方差/"/>
 
 
-  <title>Jensen不等式 | silenove blogs</title>
+  <title>偏差与方差 | silenove blogs</title>
   
 
 
@@ -261,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/31/碎碎/Jensen不等式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/机器学习/偏差与方差/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="silen Zhou">
@@ -278,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Jensen不等式</h1>
+          <h1 class="post-title" itemprop="name headline">偏差与方差</h1>
         
 
         <div class="post-meta">
@@ -290,7 +291,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-31T15:14:45+08:00">2018-01-31</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-06T18:40:18+08:00">2018-03-06</time>
             
 
             
@@ -327,28 +328,42 @@
       
 
       
-        <h1 id="jensen不等式">Jensen不等式</h1>
-<p><strong>凸函数（convex function）</strong>：设<span class="math inline">\(f\)</span>是定义域为实数的函数，如果对于所有的实数<span class="math inline">\(x\)</span>，<span class="math inline">\(f(x)\)</span>的二次倒数大于0，那么<span class="math inline">\(f\)</span>是凸函数。<br>
-凸函数性质： <span class="math display">\[ \lambda f(x_1) + (1 - \lambda) f(x_2) \geq f(\lambda x_1 + (1 - \lambda)x_2)\]</span></p>
+        <h1 id="偏差与方差">偏差与方差</h1>
+<h2 id="概念">1. 概念</h2>
+<p><strong>偏差</strong>：偏差（Bias）度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力；</p>
+<p><strong>方差</strong>：方差（Variance）度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的影响；</p>
+<p><strong>噪声</strong>：噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了问题本身的难度。</p>
+<p>当然，只有一个模型是不能得到预测值的平均情况和变化情况的。通常测量模型的偏差和方差是通过K折交叉验证得到的。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-01-31%20下午2.33.14.png" alt="-c500">
-<p class="caption">-c500</p>
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-05%20下午8.23.25.png">
+
 </div>
-<p><strong>Jensen不等式</strong>：如果<span class="math inline">\(f\)</span>是一个凸函数，<span class="math inline">\(X\)</span>是随机变量，则： <span class="math display">\[E[f(x)] \geq f(E[X])\]</span> 也可写成： <span class="math display">\[ \sum_{i=1}^N p_i f(x_i) \geq f( \sum_{i=1}^N p_i x_i )\]</span> 其中<span class="math inline">\(\sum_{i=1}^N p_i = 1\)</span>。<br>
-当且仅当<span class="math inline">\(X\)</span>为常量时，上式取等号。</p>
-<p>利用数学归纳法证明Jensen不等式：<br>
-（1）<span class="math inline">\(n=1,2\)</span>时，Jensen不等式显然成立；<br>
-（2）假设<span class="math inline">\(n=k\)</span>时，Jensen不等式成立，即： <span class="math display">\[ \sum_{i=1}^N p_i f(x_i) \geq f( \sum_{i=1}^N p_i x_i )\]</span> 其中<span class="math inline">\(\sum_{i=1}^N p_i = 1\)</span>；<br>
-那么当<span class="math inline">\(n=k+1\)</span>时： <span class="math display">\[\begin{align}
-        \sum_{i=1}^{k+1} p_i f(x_i) &amp;= p_{k+1} f(x_{k+1}) + \sum_{i=1}^k p_i x_i \nonumber \\
-        &amp;= p_{k+1} f(x_{k+1}) + Z_k \sum_{i=1}^k \frac{p_i}{Z_k} f(x_i), &amp; Z_k = \sum_{i=1}^k p_i \nonumber \\
-        &amp; \geq p_{k+1} f(x_{k+1}) + Z_kf(\sum_{i=1}^k \frac{p_i}{Z_k} x_i), &amp; Z_k + p_{k+1} = \sum_{i=1}^{k+1} \nonumber \\
-        &amp; \geq f(p_{k+1} x_{k+1} + Z_k \sum_{i=1}^k \frac{p_i}{Z_k} x_i) \nonumber \\
-        &amp;= f(p_{k+1} x_{k+1} + \sum_{i=1}^k p_i x_i) \nonumber \\
-        &amp;= f(\sum_{i=1}^{k+1} p_i x_i)  \nonumber 
-        \end{align}\]</span> 即 <span class="math display">\[ \sum_{i=1}^{k+1} p_i f(x_i) \geq f(\sum_{i=1}^{k+1} p_i x_i)\]</span> 其中 <span class="math inline">\(\sum_{i=1}^{k+1} p_i = 1\)</span>。<br>
-说明<span class="math inline">\(n=k+1\)</span>时，Jensen不等式成立。<br>
-综合（1）和（2），可知Jensen不等式成立。</p>
+<h2 id="偏差-方差分解">2. 偏差-方差分解</h2>
+<p>偏差-方差分解（bias-variance decomposition）是解释学习算法泛化性能的一种重要工具。<br>
+偏差-方差分解试图对学习算法的期望泛化错误率进行拆解。算法在不同训练集上学得的结果很可能不同，即便这些训练集是来自同一个分布。<br>
+对测试样本<span class="math inline">\(\pmb{x}\)</span>，令<span class="math inline">\(y_D\)</span>为<span class="math inline">\(\pmb{x}\)</span>在数据集中的标记，<span class="math inline">\(y\)</span>为<span class="math inline">\(\pmb{x}\)</span>的真实标记，<span class="math inline">\(f(\pmb{x};D)\)</span>为训练集<span class="math inline">\(D\)</span>上学得模型<span class="math inline">\(f\)</span>在<span class="math inline">\(\pmb{x}\)</span>上的预测输出。以回归任务为例，学习算法的期望预测为 <span class="math display">\[\bar{f}(\pmb{x}) = E_D [f(\pmb{x};D)]\]</span> 使用样本数相同的不同训练集产生的方差为 <span class="math display">\[var(\pmb{x}) = E_D[(f(\pmb{x};D) - \bar{f}(\pmb{x}))^2]\]</span> 噪声为 <span class="math display">\[\varepsilon^2 = E_D[(y_D - y)^2]\]</span> 期望输出与真实标记的差别称为偏差，即 <span class="math display">\[bias^2 (\pmb{x}) = (\bar{f} (\pmb{x}) - y)^2\]</span> 为了便于讨论，假定噪声期望为0，即<span class="math inline">\(E_D[y_D - y] = 0\)</span>，通过简单的多项式展开合并，可对算法的期望泛化误差进行分解： <span class="math display">\[\begin{align}
+    E(f;D) &amp;= E_D[(f(\pmb{x};D) - y_D)^2]  \\
+    &amp;= E_D[(f(\pmb{x};D) - \bar{f}(\pmb{x}) + \bar{f}(\pmb{x}) - y_D)^2] \\
+    &amp;= E_D[(f(\pmb{x};D) - \bar{f}(\pmb{x}))^2] + E_D[(\bar{f}(\pmb{x}) - y_D)^2] \nonumber \\
+    &amp; \quad + E_D[2 (f(\pmb{x};D) - \bar{f}(\pmb{x})) (\bar{f}(\pmb{x}) - y_D)]  \\
+    &amp;= E_D[(f(\pmb{x};D) - \bar{f}(\pmb{x}))^2] + E_D[(\bar{f}(\pmb{x}) - y_D)^2] \\
+    &amp;= E_D[(f(\pmb{x};D) - \bar{f}(\pmb{x}))^2] + E_D[(\bar{f} (\pmb{x}) -y + y - y_D)^2] \\
+    &amp;= E_D[(f(\pmb{x};D) - \bar{f}(\pmb{x}))^2] + E_D[(\bar{f}(\pmb{x})-y)^2] \nonumber \\
+    &amp; \quad + E_D[(y-y_D)^2] + 2E_D[(\bar{f}(\pmb{x}) - y)(y-y_D)] \\
+    &amp;= (\bar{f}(\pmb{x}) - y)^2 + E_D[(f(\pmb{x};D) - \bar{f}(\pmb{x}))^2] + E_D[(y_D - y)^2]
+\end{align}\]</span> 式（3）中根据<span class="math inline">\(\bar{f}(\pmb{x}) = E_D [f(\pmb{x};D)]\)</span>消去<span class="math inline">\(E_D[2 (f(\pmb{x};D) - \bar{f}(\pmb{x})) (\bar{f}(\pmb{x}) - y_D)]\)</span>，得到式（4）。<br>
+于是 <span class="math display">\[E(f;D) = bias^2(\pmb{x}) + var(\pmb{x}) + \varepsilon^2\]</span> 泛化误差可分解为偏差、方差和噪声之和。<br>
+偏差-方差分解说明，泛化性能是由学习算法的能力、数据的充分性以及学习任务本身的难度所共同决定的。给定学习任务，为了取得好的泛化性能，则需使偏差较小，即能够充分拟合数据，并且是方差较小，即使得数据扰动产生的影响小。<br>
+一般来说，偏差与方差是有冲突的，这成为偏差-方差窘境（bias-variance dilemma）。假定我们可以控制学习算法的训练程度：</p>
+<ul>
+<li>训练不足时，学习器的拟合能力不够强，训练数据的扰动不足以使学习器产生显著变化，此时偏差主导了泛化错误率；</li>
+<li>随着训练程度的加深，学习器的拟合能力逐渐增强，训练数据产生的扰动渐渐能被学习器学到，方差逐渐主导了泛化错误率；</li>
+<li>训练程度充足后，学习器的拟合能力已非常强，训练数据发生的轻微扰动都会导致学习器发生显著变化，若训练数据自身的、非全局的特性被学习器学到了，则将发生过拟合。</li>
+</ul>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-06%20下午6.28.08.png">
+
+</div>
 
       
     </div>
@@ -366,7 +381,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/碎碎/" rel="tag"># 碎碎</a>
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
           
         </div>
       
@@ -379,8 +394,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/29/机器学习/EM算法/" rel="next" title="EM算法">
-                <i class="fa fa-chevron-left"></i> EM算法
+              <a href="/2018/03/05/机器学习/SMO-序列最小最优化算法/" rel="next" title="SMO-序列最小最优化算法">
+                <i class="fa fa-chevron-left"></i> SMO-序列最小最优化算法
               </a>
             
           </div>
@@ -389,8 +404,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/31/碎碎/MacOS知识点-资源路径/" rel="prev" title="MacOS知识点--资源路径">
-                MacOS知识点--资源路径 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/07/机器学习/性能度量/" rel="prev" title="性能度量">
+                性能度量 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -514,7 +529,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jensen不等式"><span class="nav-number">1.</span> <span class="nav-text">Jensen不等式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#偏差与方差"><span class="nav-number">1.</span> <span class="nav-text">偏差与方差</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏差-方差分解"><span class="nav-number">1.2.</span> <span class="nav-text">2. 偏差-方差分解</span></a></li></ol></li></ol></div>
             
 
           </div>
