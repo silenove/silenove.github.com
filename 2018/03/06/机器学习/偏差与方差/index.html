@@ -113,7 +113,7 @@
 <meta property="og:locale" content="zh-EN">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-05%20下午8.23.25.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-06%20下午6.28.08.png">
-<meta property="og:updated_time" content="2018-03-06T10:41:04.342Z">
+<meta property="og:updated_time" content="2018-03-07T03:15:45.325Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="偏差与方差">
 <meta name="twitter:description" content="偏差与方差 1. 概念 偏差：偏差（Bias）度量了学习算法的期望预测与真实结果的偏离程度，即刻画了学习算法本身的拟合能力； 方差：方差（Variance）度量了同样大小的训练集的变动所导致的学习性能的变化，即刻画了数据扰动所造成的影响； 噪声：噪声则表达了在当前任务上任何学习算法所能达到的期望泛化误差的下界，即刻画了问题本身的难度。 当然，只有一个模型是不能得到预测值的平均情况和变化情况的。通常">
@@ -212,13 +212,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
         </li>
       
 
@@ -289,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-06T18:40:18+08:00">2018-03-06</time>
             
@@ -364,6 +364,21 @@
 <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-06%20下午6.28.08.png">
 
 </div>
+<h2 id="解决方案">3. 解决方案</h2>
+<p>一般来说，偏差高是欠拟合的表现，方差高是过拟合的表现，模型的泛化误差是偏差和方差的折中。</p>
+<p>过拟合解决方案：</p>
+<ul>
+<li>数据监测：重新梳理收集的数据，检查是否样本数量过少，样本信息不够全面，某一类特质的样本数过多；</li>
+<li>增加数据集：在数据上增加一些随机噪声，从源头上采集更多数据，重采样等多种方式；</li>
+<li>正则化方法：通过约束参数的范数使其不要过大，例如L1范数、L2范数；</li>
+<li>Dropout：神经网络中“删除”部分隐层神经元。</li>
+</ul>
+<p>欠拟合解决方案：</p>
+<ul>
+<li>减少正则化：通过减少正则化的损失函数避免欠拟合发生；</li>
+<li>添加数据量和特征维度：用于模型学习的数据规模不够大导致模型训练不充分，模型复杂度不够；各个维度数量收集的不够或者维度信息中大部分不具有区分样本的特质。方法是收集更多的特征维度，或者增加采样信息等方式来扩充数据；</li>
+<li>增加算法的复杂度：很多训练样本可能不是线性可分的，如果用线性方法可能无法达到理想的拟合效果，这时需要引入分线性方法，如核函数等增加模型复杂度。</li>
+</ul>
 
       
     </div>
@@ -457,10 +472,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -480,8 +495,8 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
               
@@ -493,8 +508,8 @@
                 
                 <div class="site-state-item site-state-tags">
                   
-                    <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">Tags</span>
                   
                 </div>
               
@@ -529,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#偏差与方差"><span class="nav-number">1.</span> <span class="nav-text">偏差与方差</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏差-方差分解"><span class="nav-number">1.2.</span> <span class="nav-text">2. 偏差-方差分解</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#偏差与方差"><span class="nav-number">1.</span> <span class="nav-text">偏差与方差</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#偏差-方差分解"><span class="nav-number">1.2.</span> <span class="nav-text">2. 偏差-方差分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">1.3.</span> <span class="nav-text">3. 解决方案</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -563,7 +578,7 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 

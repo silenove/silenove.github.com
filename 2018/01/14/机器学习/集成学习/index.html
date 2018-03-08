@@ -100,17 +100,24 @@
 
 
   
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
+<meta name="description" content="集成学习 1. 概述 集成学习（ensemble learning）是使用一系列的学习器进行学习，并使用某种规则把各个学习结果进行整合从而获得比单个学习器效果更好的一种机器学习方法。 集成学习主要有两个问题：  如何得到若干个个体学习器； 如何选择一种结合策略，将这些弱学习器集成强学习器。  个体学习器有两种选择：一种是所有个体学习器是一个种类的，或者说是同质的，比如都是决策树或者神经网络；另一种">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="集成学习">
 <meta property="og:url" content="http://yoursite.com/2018/01/14/机器学习/集成学习/index.html">
 <meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="集成学习 1. 概述 集成学习（ensemble learning）是使用一系列的学习器进行学习，并使用某种规则把各个学习结果进行整合从而获得比单个学习器效果更好的一种机器学习方法。 集成学习主要有两个问题：  如何得到若干个个体学习器； 如何选择一种结合策略，将这些弱学习器集成强学习器。  个体学习器有两种选择：一种是所有个体学习器是一个种类的，或者说是同质的，比如都是决策树或者神经网络；另一种">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:updated_time" content="2018-01-26T07:26:29.334Z">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午1.59.47.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午2.49.37.png">
+<meta property="og:updated_time" content="2018-03-07T07:48:06.190Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集成学习">
+<meta name="twitter:description" content="集成学习 1. 概述 集成学习（ensemble learning）是使用一系列的学习器进行学习，并使用某种规则把各个学习结果进行整合从而获得比单个学习器效果更好的一种机器学习方法。 集成学习主要有两个问题：  如何得到若干个个体学习器； 如何选择一种结合策略，将这些弱学习器集成强学习器。  个体学习器有两种选择：一种是所有个体学习器是一个种类的，或者说是同质的，比如都是决策树或者神经网络；另一种">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午1.59.47.png">
 
 
 
@@ -205,13 +212,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
         </li>
       
 
@@ -282,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-14T10:01:43+08:00">2018-01-14</time>
             
@@ -321,7 +328,94 @@
       
 
       
-        
+        <h1 id="集成学习">集成学习</h1>
+<h2 id="概述">1. 概述</h2>
+<p>集成学习（ensemble learning）是使用一系列的学习器进行学习，并使用某种规则把各个学习结果进行整合从而获得比单个学习器效果更好的一种机器学习方法。<br>
+集成学习主要有两个问题：</p>
+<ul>
+<li>如何得到若干个个体学习器；</li>
+<li>如何选择一种结合策略，将这些弱学习器集成强学习器。</li>
+</ul>
+<p>个体学习器有两种选择：一种是所有个体学习器是一个种类的，或者说是同质的，比如都是决策树或者神经网络；另一种是所有个体学习器不全是一个种类的，或者说是异质的，比如对训练集采用决策树、逻辑回归、朴素贝叶斯、SVM等，再通过结合策略来集成。<br>
+目前来说，同质的个体学习器应用最广泛，一般常说的集成方法都是同质个体学习器。而同质学习器使用最多的是CART决策树和神经网络。<br>
+此外，个体学习器之间是否存在依赖关系可以将集成方法分为两类：一类是个体学习器之间存在强依赖关系，即串行，代表算法是Boosting系列算法（AdaBoost和GBDT），另一类是个体学习器之间不存在依赖关系，即并行，代表算法是Bagging和随机森林。</p>
+<p>集成学习在各个规模的数据集上都有很好的策略：</p>
+<ul>
+<li>数据集大：划分成多个小数据集，学习多个模型进行组合；</li>
+<li>数据集小：利用Bootstrap方法进行抽样，得到多个数据集，分别训练多个模型进行组合。</li>
+</ul>
+<h2 id="bagging">2. Bagging</h2>
+<p>Bagging是Bootstrap aggregating的简写，Bootstrap也成为自举法，是一种有放回的抽样方法，目的是为了得到统计量的分布和置信区间。具体步骤如下：</p>
+<ol style="list-style-type: decimal">
+<li>采用重抽样方法（有放回抽样）从原始样本中抽取一定数量的样本；</li>
+<li>根据抽出的样本计算想要得到的统计量；</li>
+<li>重复上述做法N次（一般大于1000），得到N个统计量；</li>
+<li>根据这N个统计量，可计算出统计量的置信区间。</li>
+</ol>
+<p>Bagging基本流程：按照上述方法，可采样出N个训练样本采样集，然后基于每个采样集训练出一个基学习器，再将这些基学习器进行结合。<br>
+在对预测输出进行结合时，Bagging通常对分类任务使用简单投票法，对回归任务使用简单平均法。若分类预测时出现两个类收到同样票数的情形，则最简单的做法是随机选择一个，也可以进一步考察学习器投票的置信度来确定最终胜者。</p>
+<p>假定基学习器的计算复杂度为<span class="math inline">\(O(m)\)</span>，则Bagging的复杂度大致为<span class="math inline">\(N(O(m)+O(s))\)</span>，考虑到采样与投票/平均过程的复杂度<span class="math inline">\(O(s)\)</span>很小，而<span class="math inline">\(N\)</span>通常是一个不太大的常数，因此，训练一个Bagging集成与直接使用基学习算法训练一个学习器的复杂度同阶，这说明Bagging是一个很高效的集成学习算法。另外，与标准AdaBoost只适用于二分类任务不同，Bagging能不经修改地用于多分类、回归等任务。<br>
+自主采样过程还给Bagging带来了另一个优点：由于每个基学习器只使用了初始训练集中约63.2%的样本，剩下约36.8%的样本可用作验证集来对繁华性能进行“包外估计”（out-of-bag estimate）。<br>
+为此需要记录每个基学习器所使用的训练样本，令<span class="math inline">\(D_t\)</span>表示基学习器<span class="math inline">\(h_t\)</span>实际使用的训练样本，令<span class="math inline">\(H^{oob}(\pmb{x})\)</span>表示对样本<span class="math inline">\(\pmb{x}\)</span>的包外预测，即仅考虑那些未使用<span class="math inline">\(\pmb{x}\)</span>训练的基学习器在<span class="math inline">\(\pmb{x}\)</span>上的预测，有 <span class="math display">\[H^{oob} (\pmb{x}) = \arg \max_{y \in Y} \sum_{t=1}^T I(h_t(\pmb{x}) = y) · I(\pmb{x} \notin D_t)\]</span> 则Bagging泛化误差的包外估计为 <span class="math display">\[\epsilon^{oob} = \frac{1}{|D|} \sum_{(\pmb{x},y) \in D} I(H^{oob} \neq y)\]</span> 事实上，包外样本还有许多其他用途，例如当基学习器是决策树时，可使用包外样本来辅助剪枝，或用于估计决策树中各节点的后验概率以辅助对零训练样本节点的处理；当基学习器是神经网络时，可使用包外样本来辅助早期停止以减小过拟合风险。<br>
+从偏差-方差分解的角度看，Bagging主要关注降低方差，因此它在不剪枝决策树、神经网络等易受样本扰动的学习器上效用更为明显。</p>
+<p>随机森林是Bagging的一个特化进阶版，特化是指随机森林的弱学习器都是决策树，进阶是指随机森林在Bagging的基础上又加上特征的随机选择，其基本思想和Bagging一致。</p>
+<h2 id="boosting">3. Boosting</h2>
+<p>Boosting是一族可将弱学习器提升为强学习器的算法。它的工作机制：</p>
+<ol style="list-style-type: decimal">
+<li>先从初始训练集训练出一个基学习器，<strong>在根据基学习器的表现对训练样本的分布进行调整，使得先前基学习器做错的训练样本在后续中收到更多的关注</strong>，然后基于调整后的样本分布来训练下一个基学习器；</li>
+<li>重复上述过程，直至基学习器数目达到事先指定的值<span class="math inline">\(T\)</span>，最终将这<span class="math inline">\(T\)</span>个基学习器进行加权求和。</li>
+</ol>
+<p>Boosting算法要求基学习器能对特定的数据分布进行学习，这可通过“重赋权法”（re-weighting）实施，即在训练过程的每一轮中，根据样本分布为每个训练样本重新赋予一个权重，对无法接受带权样本的基学习方法，则可通过“重采样法”（re-sampling）处理，及在每一轮学习中，根据样本分布对训练集重新进行采样，再用重采样而得的样本集对基学习器进行训练。</p>
+<p>Boosting算法在训练的每一轮都要检查当前生成的基学习器是否满足基本条件（例如当前基分类器是否比随机猜测好），一旦条件不满足，则当前基学习器即被抛弃，且学习过程停止。在此情形下，初始设置的学习轮数<span class="math inline">\(T\)</span>也许远未达到，可能导致最终集成中只包含很少的基学习器而性能不佳。若采用“重采样法”，则可获得“重启动”机会以避免训练过程过早停止，即在抛弃不满足条件的当前基学习器之后，根据当前分布重新对训练样本进行采样，再基于新的采样结果重新训练出基学习器，从而使的学习过程可以持续到预设的<span class="math inline">\(T\)</span>轮完成。</p>
+<p>从偏差-方差分解的角度看，Boosting主要关注降低偏差，因此Boosting能基于泛化性能相当弱的学习器构建出很强的集成。</p>
+<p>Boosting系列算法中著名的有Adaboost和提升树（Boosting tree），提升树中应用最广泛的是GBDT（梯度提升树）。</p>
+<h2 id="结合策略">4. 结合策略</h2>
+<p>学习器结合可能会从三个方面带来好处：</p>
+<ol style="list-style-type: decimal">
+<li>从统计的方面来看，由于学习任务的假设空间往往很大，可能有多个假设在训练集上达到同等性能，此时若使用单学习器可能因误选而导致泛化性能不佳，结合多个学习器则会减小这一风险；</li>
+<li>从计算的方面来看，学习算法往往会陷入局部最小，有的局部极小点所对应的泛化性能可能很糟糕，而通过多次运行之后进行结合，可减低陷入糟糕局部极小点的风险；</li>
+<li>从表示的方面来看，某些学习任务的真实假设可能不在当前学习算法所考虑的假设空间中，此时若使用单学习器则肯定失效，而通过结合多个学习器，由于相应的假设空间有所扩大，有可能学得更好的近似。</li>
+</ol>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午1.59.47.png">
+
+</div>
+<h3 id="平均法">4.1. 平均法</h3>
+<p>对数值型输出<span class="math inline">\(h_i(\pmb{x}) \in \mathbf{R}\)</span>，最常见的结合策略是平均法（averaging）： （1）<strong>简单平均法</strong>： <span class="math display">\[H(\pmb{x}) = \frac{1}{T} \sum_{i=1}^T h_i(\pmb{x})\]</span> （2）<strong>加权平均法</strong>： <span class="math display">\[H(\pmb{x}) = \sum_{i=1}^T w_i h_i(\pmb{x})\]</span> 其中<span class="math inline">\(w_i\)</span>是个体学习器<span class="math inline">\(h_i\)</span>的权重，通常要求<span class="math inline">\(w_i \geq 0,\quad \sum_{i=1}^T w_i = 1\)</span>。<br>
+加权平均法的权重一般是从训练数据中学习而得，现实任务中的训练样本通常不充分或存在噪声，使得学出的权重不完全可靠。尤其对于规模比较大的集成来说，要学习的权重比较多，较容易导致过拟合。<br>
+权重一种计算方法可以通过估计出个体学习器的误差，然后令权重大小与误差大小成反比，之后归一化。<br>
+在个体学习器性能相差较大时宜使用加权平均法，而在个体学习器性能相近时宜使用简单平均法。</p>
+<h3 id="投票法">4.2. 投票法</h3>
+<p>对分类任务来说，学习器<span class="math inline">\(h_i\)</span>将从类别标记集合<span class="math inline">\(\{c_1,c_2,\cdots,c_N\}\)</span>中预测出一个标记，最常见的结合策略是使用投票法（voting）。<br>
+令<span class="math inline">\(h_i\)</span>在样本<span class="math inline">\(\pmb{x}\)</span>上的预测输出表示为一个<span class="math inline">\(N\)</span>维向量<span class="math inline">\((h_i^1(\pmb{x}); h_i^2(\pmb{x});\cdots;h_i^N(\pmb{x}))\)</span>，其中<span class="math inline">\(h_i^j(\pmb{x})\)</span>是<span class="math inline">\(h_i\)</span>在类别标记<span class="math inline">\(c_j\)</span>上的输出。<br>
+（1）<strong>绝对多数投票法（majority voting）</strong>： <span class="math display">\[H(\pmb{x}) = 
+    \begin{cases}
+        c_j, \qquad \quad if \quad \sum_{i=1}^T h_i^j (\pmb{x}) &gt; 0.5 \sum_{k=1}^N  \sum_{i=1}^T h_i^k (\pmb{x}) \\
+        reject, \quad otherwise
+    \end{cases}\]</span> 即若某标记得票过半数，则预测为该标记；否则拒绝预测。</p>
+<p>（2）<strong>相对多数投票法（plurality voting）</strong>： <span class="math display">\[h(\pmb{x}) = c_{\arg \max_{j} \sum_{i=1}^T h_i^j(\pmb{x})}\]</span> 即预测为得票最多的标记，若同时有多个标记获最高票，则从中随机选取一个。</p>
+<p>（3）<strong>加权投票法（weighted voting）</strong>： <span class="math display">\[h(\pmb{x}) = c_{\arg \max_{j} \sum_{i=1}^T w_i h_i^j(\pmb{x})}\]</span> 与加权平均法类似，<span class="math inline">\(w_i\)</span>是<span class="math inline">\(h_i\)</span>的权重，通常<span class="math inline">\(w_i \geq 0,\quad \sum_{i=1}^T w_i = 1\)</span>。</p>
+<p>在不允许拒绝预测的任务中，绝对多数、相对多数投票法统称为“多数投票法”。</p>
+<p>不同类型的个体学习器可能产生不同类型的<span class="math inline">\(h_i^j(\pmb{x})\)</span>值，常见的有：</p>
+<ul>
+<li>类标记：<span class="math inline">\(h_i^j(\pmb{x}) \in \{0,1\}\)</span>，若<span class="math inline">\(h_i\)</span>将样本<span class="math inline">\(\pmb{x}\)</span>预测为类别<span class="math inline">\(c_j\)</span>则取值为1，否则为0.使用类标记的投票亦称“硬投票”（hard voting）；</li>
+<li>类概率：<span class="math inline">\(h_i^j(\pmb{x}) \in [0,1]\)</span>，相当于后验概率<span class="math inline">\(P(c_j|\pmb{x})\)</span>的一个估计。使用类别概率投票亦称“软投票”（soft voting）。</li>
+</ul>
+<p>一般来说，虽然分类器估计出的类概率值一般都不太准确，但基于类概率进行结合却往往比直接基于类标记进行结合性能更好。需要注意的是，若基学习器的类型不同，则其类概率值不能直接进行比较；此种情形下，通常可将类概率值输出转化为类标记输出（例如将类概率输出最大的<span class="math inline">\(h_i^j(\pmb{x})\)</span>设为1，其他设为0）然后再投票。</p>
+<h3 id="学习法stacking">4.3. 学习法（Stacking）</h3>
+<p>当训练数据很多时，一种更为强大的结合策略是使用“学习法”。即通过另一个学习器来进行结合。Stacking是学习法的典型代表。我们把个体学习器称为初级学习器，用于结合的学习器称为次级学习器或元学习器（meta-learner）。<br>
+<strong>Stacking本身是一种著名的集成学习方法，且有不少集成学习算法可视为其变体或特例，他也可以看作一种特殊的结合策略。</strong></p>
+<p>Stacking先从初始数据集训练出初级学习器，然后“生成”一个新数据集用于训练次级学习器。在这个新数据集中，初级学习器的输出被当做样例输入特征，而初始样例的标记仍被当作样例标记。</p>
+<p>Stacking的算法描述如下图所示，这里假设初级学习器使用不同学习算法产生，即初级集成是异质的。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午2.49.37.png">
+
+</div>
+<p>训练阶段，次级训练集是利用初级学习器产生的，若直接用初级学习器的训练集来产生次级训练集，则过拟合风险会比较大。因此，一般通过使用交叉验证或留一法这样的方式，用训练初级学习器未使用的样本来产生次级学习器的训练样本。<br>
+以<span class="math inline">\(k\)</span>折交叉验证为例，初始训练集<span class="math inline">\(D\)</span>被随机划分为<span class="math inline">\(k\)</span>个大小相似的集合<span class="math inline">\(D_1,D_2,\cdots,D_k\)</span>。令<span class="math inline">\(D_j\)</span>和<span class="math inline">\(\bar{D}_j = D \backslash D_j\)</span>分别表示第<span class="math inline">\(j\)</span>折的测试集和训练集。给定<span class="math inline">\(T\)</span>个初级学习算法，初级学习器<span class="math inline">\(h_t^{(j)}\)</span>通过在<span class="math inline">\(\bar{D}\)</span>上使用第<span class="math inline">\(t\)</span>个学习算法而得。对<span class="math inline">\(D_j\)</span>中每个样本<span class="math inline">\(\pmb{x}_i\)</span>，令<span class="math inline">\(z_{it} = h_t^{(j)} (\pmb{x}_i)\)</span>，则由<span class="math inline">\(\pmb{x}_i\)</span>所产生的次级训练样例的示例部分为<span class="math inline">\(\pmb{z}_i = (z_{i1};z_{i2};\cdots,z_{iT})\)</span>，标记部分为<span class="math inline">\(y_i\)</span>。于是，在整个交叉验证过程结束后，从这<span class="math inline">\(T\)</span>个初级学习器产生的次级训练集是<span class="math inline">\(D&#39; = \{(\pmb{z}_i,y_i)\}_{i=1}^m\)</span>，然后<span class="math inline">\(D&#39;\)</span>将用于训练次级学习器。<br>
+次级学习器的输入属性表示和次级学习算法对Stacking集成的泛化性能有很大影响。有研究表明，将初级学习器的输出类概率作为次级学习器的输入属性，用多响应线性回归（Multi-response Linear Regression，MLR）作为次基学习算法效果较好，在MLR中使用不同的属性集更佳。</p>
+<p>MLR是基于线性回归的分类器，它对每个类分别进行线性回归，属于该类的训练样例所对应的输出被置为1，其他类置为0；测试示例将被分给输出值最大的类。</p>
+<p>贝叶斯模型平均（Bayesian Model Averaging，BMA）基于后验概率来为不同模型赋予权重，可视为加权平均法的一种特殊实现。对Stacking和BMA进行比较，理论上来说，若数据生成模型恰在当前考虑的模型中，且数据噪声较少，则BMA不差于Stacking；然而，在现实应用中无法确保数据生成模型一定在当前考虑的模型中，甚至可能难以用当前考虑的模型来进行近似，因此，Stacking通常优于BMA，因为鲁棒性比BMA更好，而且BMA对模型近似误差非常敏感。</p>
 
       
     </div>
@@ -336,6 +430,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
       
 
       
@@ -407,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -423,8 +532,8 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
               
@@ -436,8 +545,8 @@
                 
                 <div class="site-state-item site-state-tags">
                   
-                    <span class="site-state-item-count">13</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">Tags</span>
                   
                 </div>
               
@@ -462,6 +571,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集成学习"><span class="nav-number">1.</span> <span class="nav-text">集成学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bagging"><span class="nav-number">1.2.</span> <span class="nav-text">2. Bagging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#boosting"><span class="nav-number">1.3.</span> <span class="nav-text">3. Boosting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结合策略"><span class="nav-number">1.4.</span> <span class="nav-text">4. 结合策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#平均法"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1. 平均法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#投票法"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2. 投票法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习法stacking"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3. 学习法（Stacking）</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -490,7 +615,7 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
