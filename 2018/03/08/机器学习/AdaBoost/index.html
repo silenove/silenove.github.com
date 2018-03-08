@@ -113,10 +113,12 @@
 <meta property="og:locale" content="zh-EN">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午4.47.11.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午9.17.20.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.28.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.44.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.14.07.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.36.55.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.37.26.png">
-<meta property="og:updated_time" content="2018-03-08T05:44:26.123Z">
+<meta property="og:updated_time" content="2018-03-08T10:53:04.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdaBoost">
 <meta name="twitter:description" content="AdaBoost 1. AdaBoost算法 Boosting是一种常用的统计学习方法，应用广泛且有效，在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。 AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两个问题需要解决：  在每一轮中如何改变训练数据的权值或概率分布； 如何将弱分类器组合成一个强分类器。  AdaBoost">
@@ -215,13 +217,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -292,7 +294,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T13:43:36+08:00">2018-03-08</time>
             
@@ -344,6 +346,17 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 <li>对于第一个问题，AdaBoost提高那些被前一轮弱分类器错误分类样本的权值，而降低那些被正确分类样本的权值；</li>
 <li>对于第二个问题，AdaBoost采用加权多数表决的方式。</li>
 </ol>
+<p>AdaBoost的主要优点：</p>
+<ul>
+<li>AdaBoost作为分类器时，分类精度很高；</li>
+<li>在AdaBoost的框架下，可以使用各种回归分类模型来构建弱学习器，十分灵活；</li>
+<li>作为简单的二分类器时，构造简单，结果可理解；</li>
+<li>不容易发生过拟合。</li>
+</ul>
+<p>AdaBoost的主要缺点：</p>
+<ul>
+<li>对异常样本敏感，异常样本在迭代中可能会获得较高的权重，影响最终的强学习器的预测准确性。</li>
+</ul>
 <p>现在叙述AdaBoost算法，假设给定一个二类分类的训练数据集 <span class="math display">\[T = \{(\pmb{x}_1,y_1), (\pmb{x}_2,y_2), \cdots, (\pmb{x}_N,y_N)\}\]</span> 其中，每个样例点由实例和标记组成，实例<span class="math inline">\(\pmb{x}_i \in \mathbf{R}^n\)</span>，标记<span class="math inline">\(y_i \in \{-1,+1\}\)</span>，AdaBoost算法如下：</p>
 <div class="figure">
 <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午4.47.11.png">
@@ -361,17 +374,6 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
     \end{cases}\]</span></p>
 <p>由此可知，被基本分类器<span class="math inline">\(G_m(\pmb{x})\)</span>误分类样本的权值得以扩大，而被正确分类样本的权值却得以缩小。两者相比较，误分类样本的权值被放大<span class="math inline">\(e^{2 \alpha_m} = \frac{1 - e_m}{e_m}\)</span>倍。因此，误分类样本在下一轮学习中起更大的作用。不改变所给的训练数据，而不断改变训练数据权值的分布，使得训练数据在基本分类器的学习中其不同的作用，这是AdaBoost的一个特点。</p>
 <p>步骤（3）线性组合<span class="math inline">\(f(\pmb{x})\)</span>实现<span class="math inline">\(M\)</span>个基本分类器的加权表决。系数<span class="math inline">\(\alpha_m\)</span>表示了基本分类器<span class="math inline">\(G_m(\pmb{x})\)</span>的重要性。这里，所有<span class="math inline">\(\alpha_m\)</span>之和并不为1，<span class="math inline">\(f(\pmb{x})\)</span>的符号决定了实例<span class="math inline">\(\pmb{x}\)</span>的类，<span class="math inline">\(f(\pmb{x})\)</span>的绝对值表示分类的确信度，利用基本分类器的线性组合构建最终分类器是AdaBoost的另一特点。</p>
-<p>AdaBoost的主要优点：</p>
-<ul>
-<li>AdaBoost作为分类器时，分类精度很高；</li>
-<li>在AdaBoost的框架下，可以使用各种回归分类模型来构建弱学习器，十分灵活；</li>
-<li>作为简单的二分类器时，构造简单，结果可理解；</li>
-<li>不容易发生过拟合。</li>
-</ul>
-<p>AdaBoost的主要缺点：</p>
-<ul>
-<li>对异常样本敏感，异常样本在迭代中可能会获得较高的权重，影响最终的强学习器的预测准确性。</li>
-</ul>
 <h2 id="adaboost算法的训练误差分析">2. AdaBoost算法的训练误差分析</h2>
 <p>AdaBoost最基本的性质是它能在学习过程中不断减少训练误差，即在训练数据集上的分类误差率。<br>
 <strong>定理1</strong>：AdaBoost算法最终分类器的训练误差界为 <span class="math display">\[\frac{1}{N} \sum_{i=1}^N I(G_m(\pmb{x}_i) \neq y_i) \leq \frac{1}{N} \sum_{i=1} \exp(- y_i f(\pmb{x}_i))= \prod_{m} Z_m\]</span></p>
@@ -431,7 +433,20 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 (e^{\alpha} + e^{- \alpha}) e_m - e^{- \alpha} = 0 \nonumber
 \end{equation}\]</span> 求得 <span class="math display">\[\alpha_m^* = \frac{1}{2} \log \frac{1-e_m}{e_m}\]</span> 这里的<span class="math inline">\(\alpha_m^*\)</span>与AdaBoost算法在第2（c）步求得的<span class="math inline">\(\alpha_m\)</span>完全一致。<br>
 最后再看每一轮样本权值的更新，由 <span class="math display">\[f_m(\pmb{x}) = f_{m-1}(\pmb{x}) + \alpha_m G_m(\pmb{x})\]</span> 以及<span class="math inline">\(\bar{w}_{mi} = \exp[-y_i f_{m-1}(\pmb{x}_i)]\)</span>，可得 <span class="math display">\[\bar{w}_{m+1,i} = \bar{w}_{m,i} \exp[-y_i \alpha_m G_m(\pmb{x})]\]</span> 这里与AdaBoost算法第2（d）步的样本权值更新只相差规范化因子，因而等价。</p>
-<h2 id="sklearn使用">4. sklearn使用</h2>
+<h2 id="adaboost多分类和回归">4. AdaBoost多分类和回归</h2>
+<h3 id="多分类">4.1. 多分类</h3>
+<p>原始的AdaBoost算法是针对二分类问题的，多分类问题采用的也是将其分解为多个二分类问题。而SAMME和SAMME.R算法不采用这种思路，只是二分类的推广，也是加法模型，指数损失函数和前向分步算法，而且每个弱分类器的正确率只要大于0.5即可。<br>
+假设训练集<span class="math inline">\(T = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_n,y_n)\}\)</span>，训练集在第<span class="math inline">\(k\)</span>个弱分类器上的样本权重是<span class="math inline">\((w_{k1},w_{k2},\cdots,w_{kn}),w_{1i} = \frac{1}{n},i=1,2,\cdots,n\)</span>，输出<span class="math inline">\(y_i \in \{1,2,\cdots,K\}\)</span>，<span class="math inline">\(K\)</span>是类别个数。</p>
+<p><strong>SAMME</strong> <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.28.png" alt="-c500"></p>
+<p><strong>SAMME.R</strong> <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.44.png"></p>
+<p>参考文献：Zhu J, Zou H, Rosset S, et al. Multi-class AdaBoost[J]. Statistics &amp; Its Interface, 2006, 2(3):349-360.</p>
+<h3 id="回归">4.2. 回归</h3>
+<p>假设训练集为<span class="math inline">\(T=\{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_N,y_N)\}\)</span>。<br>
+输入：训练数据集，弱学习算法和弱学习器个数T<br>
+输出：最终的强学习器<span class="math inline">\(G(\pmb{x})\)</span><br>
+1. 初始化样本权重<span class="math inline">\(D_1 = (w_{11},w_{12},\cdots,w_{1n}),\quad w_{1i}=\frac{1}{n},\quad i=1,2,\cdots,N\)</span>。 2. 对<span class="math inline">\(m=1,2,\cdots,T\)</span>：   1. 使用具有样本权重<span class="math inline">\(D_m\)</span>的训练数据和弱学习器算法得到弱学习器<span class="math inline">\(G_m(\pmb{x})\)</span>;   2. 计算弱学习器在训练集上上的误差<span class="math inline">\(e_{mi} = L(|y_i - G_m(\pmb{x}_i)|)\)</span>，损失函数<span class="math inline">\(L\)</span>可以具有任意形式但必须保证<span class="math inline">\(L \in [0,1]\)</span>，令<span class="math inline">\(E_m = sup|y_i - G_m(\pmb{x}_i)|,i=1,2,\cdots,N\)</span>，即训练集上的最大误差，然后我们会有三种可选用的损失函数：     1. 线性误差：<span class="math inline">\(e_{mi} = \frac{|y_i - G_m(\pmb{x}_i)|}{E_m}\)</span>；     2. 平方误差：<span class="math inline">\(e_{mi} = \frac{|y_i - G_m(\pmb{x}_i)|^2}{E_m}\)</span>；     3. 指数误差：<span class="math inline">\(e_{mi} = 1 - \exp[\frac{|y_i - G_m(\pmb{x}_i)|}{E_m}]\)</span>；   3. 利用每个样本的相对误差，计算回归误差率<span class="math inline">\(e_m = \sum_{i=1}^N w_{mi} e_{mi}\)</span>；   4. 计算弱学习器的权重系数<span class="math inline">\(\alpha_m = \frac{e_m}{1 - e_m}\)</span>;   5. 更新样本权重<span class="math inline">\(w_{m+1,i} = \frac{w_{mi}}{Z_m} e_m^{1 - e_{mi}}\)</span>，其中<span class="math inline">\(Z_m\)</span>为归一化因子，<span class="math inline">\(Z_m = \sum_{i=1}^N w_{mi} e_m^{1 - e_{mi}}\)</span>； 3. 根据<span class="math inline">\(T\)</span>个弱学习器得到最终的强学习器，利用强学习器进行预测的策略为： <span class="math display">\[G = inf\{y \in Y: \sum_{m:G_m \leq y} \log(\frac{1}{e_m}) \geq \frac{1}{2} \sum_m \log(\frac{1}{e_m}) \}\]</span> 计算的是加权中值，对于实例<span class="math inline">\(\pmb{x}_i\)</span>，每一个弱学习器<span class="math inline">\(G_m\)</span>都会产生输出概率<span class="math inline">\(y_i^{(m)}\)</span>，并且弱学习器<span class="math inline">\(G_m\)</span>对应的权重系数为<span class="math inline">\(\alpha_m\)</span>，我们对所有弱学习器的输出值进行排序并重新标记： <span class="math display">\[y_i^{(1)} &lt; y_i^{(2)} &lt; \cdots &lt; y_i^{(T)}\]</span> 但保持每个学习器<span class="math inline">\(G_m\)</span>与其对应的权重系数<span class="math inline">\(\alpha_m\)</span>不变。按照上述排序依次累加各弱学习器对应的<span class="math inline">\(\log(\frac{1}{e_m})\)</span>直到找到满足公式中不等式的最小的<span class="math inline">\(m\)</span>值，则将弱学习器<span class="math inline">\(G_m\)</span>的预测值作为最终强学习器的预测值。</p>
+<p>参考文献：Drucker H. Improving Regressors using Boosting Techniques[C]// Fourteenth International Conference on Machine Learning. Morgan Kaufmann Publishers Inc. 1997:107-115.</p>
+<h2 id="sklearn使用">5. sklearn使用</h2>
 <p>sklearn中AdaBoost类库包含AdaBoostClassifier和AdaBoostRegressor两个，其中AdaBoostClassifier用于分类，AdaBoostRegressor用于回归。</p>
 <p>AdaBoostClassifier：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">ensemble</span>.<span class="title">AdaboostClassifier</span><span class="params">(base_estimator=None, n_estimators=<span class="number">50</span>, learning_rate=<span class="number">1.0</span>, algorithm=<span class="string">'SAMME.R'</span>, random_state=None)</span></span></span><br></pre></td></tr></table></figure>
@@ -534,10 +549,10 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -558,7 +573,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">19</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -571,7 +586,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
                 <div class="site-state-item site-state-tags">
                   
                     <span class="site-state-item-count">15</span>
-                    <span class="site-state-item-name">Tags</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -606,7 +621,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#adaboost"><span class="nav-number">1.</span> <span class="nav-text">AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost算法"><span class="nav-number">1.1.</span> <span class="nav-text">1. AdaBoost算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost算法的训练误差分析"><span class="nav-number">1.2.</span> <span class="nav-text">2. AdaBoost算法的训练误差分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost算法的解释"><span class="nav-number">1.3.</span> <span class="nav-text">3. AdaBoost算法的解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前向分步算法"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1. 前向分步算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前向分步算法与adaboost"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 前向分步算法与AdaBoost</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sklearn使用"><span class="nav-number">1.4.</span> <span class="nav-text">4. sklearn使用</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#adaboost"><span class="nav-number">1.</span> <span class="nav-text">AdaBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost算法"><span class="nav-number">1.1.</span> <span class="nav-text">1. AdaBoost算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost算法的训练误差分析"><span class="nav-number">1.2.</span> <span class="nav-text">2. AdaBoost算法的训练误差分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost算法的解释"><span class="nav-number">1.3.</span> <span class="nav-text">3. AdaBoost算法的解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前向分步算法"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1. 前向分步算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前向分步算法与adaboost"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 前向分步算法与AdaBoost</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaboost多分类和回归"><span class="nav-number">1.4.</span> <span class="nav-text">4. AdaBoost多分类和回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多分类"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1. 多分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回归"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2. 回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sklearn使用"><span class="nav-number">1.5.</span> <span class="nav-text">5. sklearn使用</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -640,7 +655,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
