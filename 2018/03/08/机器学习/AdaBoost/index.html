@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.14.07.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.36.55.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.37.26.png">
-<meta property="og:updated_time" content="2018-03-08T10:53:04.576Z">
+<meta property="og:updated_time" content="2018-03-08T11:17:28.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdaBoost">
 <meta name="twitter:description" content="AdaBoost 1. AdaBoost算法 Boosting是一种常用的统计学习方法，应用广泛且有效，在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。 AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两个问题需要解决：  在每一轮中如何改变训练数据的权值或概率分布； 如何将弱分类器组合成一个强分类器。  AdaBoost">
@@ -444,7 +444,17 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 <p>假设训练集为<span class="math inline">\(T=\{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_N,y_N)\}\)</span>。<br>
 输入：训练数据集，弱学习算法和弱学习器个数T<br>
 输出：最终的强学习器<span class="math inline">\(G(\pmb{x})\)</span><br>
-1. 初始化样本权重<span class="math inline">\(D_1 = (w_{11},w_{12},\cdots,w_{1n}),\quad w_{1i}=\frac{1}{n},\quad i=1,2,\cdots,N\)</span>。 2. 对<span class="math inline">\(m=1,2,\cdots,T\)</span>：   1. 使用具有样本权重<span class="math inline">\(D_m\)</span>的训练数据和弱学习器算法得到弱学习器<span class="math inline">\(G_m(\pmb{x})\)</span>;   2. 计算弱学习器在训练集上上的误差<span class="math inline">\(e_{mi} = L(|y_i - G_m(\pmb{x}_i)|)\)</span>，损失函数<span class="math inline">\(L\)</span>可以具有任意形式但必须保证<span class="math inline">\(L \in [0,1]\)</span>，令<span class="math inline">\(E_m = sup|y_i - G_m(\pmb{x}_i)|,i=1,2,\cdots,N\)</span>，即训练集上的最大误差，然后我们会有三种可选用的损失函数：     1. 线性误差：<span class="math inline">\(e_{mi} = \frac{|y_i - G_m(\pmb{x}_i)|}{E_m}\)</span>；     2. 平方误差：<span class="math inline">\(e_{mi} = \frac{|y_i - G_m(\pmb{x}_i)|^2}{E_m}\)</span>；     3. 指数误差：<span class="math inline">\(e_{mi} = 1 - \exp[\frac{|y_i - G_m(\pmb{x}_i)|}{E_m}]\)</span>；   3. 利用每个样本的相对误差，计算回归误差率<span class="math inline">\(e_m = \sum_{i=1}^N w_{mi} e_{mi}\)</span>；   4. 计算弱学习器的权重系数<span class="math inline">\(\alpha_m = \frac{e_m}{1 - e_m}\)</span>;   5. 更新样本权重<span class="math inline">\(w_{m+1,i} = \frac{w_{mi}}{Z_m} e_m^{1 - e_{mi}}\)</span>，其中<span class="math inline">\(Z_m\)</span>为归一化因子，<span class="math inline">\(Z_m = \sum_{i=1}^N w_{mi} e_m^{1 - e_{mi}}\)</span>； 3. 根据<span class="math inline">\(T\)</span>个弱学习器得到最终的强学习器，利用强学习器进行预测的策略为： <span class="math display">\[G = inf\{y \in Y: \sum_{m:G_m \leq y} \log(\frac{1}{e_m}) \geq \frac{1}{2} \sum_m \log(\frac{1}{e_m}) \}\]</span> 计算的是加权中值，对于实例<span class="math inline">\(\pmb{x}_i\)</span>，每一个弱学习器<span class="math inline">\(G_m\)</span>都会产生输出概率<span class="math inline">\(y_i^{(m)}\)</span>，并且弱学习器<span class="math inline">\(G_m\)</span>对应的权重系数为<span class="math inline">\(\alpha_m\)</span>，我们对所有弱学习器的输出值进行排序并重新标记： <span class="math display">\[y_i^{(1)} &lt; y_i^{(2)} &lt; \cdots &lt; y_i^{(T)}\]</span> 但保持每个学习器<span class="math inline">\(G_m\)</span>与其对应的权重系数<span class="math inline">\(\alpha_m\)</span>不变。按照上述排序依次累加各弱学习器对应的<span class="math inline">\(\log(\frac{1}{e_m})\)</span>直到找到满足公式中不等式的最小的<span class="math inline">\(m\)</span>值，则将弱学习器<span class="math inline">\(G_m\)</span>的预测值作为最终强学习器的预测值。</p>
+1. 初始化样本权重<span class="math inline">\(D_1 = (w_{11},w_{12},\cdots,w_{1n}),\quad w_{1i}=\frac{1}{n},\quad i=1,2,\cdots,N\)</span>。<br>
+2. 对<span class="math inline">\(m=1,2,\cdots,T\)</span>：<br>
+  1. 使用具有样本权重<span class="math inline">\(D_m\)</span>的训练数据和弱学习器算法得到弱学习器<span class="math inline">\(G_m(\pmb{x})\)</span>;<br>
+  2. 计算弱学习器在训练集上上的误差<span class="math inline">\(e_{mi} = L(|y_i - G_m(\pmb{x}_i)|)\)</span>，损失函数<span class="math inline">\(L\)</span>可以具有任意形式但必须保证<span class="math inline">\(L \in [0,1]\)</span>，令<span class="math inline">\(E_m = sup|y_i - G_m(\pmb{x}_i)|,i=1,2,\cdots,N\)</span>，即训练集上的最大误差，然后我们会有三种可选用的损失函数：<br>
+    1. 线性误差：<span class="math inline">\(e_{mi} = \frac{|y_i - G_m(\pmb{x}_i)|}{E_m}\)</span>；<br>
+    2. 平方误差：<span class="math inline">\(e_{mi} = \frac{|y_i - G_m(\pmb{x}_i)|^2}{E_m}\)</span>；<br>
+    3. 指数误差：<span class="math inline">\(e_{mi} = 1 - \exp[\frac{|y_i - G_m(\pmb{x}_i)|}{E_m}]\)</span>；<br>
+  3. 利用每个样本的相对误差，计算回归误差率<span class="math inline">\(e_m = \sum_{i=1}^N w_{mi} e_{mi}\)</span>；<br>
+  4. 计算弱学习器的权重系数<span class="math inline">\(\alpha_m = \frac{e_m}{1 - e_m}\)</span>；<br>
+  5. 更新样本权重<span class="math inline">\(w_{m+1,i} = \frac{w_{mi}}{Z_m} e_m^{1 - e_{mi}}\)</span>，其中<span class="math inline">\(Z_m\)</span>为归一化因子，<span class="math inline">\(Z_m = \sum_{i=1}^N w_{mi} e_m^{1 - e_{mi}}\)</span>；<br>
+3. 根据<span class="math inline">\(T\)</span>个弱学习器得到最终的强学习器，利用强学习器进行预测的策略为： <span class="math display">\[G = inf\{y \in Y: \sum_{m:G_m \leq y} \log(\frac{1}{e_m}) \geq \frac{1}{2} \sum_m \log(\frac{1}{e_m}) \}\]</span> 计算的是加权中值，对于实例<span class="math inline">\(\pmb{x}_i\)</span>，每一个弱学习器<span class="math inline">\(G_m\)</span>都会产生输出概率<span class="math inline">\(y_i^{(m)}\)</span>，并且弱学习器<span class="math inline">\(G_m\)</span>对应的权重系数为<span class="math inline">\(\alpha_m\)</span>，我们对所有弱学习器的输出值进行排序并重新标记： <span class="math display">\[y_i^{(1)} &lt; y_i^{(2)} &lt; \cdots &lt; y_i^{(T)}\]</span> 但保持每个学习器<span class="math inline">\(G_m\)</span>与其对应的权重系数<span class="math inline">\(\alpha_m\)</span>不变。按照上述排序依次累加各弱学习器对应的<span class="math inline">\(\log(\frac{1}{e_m})\)</span>直到找到满足公式中不等式的最小的<span class="math inline">\(m\)</span>值，则将弱学习器<span class="math inline">\(G_m\)</span>的预测值作为最终强学习器的预测值。</p>
 <p>参考文献：Drucker H. Improving Regressors using Boosting Techniques[C]// Fourteenth International Conference on Machine Learning. Morgan Kaufmann Publishers Inc. 1997:107-115.</p>
 <h2 id="sklearn使用">5. sklearn使用</h2>
 <p>sklearn中AdaBoost类库包含AdaBoostClassifier和AdaBoostRegressor两个，其中AdaBoostClassifier用于分类，AdaBoostRegressor用于回归。</p>
@@ -499,6 +509,10 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/10/机器学习/GBDT/" rel="prev" title="GBDT">
+                GBDT <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -572,7 +586,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
