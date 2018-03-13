@@ -114,7 +114,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.59.39.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午10.05.28.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-21%20下午9.56.33.png">
-<meta property="og:updated_time" content="2018-02-21T14:09:25.930Z">
+<meta property="og:updated_time" content="2018-03-11T11:43:11.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贝叶斯网">
 <meta name="twitter:description" content="贝叶斯网 贝叶斯网（Bayesian network）也称作“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，CPT）来描述属性之间的联合概率分布。（条件概率表用于属性为离散型的数据，对于连续属性，条件概率表可推广为条件概率密度函">
@@ -213,13 +213,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
         </li>
       
 
@@ -290,7 +290,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-21T10:38:10+08:00">2018-02-21</time>
             
@@ -363,7 +363,7 @@
 <p>由此产生的无向图称为“道德图”（moral graph），令父节点相连的过程称为“道德化”（moralization）。<br>
 基于道德图能直观、迅速地找到变量间的条件独立性。假设道德图中有变量<span class="math inline">\(x,y\)</span>和变量集合<span class="math inline">\(\pmb{z} = \{z_i\}\)</span>，如果把变量集合<span class="math inline">\(\pmb{z}\)</span>去除后，<span class="math inline">\(x\)</span>和<span class="math inline">\(y\)</span>属于两个连通分支，则称变量<span class="math inline">\(x\)</span>和<span class="math inline">\(y\)</span>被<span class="math inline">\(\pmb{z}\)</span>有向分离，<span class="math inline">\(x \perp y | \pmb{z}\)</span>成立。</p>
 <h2 id="学习">2. 学习</h2>
-<p>若果网络结构已知，即属性间的依赖关系已知，则贝叶斯网的学习过程相对简单，只需通过对训练样本“计数”，估计出每个节点的条件概率表即可。但在现实应用中往往不知晓网络结构，于是，贝叶斯网学习的首要任务就是根据训练数据集找出结构最“恰当”的贝叶斯网，“评分搜索”是求解这一问题的常用方法。<br>
+<p>如果网络结构已知，即属性间的依赖关系已知，则贝叶斯网的学习过程相对简单，只需通过对训练样本“计数”，估计出每个节点的条件概率表即可。但在现实应用中往往不知晓网络结构，于是，贝叶斯网学习的首要任务就是根据训练数据集找出结构最“恰当”的贝叶斯网，“评分搜索”是求解这一问题的常用方法。<br>
 <strong>评分搜索</strong>：先定义一个评分函数，以此来评估贝叶斯网与训练数据的契合程度，然后基于这个评分函数来寻找结构最优的贝叶斯网。显然，评分函数引入了获得怎样的贝叶斯网的归纳偏好。<br>
 常用评分函数通常基于信息论准则，此类准则将学习问题看做一个数据压缩问题，学习的目标是找到一个能以最短编码长度描述数据的模型，此时编码的长度包括了描述模型自身所需的字节长度和使用该模型描述数据所需的字节长度。对于贝叶斯网学习而言，模型就是一个贝叶斯网。同时，每个贝叶斯网描述了一个在训练数据上的概率分布，自有一套编码机制能使那些经常出现的样本有更短的编码。我们应选择综合编码长度（包括描述网络和编码数据）最短的贝叶斯网，这就是“最小描述长度”（Minimal Description Length，MDL）准则。<br>
 给定训练集<span class="math inline">\(D = \{\pmb{x}_1, \pmb{x}_2, \cdots, \pmb{x}_m\}\)</span>，贝叶斯网<span class="math inline">\(B = &lt;G, \Theta&gt;\)</span>在<span class="math inline">\(D\)</span>上的评分函数可写为 <span class="math display">\[s(B|D) = f(\theta)|B| - LL(B|D)\]</span> 其中，<span class="math inline">\(|B|\)</span>是贝叶斯网的参数个数；<span class="math inline">\(f(\theta)\)</span>表示描述每个参数<span class="math inline">\(\theta\)</span>所需的字节数；而 <span class="math display">\[LL(B|D) = \sum_{i=1}^m \log P_B(\pmb{x}_i)\]</span> 是贝叶斯网<span class="math inline">\(B\)</span>的对数似然。显然，公式中的第一项是计算编码贝叶斯网<span class="math inline">\(B\)</span>所需的字节数，第二项是计算<span class="math inline">\(B\)</span>所对应的概率分布<span class="math inline">\(P_B\)</span>对<span class="math inline">\(D\)</span>描述得有多好。此时，学习任务转化为优化任务，寻找一个贝叶斯网<span class="math inline">\(B\)</span>使评分函数<span class="math inline">\(s(B|D)\)</span>最小。<br>
@@ -477,10 +477,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Inhaltsverzeichnis
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Übersicht
           </li>
         </ul>
       
@@ -500,8 +500,8 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">21</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
               
@@ -514,7 +514,7 @@
                 <div class="site-state-item site-state-tags">
                   
                     <span class="site-state-item-count">15</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">Tags</span>
                   
                 </div>
               
@@ -583,7 +583,7 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="机器学习,集成学习,Boosting," />
+
+
+<meta name="description" content="XGBoost XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。 XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失">
+<meta name="keywords" content="机器学习,集成学习,Boosting">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XGBoost">
+<meta property="og:url" content="http://yoursite.com/2018/03/11/机器学习/XGBoost/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="XGBoost XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。 XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午7.32.44.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午8.26.19.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午8.36.19.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-12%20下午11.06.29.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午4.39.58.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午4.42.05.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午5.18.30.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.42.00.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.46.39.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.51.41.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.16.18.png">
+<meta property="og:updated_time" content="2018-03-13T11:19:03.059Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XGBoost">
+<meta name="twitter:description" content="XGBoost XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。 XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午7.32.44.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/11/机器学习/XGBoost/"/>
+
+
+  <title>XGBoost | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/机器学习/XGBoost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">XGBoost</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T20:02:38+08:00">2018-03-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="xgboost">XGBoost</h1>
+<p>XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。<br>
+XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失函数、正则化项、防止过拟合方法、切分点查找算法优化、稀疏感知算法、并行化算法设计以及在系统设计方面的各种优化措施。</p>
+<h2 id="原理">1. 原理</h2>
+<h3 id="目标函数">1.1. 目标函数</h3>
+<p>给定训练数据集<span class="math inline">\(\mathscr{D} = \{(\pmb{x}_i,y_i)\} (|\mathscr{D}|=n,\pmb{x}_i \in \mathbf{R}^m, y\in \mathbf{R})\)</span>，其中<span class="math inline">\(n\)</span>为训练数据集包含的样例数，<span class="math inline">\(m\)</span>为没个样例包含的特征数。我们使用Tree Ensemble，将模型写成 <span class="math display">\[\hat{y}_i = \phi(\pmb{x}_i) = \sum_{k=1}^K f_k(\pmb{x}_i), \quad f_k \in \mathscr{F} \tag{1}\]</span> 其中<span class="math inline">\(\mathscr{F} = \{f(\pmb{x}) = w_{q(\pmb{x})}\} (q: \mathbf{R}^m \to T,w \in \mathbf{R}^T)\)</span>，<span class="math inline">\(\mathscr{F}\)</span>为对应的回归树的假设空间。<span class="math inline">\(q\)</span>代表每棵回归树的结构，并且将一个样例对应到一个相应的叶节点上。<span class="math inline">\(T\)</span>表示回归树的叶节点个数。每棵回归树<span class="math inline">\(f_k\)</span>对应于一个树结构<span class="math inline">\(p\)</span>和叶节点权重<span class="math inline">\(w\)</span>。由于回归树的叶节点包含连续值，所以用<span class="math inline">\(w_i\)</span>表示第<span class="math inline">\(i\)</span>个叶节点上的权重。当用所学模型对测试样例进行预测时，只需要每棵回归树根据规则将样例分类到对应的叶节点上，之后将叶节点对应的权重累加作为最终的预测值。<br>
+为了学习该模型，需要最小化正则化后的目标函数： <span class="math display">\[\mathscr{L}(\phi) = \sum_{i} l(\hat{y}_i,y_i) + \sum_{k} \Omega (f_k) \tag{2}\]</span> 其中<span class="math inline">\(\Omega(f) = \gamma T + \frac{1}{2} \lambda ||w||^2\)</span>。<span class="math inline">\(l(\hat{y}_i,y_i)\)</span>为可微的凸函数，表示将真实标记<span class="math inline">\(y_i\)</span>预测为<span class="math inline">\(\hat{y}_i\)</span>的损失代价。第二项<span class="math inline">\(\Omega\)</span>表示对于模型复杂度的惩罚，附加的正则项可以平滑最终学习到的权重，并且避免过拟合。当正则化项的参数为0时，目标函数退化为传统的GBDT。</p>
+<h3 id="梯度拟合">1.2. 梯度拟合</h3>
+<p>用<span class="math inline">\(\hat{y}_i^{(t)}\)</span>表示模型在第<span class="math inline">\(t\)</span>轮对第<span class="math inline">\(i\)</span>个样例的预测结果，我们需要最小化下面的目标函数： <span class="math display">\[\mathscr{L}^{(t)} = \sum_{i=1}^n l(y_i,\hat{y}_i^{(t-1)} + f_t(\pmb{x}_i)) + \Omega (f_t)\]</span> 一般情况下，<strong>为了能够快速的优化目标函数，可以使用二级泰勒展开近似该目标函数</strong>： <span class="math display">\[\mathscr{L}^{(t)} \simeq = \sum_{i=1}^n [l(y_i,\hat{y}^{(t-1)}) + g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \Omega (f_t)\]</span> 其中，<span class="math inline">\(g_i = \partial_{\hat{y}^{(t-1)}} l(y_i,\hat{y}^{(t-1)})\)</span>，<span class="math inline">\(h_i = \partial_{\hat{y}^{(t-1)}}^2 l(y_i,\hat{y}^{(t-1)})\)</span>，<span class="math inline">\(g_i\)</span>和<span class="math inline">\(h_i\)</span>分别表示损失函数的一阶导数和二阶导数。移除常数项后，可以将第<span class="math inline">\(t\)</span>轮学习的目标函数化简为 <span class="math display">\[\tilde{\mathscr{L}}^{(t)} = \sum_{i=1}^n [g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \Omega (f_t) \tag{3}\]</span> 定义<span class="math inline">\(I_j = \{i | q(\pmb{x}_i) = j\}\)</span>为叶节点<span class="math inline">\(j\)</span>包含的样例集合。在第<span class="math inline">\(t\)</span>轮中，当<span class="math inline">\(i \in I_j\)</span>时，有<span class="math inline">\(f_t(\pmb{x}_i) = w_j\)</span>。我们可以将正则项<span class="math inline">\(\Omega\)</span>展开，将上述公式重写为 <span class="math display">\[\begin{align}
+    \tilde{\mathscr{L}}^{(t)} &amp;= \sum_{i=1}^n [g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \gamma T + \frac{1}{2} \lambda \sum_{j=1}^T w_j^2 \nonumber \\
+    &amp;= \sum_{j=1}^T [(\sum_{i \in I_j} g_i)w_j + \frac{1}{2} (\sum_{i \in I_j} h_i + \lambda) w_j^2] + \gamma T \nonumber
+\end{align} \tag{4}\]</span> 为了构建最优的树结构，我们可以对上面的公式求导，计算叶节点<span class="math inline">\(j\)</span>对应的最优的权重<span class="math inline">\(w_j^*\)</span>： <span class="math display">\[w_j^* = - \frac{\sum_{i \in I_j} g_i}{\sum_{i \in I_j} h_i + \lambda} \tag{5}\]</span> 对应的最优目标函数值为 <span class="math display">\[\tilde{\mathscr{L}}^{(t)} (q) = - \frac{1}{2} \sum_{j=1}^T \frac{(\sum_{i \in I_j} g_i)^2}{\sum_{i \in I_j} h_i + \lambda} + \gamma T \tag{6}\]</span> 上述公式可以作为评分函数来衡量一个结构为<span class="math inline">\(q\)</span>的树的质量，<strong>分数越低，树结构越好</strong>。</p>
+<p>下图说明了该分数如何计算： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午7.32.44.png"></p>
+<p>通常情况下，很难枚举出所有可能的树结构，而是使用一种贪心的算法从一个单一的叶节点迭代的增加分支。假设<span class="math inline">\(I_L\)</span>和<span class="math inline">\(I_R\)</span>分别表示切分后左节点包含的样例和右节点包含的样例，令<span class="math inline">\(I = I_L \cup I_R\)</span>，切分后的损失函数可写为 <span class="math display">\[\mathscr{L}_{split} = \frac{1}{2} [\frac{(\sum_{i \in I_L} g_i)^2}{\sum_{i \in I_L} h_i + \lambda} + \frac{(\sum_{i \in I_R} g_i)^2}{\sum_{i \in I_R} h_i + \lambda} - \frac{(\sum_{i \in I} g_i)^2}{\sum_{i \in I} h_i + \lambda}] - \gamma \tag{7}\]</span> 这个公式通常用来选择用于切分的特征。</p>
+<h2 id="shrinkage和column-subsampling">2. Shrinkage和Column Subsampling</h2>
+<h3 id="shrinkage">2.1. Shrinkage</h3>
+<p>Shrinkage（衰减）类似于学习率，在每一步学习得到的tree boosting上增加一个参数<span class="math inline">\(\eta\)</span>，类似于随机梯度下降法中的学习率，通过这种方法减小每棵树的影响力，对接下来需要学习的树模型提供空间去优化模型。</p>
+<h3 id="column-subsampling">2.2. Column Subsampling</h3>
+<p>Column Subsampling（特征子采样），这个技术通常用于随机森林中，但之前一直未用于tree boosting中。根据用户的反馈，使用特征自采样避免过拟合的效果通常优于传统的训练数据集下采样，并且对后续的并行化处理算法的速度有所提高。</p>
+<h2 id="切分点查找算法">3. 切分点查找算法</h2>
+<h3 id="exact-greedy算法">3.1. Exact Greedy算法</h3>
+<p>一个关键的问题是如何根据公式（7）在回归树的学习阶段选取最优切分点。<br>
+exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点，根据公式寻找最优切分点</strong>。<br>
+一般在单机版的工具包中都有实现该算法，如sklearn等，为了提高效率，通常会先根据特征值对训练集数据进行排序，并按照顺序累加计算公式（7）中需要的梯度统计值。<br>
+算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午8.26.19.png">
+
+</div>
+<h3 id="近似算法">3.2. 近似算法</h3>
+<p>exact greedy算法非常有效，但是当数据不能完全存入内存中时，想要高效地运行此算法是不可能的，同样的问题也会出现在分布式的环境中。为了应对这两种情况，下面给出一种近似算法。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午8.36.19.png">
+
+</div>
+<p>算法总结：</p>
+<ul>
+<li>该算法会根据特征分布的分位数获得候选切分点，即按照分布式加权直方图算法确定一组候选切分点，再通过遍历寻找最优切分点；</li>
+<li>在寻找切分点时，不会枚举所有特征值，而是对特征值进行聚合统计，将连续的特征值映射到不同的buckets中，整合统计信息，只有在buckets边界上的特征值才会作为候选切分点。</li>
+</ul>
+<p>根据候选切分点获取的时间段，该算法有两种变体：</p>
+<ul>
+<li>global：在模型构建的初始阶段获取候选的切分点，并且在之后算法中使用的候选切分点不会改变；</li>
+<li>local：在每次切分之后更新候选切分点列表。</li>
+</ul>
+<p>通常情况下，global方法比local方法需要更少的执行步骤，但是需要更多的候选切分点，因为在每次切分后，global方法不会改善候选切分点。local方法需要在每次切分之后改善候选切分点，所以更适用于更深的树结构的构造。</p>
+<p>下图是对不同方法的比较： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-12%20下午11.06.29.png"></p>
+<h3 id="加权quantile-sketch">3.3. 加权Quantile Sketch</h3>
+<p>近似算法中一个重要的步骤就是如何确定候选切分点。<br>
+令集合<span class="math inline">\(\mathscr{D}_k = \{(x_{1k},h_1),(x_{2k},h_2),\cdots,(x_{nk},h_n)\}\)</span>表示数据集中各样例第<span class="math inline">\(k\)</span>个特征值，并且按照二阶导的统计信息<span class="math inline">\(h_i\)</span>进行排序，我们可以定义如下的排序公式： <span class="math display">\[r_k (z) = \frac{1}{\sum_{(x,h) \in \mathscr{D}_k} h} \sum_{(x,h) \in \mathscr{D}_k,x&lt;z} h \tag{8}\]</span> 上式表示样例第<span class="math inline">\(k\)</span>个特征值小于<span class="math inline">\(z\)</span>在数据集中所占的比例，目标是找到候选切分点集<span class="math inline">\(\{s_{k1},s_{k2},\cdots,s_{kl}\}\)</span>，有 <span class="math display">\[|r_k(s_k,j) - r_k(s_k,j+1)| &lt; \epsilon , \quad s_{k1} = \min_{i} x_{ik},s_{kl} = \max_{i} x_{ik}\]</span> 这里<span class="math inline">\(\epsilon\)</span>是一个近似参数，直观地可理解为大约有<span class="math inline">\(1/ \epsilon\)</span>个候选切分点。<br>
+上述过程中样例<span class="math inline">\(\pmb{x}_i\)</span>的权重为<span class="math inline">\(h_i\)</span>，为了解释为什么用<span class="math inline">\(h_i\)</span>表示权重，可将公式（3）重写为 <span class="math display">\[\sum_{i=1}^n \frac{1}{2} h_i(f_t(\pmb{x}_i) - g_i/h_i)^2 + \Omega(f_t) + constant\]</span> 上述公式可理解为计算平方误差的目标函数，其中每个样例的权重为<span class="math inline">\(h_i\)</span>，标记为<span class="math inline">\(g_i/h_i\)</span>。</p>
+<h3 id="稀疏特征切分点查找">3.4. 稀疏特征切分点查找</h3>
+<p>在现实任务中，训练数据很有可能是稀疏的，例如特征工程中的one-hot编码、数据缺失等，算法能够处理稀疏模式也是十分重要的。为了应对稀疏问题，XGBoost中在树中的每个节点处加入了一个默认方向，当节点对应的特征值缺失时，样例将会被分到默认方向。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午4.39.58.png">
+
+</div>
+<p>由于每个节点有两个分支，所以默认方向有两种选择，最佳默认方向会从数据中学得。<br>
+算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午4.42.05.png">
+
+</div>
+<p>该算法只会关注于那些在特征<span class="math inline">\(k\)</span>上无缺失的样例，并会处理将特征<span class="math inline">\(k\)</span>缺失的样例分到左分支和右分支两种情形，之后比较二者选取最优的默认方向。对于未出现过的特征值也可当作缺失值处理，用户可为缺失值指定值，该算法同样适用。</p>
+<h2 id="系统设计">4.系统设计</h2>
+<p>XGBoost在系统设计方面同样设计了一些方法用于提升算法的速度和准确度，这里只介绍一下并行化处理，具体内容可参考原文。</p>
+<h3 id="并行化处理">4.1. 并行化处理</h3>
+<p>在树的生成阶段，大部分时间用来对数据集进行排序。为了减少排序时间，XGBoos把数据按照block结构存储于内存中，数据在每个block中存储为压缩列（compressed column，CSC）格式，每一列存储了对相应特征值的排序结果。所以输入数据的分布只需要在训练之前计算一次，并且在后续迭代中可以重复使用。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午5.18.30.png">
+
+</div>
+<p>在决策树生成过程中需要选择增益最大的特征值作为切分点，而各个特征值增益的计算就可以通过block结构中不同的列并行处理，即采用多线程并行的方式寻找最优切分点。同样的，block结构也支持特征子采样，只需要选择一部分列去寻找最优切分点。除此之外，block结构也降低了算法的时间复杂度，这里就不具体分析了。</p>
+<h2 id="xgboost使用">5. XGBoost使用</h2>
+<p>XGBoost的参数主要分为三类：</p>
+<ul>
+<li>通用参数：宏观函数控制；</li>
+<li>Booster参数：控制每一步的Booster（tree/regression）；</li>
+<li>学习目标参数：控制训练目标的表现。</li>
+</ul>
+<p>（1）<strong>通用参数</strong></p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.42.00.png" alt="-w500">
+<p class="caption">-w500</p>
+</div>
+<p>（2）<strong>Booster参数</strong></p>
+<p>通常情况下，tree booster的表现优于linear booster，所以linear booster很少用到。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.46.39.png">
+
+</div>
+<p>（3）<strong>学习目标参数</strong><br>
+控制优化目标和每一步结果的度量方法。 <strong>XGBoost工具支持自定义目标函数，只要函数可一阶和二阶求导</strong>。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.51.41.png" alt="-w600">
+<p class="caption">-w600</p>
+</div>
+<h2 id="xgboost与传统gbdt的不同">6. XGBoost与传统GBDT的不同</h2>
+<p>XGBoost与传统GBDT的不同：</p>
+<ul>
+<li>传统GBDT以CART作为基分类器，XGBoost还支持线性分类器，此时XGBoost相当于带L1和L2正则化的logistic回归（分类问题）或线性回归（回归问题）；</li>
+<li>传统GBDT在目标函数的优化中只是用了一阶导数信息，而XGBoost对目标函数进行了二阶泰勒展开，同时用到一阶导数和二阶导数；</li>
+<li>XGBoost在目标函数中加入了正则项，控制模型复杂度，避免出现过拟合，而传统GBDT的目标函数中没有正则项，依赖于决策树剪枝；</li>
+<li>Shrinkage缩减，降低了每棵树的影响，为后续决策树的学习提供了空间；</li>
+<li>特征子采样，借鉴随机森林的方法，降低过拟合，减少运算量；</li>
+<li>对缺失值的处理，在决策树生成时构建默认方向；</li>
+<li>并行计算，在选取最优切分点时支持并行计算；</li>
+<li>可并行的近似直方图算法，用于高效地生成候选的切分点。</li>
+</ul>
+<p><strong>XGBoost目标函数中的加入正则项是否优于CART剪枝？</strong></p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.16.18.png">
+
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/集成学习/" rel="tag"># 集成学习</a>
+          
+            <a href="/tags/Boosting/" rel="tag"># Boosting</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/碎碎/泰勒公式/" rel="next" title="泰勒公式">
+                <i class="fa fa-chevron-left"></i> 泰勒公式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">Tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#xgboost"><span class="nav-number">1.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.1.</span> <span class="nav-text">1. 原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目标函数"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1. 目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度拟合"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2. 梯度拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shrinkage和column-subsampling"><span class="nav-number">1.2.</span> <span class="nav-text">2. Shrinkage和Column Subsampling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shrinkage"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1. Shrinkage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#column-subsampling"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2. Column Subsampling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切分点查找算法"><span class="nav-number">1.3.</span> <span class="nav-text">3. 切分点查找算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exact-greedy算法"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1. Exact Greedy算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#近似算法"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 近似算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加权quantile-sketch"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3. 加权Quantile Sketch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#稀疏特征切分点查找"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4. 稀疏特征切分点查找</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统设计"><span class="nav-number">1.4.</span> <span class="nav-text">4.系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#并行化处理"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1. 并行化处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost使用"><span class="nav-number">1.5.</span> <span class="nav-text">5. XGBoost使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xgboost与传统gbdt的不同"><span class="nav-number">1.6.</span> <span class="nav-text">6. XGBoost与传统GBDT的不同</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
