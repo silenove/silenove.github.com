@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.46.39.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.51.41.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.16.18.png">
-<meta property="og:updated_time" content="2018-03-13T11:19:03.059Z">
+<meta property="og:updated_time" content="2018-03-13T11:20:57.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XGBoost">
 <meta name="twitter:description" content="XGBoost XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。 XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失">
@@ -339,7 +339,8 @@
       
         <h1 id="xgboost">XGBoost</h1>
 <p>XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。<br>
-XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失函数、正则化项、防止过拟合方法、切分点查找算法优化、稀疏感知算法、并行化算法设计以及在系统设计方面的各种优化措施。</p>
+XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失函数、正则化项、防止过拟合方法、切分点查找算法优化、稀疏感知算法、并行化算法设计以及在系统设计方面的各种优化措施。<br>
+参考文献：XGBoost: A Scalable Tree Boosting System</p>
 <h2 id="原理">1. 原理</h2>
 <h3 id="目标函数">1.1. 目标函数</h3>
 <p>给定训练数据集<span class="math inline">\(\mathscr{D} = \{(\pmb{x}_i,y_i)\} (|\mathscr{D}|=n,\pmb{x}_i \in \mathbf{R}^m, y\in \mathbf{R})\)</span>，其中<span class="math inline">\(n\)</span>为训练数据集包含的样例数，<span class="math inline">\(m\)</span>为没个样例包含的特征数。我们使用Tree Ensemble，将模型写成 <span class="math display">\[\hat{y}_i = \phi(\pmb{x}_i) = \sum_{k=1}^K f_k(\pmb{x}_i), \quad f_k \in \mathscr{F} \tag{1}\]</span> 其中<span class="math inline">\(\mathscr{F} = \{f(\pmb{x}) = w_{q(\pmb{x})}\} (q: \mathbf{R}^m \to T,w \in \mathbf{R}^T)\)</span>，<span class="math inline">\(\mathscr{F}\)</span>为对应的回归树的假设空间。<span class="math inline">\(q\)</span>代表每棵回归树的结构，并且将一个样例对应到一个相应的叶节点上。<span class="math inline">\(T\)</span>表示回归树的叶节点个数。每棵回归树<span class="math inline">\(f_k\)</span>对应于一个树结构<span class="math inline">\(p\)</span>和叶节点权重<span class="math inline">\(w\)</span>。由于回归树的叶节点包含连续值，所以用<span class="math inline">\(w_i\)</span>表示第<span class="math inline">\(i\)</span>个叶节点上的权重。当用所学模型对测试样例进行预测时，只需要每棵回归树根据规则将样例分类到对应的叶节点上，之后将叶节点对应的权重累加作为最终的预测值。<br>
@@ -495,6 +496,10 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/03/13/机器学习/随机森林/" rel="prev" title="随机森林">
+                随机森林 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -567,7 +572,7 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
@@ -580,7 +585,7 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
                 
                 <div class="site-state-item site-state-tags">
                   
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">Tags</span>
                   
                 </div>
