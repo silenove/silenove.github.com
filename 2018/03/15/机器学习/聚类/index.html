@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="机器学习,聚类," />
+
+
+<meta name="description" content="聚类 1. 聚类任务 在无监督学习中，训练样本的标记信息是未知的，目标是通过对无标记训练样本的学习来揭示数据的内在性质和规律，为进一步的数据分析提供基础。此类学习任务中研究最多、应用最广的就是聚类。 聚类试图将数据集中的样本划分为若干个通常是不相交的子集，每个子集称为一个“簇”，通过这样的划分，每个簇可能对应于一些潜在的概念（类别）。这些概念对于聚类算法而言是事先未知的，聚类过程仅能自动形成簇结构">
+<meta name="keywords" content="机器学习,聚类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聚类">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/机器学习/聚类/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="聚类 1. 聚类任务 在无监督学习中，训练样本的标记信息是未知的，目标是通过对无标记训练样本的学习来揭示数据的内在性质和规律，为进一步的数据分析提供基础。此类学习任务中研究最多、应用最广的就是聚类。 聚类试图将数据集中的样本划分为若干个通常是不相交的子集，每个子集称为一个“簇”，通过这样的划分，每个簇可能对应于一些潜在的概念（类别）。这些概念对于聚类算法而言是事先未知的，聚类过程仅能自动形成簇结构">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午1.02.51.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午1.57.34.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午9.02.10.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午9.45.22.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.00.56.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.33.01.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.31.22.png">
+<meta property="og:updated_time" content="2018-03-15T11:36:26.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聚类">
+<meta name="twitter:description" content="聚类 1. 聚类任务 在无监督学习中，训练样本的标记信息是未知的，目标是通过对无标记训练样本的学习来揭示数据的内在性质和规律，为进一步的数据分析提供基础。此类学习任务中研究最多、应用最广的就是聚类。 聚类试图将数据集中的样本划分为若干个通常是不相交的子集，每个子集称为一个“簇”，通过这样的划分，每个簇可能对应于一些潜在的概念（类别）。这些概念对于聚类算法而言是事先未知的，聚类过程仅能自动形成簇结构">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午1.02.51.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/15/机器学习/聚类/"/>
+
+
+  <title>聚类 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/机器学习/聚类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">聚类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-15T19:35:50+08:00">2018-03-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="聚类">聚类</h1>
+<h2 id="聚类任务">1. 聚类任务</h2>
+<p>在无监督学习中，训练样本的标记信息是未知的，目标是通过对无标记训练样本的学习来揭示数据的内在性质和规律，为进一步的数据分析提供基础。此类学习任务中研究最多、应用最广的就是聚类。<br>
+聚类试图将数据集中的样本划分为若干个通常是不相交的子集，每个子集称为一个“簇”，通过这样的划分，每个簇可能对应于一些潜在的概念（类别）。这些概念对于聚类算法而言是事先未知的，聚类过程仅能自动形成簇结构，簇所对应的概念也需要使用者自己把握。<br>
+聚类能作为一个单独的过程，用于寻找数据内在的分布结构，也可作为分类等其他学习任务的前驱过程。例如在一些商业应用中需要对新用户的类型进行判别，但定义“用户类型”对商家来说不太容易，此时往往可先对用户数据进行聚类，根据聚类结果将每个簇定义为一个类，然后再基于这些类训练分类模型，用与判别新用户的类型。</p>
+<h2 id="性能度量">2. 性能度量</h2>
+<p>聚类的性能度量也成为聚类的有效性指标，对于聚类结果，我们需要通过某种性能度量来评估其好坏；另一方面，若明确了最终将要使用的性能度量，则可直接将其作为聚类过程的优化目标，从而更好地得到符合要求的聚类结果。<br>
+聚类性能度量大致有两类：</p>
+<ul>
+<li>将聚类结果与某个“参考模型”进行比较，称为“外部指标”；</li>
+<li>直接考察聚类结果而不利用任何参考模型，称为“内部指标”。</li>
+</ul>
+<p>对数据集<span class="math inline">\(D=\{\pmb{x}_1,\pmb{x}_2,\cdots,\pmb{x}_m\}\)</span>，假设通过聚类给出的簇划分为<span class="math inline">\(C=\{C_1,C_2,\cdots,C_k\}\)</span>，参考模型给出的簇划分为<span class="math inline">\(C^* = \{C_1^*,C_2^*,\cdots,C_s^*\}\)</span>，相应的，令<span class="math inline">\(\lambda\)</span>和<span class="math inline">\(\lambda^*\)</span>分别表示与<span class="math inline">\(C\)</span>和<span class="math inline">\(C^*\)</span>对应的簇标记变量，将样本两两考虑，定义 <span class="math display">\[\begin{equation}
+    a = |SS|,\quad SS = \{(\pmb{x}_i,\pmb{x}_j)| \lambda_i = \lambda_j,\lambda_i^* = \lambda_j^*,i&lt;j\} \nonumber \\
+    b = |SD|,\quad SD = \{(\pmb{x}_i,\pmb{x}_j)| \lambda_i = \lambda_j,\lambda_i^* \neq \lambda_j^*,i&lt;j\} \nonumber \\
+    c = |DS|,\quad DS = \{(\pmb{x}_i,\pmb{x}_j)| \lambda_i \neq \lambda_j,\lambda_i^* = \lambda_j^*,i&lt;j\} \nonumber \\
+    d = |DD|,\quad DD = \{(\pmb{x}_i,\pmb{x}_j)| \lambda_i \neq \lambda_j,\lambda_i^* \neq \lambda_j^*,i&lt;j\} \nonumber
+\end{equation}\]</span> 其中集合<span class="math inline">\(SS\)</span>包含了在<span class="math inline">\(C\)</span>中隶属于相同簇且在<span class="math inline">\(C^*\)</span>中也隶属于相同簇的样本对，集合<span class="math inline">\(SD\)</span>包含了在<span class="math inline">\(C\)</span>中隶属于相同簇但在<span class="math inline">\(C^*\)</span>中隶属于不同簇的样本对，<span class="math inline">\(DS\)</span>和<span class="math inline">\(DD\)</span>类似。由于每个样本对<span class="math inline">\((\pmb{x}_i,\pmb{x}_j)(i &lt; j)\)</span>仅能出现在一个集合里，因此有<span class="math inline">\(a+b+c+d=m(m-1)/2\)</span>成立。<br>
+基于上面的定义，导出常用的聚类性能度量外部指标：<br>
+（1）<strong>Jaccard系数（JC）</strong><br>
+<span class="math display">\[JC = \frac{a}{a+b+c}\]</span> （2）<strong>FM指数（FMI）</strong> <span class="math display">\[FMI = \sqrt{\frac{a}{a+b}·\frac{a}{a+c}}\]</span> （3）<strong>Rand指数（RI）</strong> <span class="math display">\[RI = \frac{2(a+d)}{m(m-1)}\]</span></p>
+<p>显然，上述性能度量的结果均在<span class="math inline">\([0,1]\)</span>之间，值越大越好。</p>
+<p>考虑聚类结果的簇划分<span class="math inline">\(C=\{C_1,C_2,\cdots,C_k\}\)</span>，定义<span class="math inline">\(dist(·,·)\)</span>用于表示两个样本之间的距离，<span class="math inline">\(\pmb{\mu}\)</span>代表簇的中心点<span class="math inline">\(\pmb{\mu} = \frac{1}{|C|} \sum_{1 \leq i \leq|C|} \pmb{x}_i\)</span>，并定义以下公式 <span class="math display">\[avg(C) = \frac{2}{|C|(|C|-1)} \sum_{1 \leq i &lt; j \leq |C|} dist(\pmb{x}_i,\pmb{x}_j)\]</span> <span class="math inline">\(avg(C)\)</span>表示簇<span class="math inline">\(C\)</span>内样本之间的平均距离。<br>
+<span class="math display">\[diam(C) = \max_{1 \leq i &lt; j \leq |C|} dist(\pmb{x}_i,\pmb{x}_j)\]</span> <span class="math inline">\(diam(C)\)</span>对应于簇<span class="math inline">\(C\)</span>内样本间的最远距离。<br>
+<span class="math display">\[d_{min}(C_i,C_j) = \min_{\pmb{x}_i \in C_i,\pmb{x}_j \in C_j} dist(\pmb{x}_i,\pmb{x}_j)\]</span> <span class="math inline">\(d_{min}(C_i,C_j)\)</span>对应于簇<span class="math inline">\(C_i\)</span>与簇<span class="math inline">\(C_j\)</span>最近样本间的距离。<br>
+<span class="math display">\[d_{cen}(C_i,C_j) = dist(\pmb{\mu}_i,\pmb{\mu}_j)\]</span> <span class="math inline">\(d_{cen}(C_i,C_j)\)</span>对应于簇<span class="math inline">\(C_i\)</span>和簇<span class="math inline">\(C_j\)</span>中心点间的距离。</p>
+<p>基于上述公式可导出下面常用的聚类性能度量内部指标：<br>
+（1）<strong>DB指数（DBI）</strong><br>
+<span class="math display">\[DBI = \frac{1}{k} \sum_{i=1}^k \max_{j \neq i} (\frac{avg(C_i) + avg(C_j)}{d_{cen}(C_i,C_j)})\]</span></p>
+<p>（2）<strong>Dunn指数（DI）</strong><br>
+<span class="math display">\[DI = \min_{1 \leq i \leq k} \{ \min_{j \neq i} (\frac{d_{min}(C_i,C_j)}{\max_{1 \leq l \leq k} diam(C_l)})\}\]</span></p>
+<p>显然，DBI的值越小越好，而DI则相反，值越大越好。</p>
+<h2 id="距离计算">3. 距离计算</h2>
+<p>对于函数<span class="math inline">\(dist(·,·)\)</span>，如果是一个“距离度量”，则需要满足一些基本性质：</p>
+<ul>
+<li>非负性：<span class="math inline">\(dist(\pmb{x}_i,\pmb{x}_j) \geq 0\)</span>；</li>
+<li>同一性：<span class="math inline">\(dist(\pmb{x}_i,\pmb{x}_j) = 0\)</span>当且仅当<span class="math inline">\(\pmb{x}_i = \pmb{x}_j\)</span>；</li>
+<li>对称性：<span class="math inline">\(dist(\pmb{x}_i,\pmb{x}_j) = dist(\pmb{x}_j,\pmb{x}_i)\)</span>；</li>
+<li>直递性：<span class="math inline">\(dist(\pmb{x}_i,\pmb{x}_j) \leq dist(\pmb{x}_i,\pmb{x}_k) + dist(\pmb{x}_k,\pmb{x}_j)\)</span>。</li>
+</ul>
+<p>给定样本<span class="math inline">\(\pmb{x}_i = (x_{i1},x_{i2},\cdots,x_{in})\)</span>与<span class="math inline">\(\pmb{x}_j = (x_{j1},x_{j2},\cdots,x_{jn})\)</span>，最常用的是“闵可夫斯基距离”（Minkowski distance）：<br>
+<span class="math display">\[dist_{mk}(\pmb{x}_i,\pmb{x}_j) = (\sum_{u=1}^n |x_{iu} - x_{ju}|^p)^{\frac{1}{p}}\]</span> （1）<span class="math inline">\(p=1\)</span>时，为<strong>曼哈顿距离（Manhattan distance）</strong>：<br>
+<span class="math display">\[dist_{man}(\pmb{x}_i,\pmb{x}_j) = ||\pmb{x}_i - \pmb{x}_j||_1 = \sum_{u=1}^n |x_{iu} - x_{ju}|\]</span><br>
+（2）<span class="math inline">\(p=2\)</span>时，为<strong>欧氏距离（Euclidean distance）</strong>： <span class="math display">\[dist_{ed}(\pmb{x}_i,\pmb{x}_j) = ||\pmb{x}_i - \pmb{x}_j||_2 = \sqrt{\sum_{u=1}^n |x_{iu} - x_{ju}|^2}\]</span><br>
+（3）<span class="math inline">\(p= \infty\)</span>，为各个坐标距离的最大值： <span class="math display">\[dist(\pmb{x}_i,\pmb{x}_j) = \max_{1 \leq u \leq n} |x_{iu} - x_{ju}|\]</span></p>
+<p>在讨论距离计算时，将能直接在属性值上计算距离的属性称为<strong>有序属性</strong>，例如<span class="math inline">\(\{1,2,3\}\)</span>；将不能直接在属性值上计算距离的称为<strong>无序属性</strong>，例如<span class="math inline">\(\{飞机，火车，轮船\}\)</span>。闵可夫斯基距离可用于有序属性。<br>
+对于无序属性可采用VDM（Value Difference Metric）。令<span class="math inline">\(m_{u,a}\)</span>表示在属性<span class="math inline">\(u\)</span>上取值为<span class="math inline">\(a\)</span>的样本数，<span class="math inline">\(m_{u,a,i}\)</span>表示在第<span class="math inline">\(i\)</span>个样本簇中在属性<span class="math inline">\(u\)</span>上取值为<span class="math inline">\(a\)</span>的样本数，<span class="math inline">\(k\)</span>为样本簇数，则属性<span class="math inline">\(u\)</span>上两个离散值<span class="math inline">\(a\)</span>和<span class="math inline">\(b\)</span>之间的VDM距离为 <span class="math display">\[VDM_p(a,b) = \sum_{i=1}^k |\frac{m_{u,a,i}}{m_{u,a}} - \frac{m_{u,b,i}}{m_{u,b}}|^p\]</span> 于是，可将闵可夫斯基距离和VDM结合用于处理混合属性。假设有<span class="math inline">\(n_c\)</span>个有序属性，<span class="math inline">\(n-n_c\)</span>个无序属性，不失一般性，令有序属性排列在无序属性之前，则 <span class="math display">\[MinkovDM_p(\pmb{x}_i,\pmb{x}_j) = (\sum_{u=1}^{n_c}|x_{iu} - x_{ju}|^p + \sum_{u=n_c + 1}^n VDM_p(x_{iu},x_{ju}))^{\frac{1}{p}}\]</span> 当样本空间中不同属性的重要性不同时，可使<strong>加权距离</strong>，以闵可夫斯基距离为例： <span class="math display">\[dist_{wmk}(\pmb{x}_i,\pmb{x}_j) = (w_1·|x_{i1} - x_{j1}|^p + \cdots + w_n·|x_{in} - x_{jn}|^p)^{\frac{1}{p}}\]</span> 其中权重<span class="math inline">\(w_i \geq 0 (i=1,2,\cdots,n)\)</span>表征不同属性的重要性，通常<span class="math inline">\(\sum_{i=1}^n w_i = 1\)</span>。</p>
+<h2 id="原型聚类">4. 原型聚类</h2>
+<p>原型聚类也称为“基于原型的聚类”，此类算法假设聚类结构能通过一组原型刻画，在现实聚类任务中极为常用。通常情形下，算法先对原型进行初始化，然后对原型进行迭代更新求解。采用不同的原型表示、不同的求解方式，将产生不同的算法。</p>
+<h3 id="k均值算法">4.1. <span class="math inline">\(k\)</span>均值算法</h3>
+<p>给定样本集<span class="math inline">\(D = \{\pmb{x}_1,\pmb{x}_2,\cdots,\pmb{x}_m\}\)</span>，<span class="math inline">\(k\)</span>均值（k-means）算法针对聚类所得簇划分<span class="math inline">\(C=\{C_1,C_2,\cdots,C_k\}\)</span>最小平方误差 <span class="math display">\[E = \sum_{i=1}^k \sum_{\pmb{x} \in C_i} ||\pmb{x} - \pmb{\mu}_i||_2^2\]</span> 其中<span class="math inline">\(\pmb{\mu}_i = \frac{1}{|C_i|} \sum_{\pmb{x} \in C_i} \pmb{x}\)</span>是簇<span class="math inline">\(C_i\)</span>的均值向量。直观来看，上式在一定程度上刻画了簇内样本围绕簇均值向量的紧密程度，<span class="math inline">\(E\)</span>值越小则簇内样本相似度越高。<br>
+算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午1.02.51.png">
+
+</div>
+<p>优点：</p>
+<ul>
+<li>容易理解，聚类效果不错；</li>
+<li>处理大数据集时，该算法可以保证较好的伸缩性和高效率；</li>
+<li>当簇近似高斯分布时，效果非常不错。</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>K值需要用户给定，在进行数据处理之前，K值是未知的，不同的K值也会得到不同的结果，可多选取几个K值，grid search选取几个指标评价效果；</li>
+<li>对初始簇中心点是敏感的，可以多初始化几次，选取损失函数最小的；</li>
+<li>属于硬聚类，每个样本点只属于一个类；</li>
+<li>对异常值免疫能力差，可以进行一些调整（不取均值点、取离均值最近的样本点）；</li>
+<li>对团壮数据点区分度好，对于带状效果不好（谱聚类、特征映射）。</li>
+</ul>
+<p>缺失值问题：</p>
+<ul>
+<li>离散特征：将缺失的样本作为单独一类，缺失特征过多的样本去掉；</li>
+<li>连续特征：通过其他特征对缺失特征做回归；样本平均值填补；中位数填补。</li>
+</ul>
+<p>对于初始值选取的问题，可用扩展的算法KMeans++，每次有权重的选取新的中心点。<br>
+为了使收敛速度加快，可以使用Mini-BatchKMeans，求梯度时用随机梯度下降，而不是批量梯度下降。</p>
+<h3 id="学习向量量化">4.2. 学习向量量化</h3>
+<p>与<span class="math inline">\(k\)</span>均值算法类似，<strong>学习向量量化</strong>（Learning Vector Quantization，LVQ）也是试图寻找一组原型向量来刻画聚类结构，但与一般聚类算法不同，LVQ假设数据样本带有类别标记，学习过程利用样本的这些监督信息来辅助聚类。<br>
+给定样本集<span class="math inline">\(D = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_m,y_m)\}\)</span>，每个样本<span class="math inline">\(\pmb{x}_j\)</span>是由<span class="math inline">\(n\)</span>个属性描述的特征向量<span class="math inline">\((x_{j1},x_{j2},\cdots,x_{jn})\)</span>，<span class="math inline">\(y_i \in \gamma\)</span>是样本<span class="math inline">\(\pmb{x}_j\)</span>的类别标记。LVQ的目标是学一组<span class="math inline">\(n\)</span>为原型向量<span class="math inline">\(\{\pmb{p}_1,\pmb{p}_2,\cdots,\pmb{p}_q\}\)</span>，每个原型向量代表一个聚类簇，粗标记<span class="math inline">\(t_i \in \gamma\)</span>。</p>
+<p>算法如下： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午1.57.34.png"></p>
+<p>对样本<span class="math inline">\(\pmb{x}_j\)</span>，如果最近的原型向量<span class="math inline">\(\pmb{p}_i^*\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>的类别标记相同，则令<span class="math inline">\(\pmb{p}_i^*\)</span>向<span class="math inline">\(\pmb{x}_j\)</span>的方向靠拢，此时新原型向量为 <span class="math display">\[\pmb{p}&#39; = \pmb{p}_i^* + \eta·(\pmb{x}_j - \pmb{p}_i^*)\]</span> <span class="math inline">\(\pmb{p}‘\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>之间的距离为 <span class="math display">\[\begin{align}
+    ||\pmb{p}&#39; - \pmb{x}_j||_2 &amp;= ||\pmb{p}_i^* + \eta ·(\pmb{x}_j - \pmb{p}_i^*) - \pmb{x}_j||_2 \nonumber \\
+    &amp;= (1 - \eta)·||\pmb{p}_i^* - \pmb{x}_j||_2 \nonumber 
+\end{align}\]</span> 令学习率<span class="math inline">\(\eta \in (0,1)\)</span>，则原型向量<span class="math inline">\(\pmb{p}_i^*\)</span>在更新为<span class="math inline">\(\pmb{p}&#39;\)</span>之后将更接近<span class="math inline">\(\pmb{x}_j\)</span>。<br>
+类似的，若<span class="math inline">\(\pmb{p}_i^*\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>的类别标记不同，则更新后的原型向量与<span class="math inline">\(\pmb{x}_j\)</span>之间的距离将增大为<span class="math inline">\((1 + \eta)·||\pmb{p}_i^* - \pmb{x}_j||_2\)</span>，从而远离<span class="math inline">\(\pmb{x}_j\)</span>。<br>
+在学得一组原型向量<span class="math inline">\(\{\pmb{p}_1,\pmb{p}_2,\cdots,\pmb{p}_q\}\)</span>后，即可实现对样本空间<span class="math inline">\(\mathscr{X}\)</span>的簇划分，对任意样本<span class="math inline">\(\pmb{x}\)</span>，它将被划入与其距离最近的原型向量所代表的簇中。即每个原型向量<span class="math inline">\(\pmb{p}_i\)</span>定义了与之相关的一个区域<span class="math inline">\(R_i\)</span>，该区域中每个样本与<span class="math inline">\(\pmb{p}_i\)</span>的距离不大于它与其他原型向量<span class="math inline">\(\pmb{p}_{i&#39;}(i&#39; \neq i)\)</span>的距离，即 <span class="math display">\[R_i = \{\pmb{x} \in \mathscr{X}| ||\pmb{x} - \pmb{p}_i||_2 \leq ||\pmb{x} - \pmb{p}_{i&#39;}||_2,i&#39; \neq i\}\]</span> 由此形成了对应样本空间<span class="math inline">\(\mathscr{X}\)</span>的簇划分<span class="math inline">\(\{R_1,R_2,\cdots,R_q\}\)</span>，该划分通常称为&quot;Voronoi部分&quot;（Voronoi tessellation）。</p>
+<h3 id="高斯混合聚类">4.3. 高斯混合聚类</h3>
+<p>与<span class="math inline">\(k\)</span>均值、LVQ用原型向量来刻画聚类结构不同，高斯混合（Mixture-of-Gaussian）聚类采用概率模型来表达聚类原型。<br>
+对<span class="math inline">\(n\)</span>维样本空间<span class="math inline">\(\mathscr{X}\)</span>中的随机向量<span class="math inline">\(\pmb{x}\)</span>，若<span class="math inline">\(\pmb{x}\)</span>服从高斯分布，其概率密度函数为 <span class="math display">\[p(\pmb{x}) = \frac{1}{(2 \pi)^\frac{n}{2} |\pmb{\Sigma}|^{\frac{1}{2}}} e^{ - \frac{1}{2} (\pmb{x} - \pmb{\mu})^T \pmb{\Sigma}^{-1} (\pmb{x} - \pmb{\mu})} \tag{1}\]</span> 其中<span class="math inline">\(\pmb{\mu}\)</span>是<span class="math inline">\(n\)</span>维均值向量，<span class="math inline">\(\Sigma\)</span>是<span class="math inline">\(n \times n\)</span>的协方差矩阵。有上式可以看出均值向量<span class="math inline">\(\pmb{\mu}\)</span>和协方差矩阵<span class="math inline">\(\pmb{\Sigma}\)</span>这两个参数决定。为了明确显示高斯分布于相应参数的依赖关系，将概率密度函数记为<span class="math inline">\(p(\pmb{x} | \pmb{\mu}, \pmb{\Sigma})\)</span>。<br>
+定义高斯混合分布： <span class="math display">\[p_{\mathscr{M}}(\pmb{x}) = \sum_{i=1}^k \alpha_i · p(\pmb{x}| \pmb{\mu}_i, \pmb{\Sigma}_i) \tag{2}\]</span> 该分布共由<span class="math inline">\(k\)</span>个混合成分组成，每个混合成分对应一个高斯分布。其中<span class="math inline">\(\pmb{\mu}_i\)</span>与<span class="math inline">\(\pmb{\Sigma}_i\)</span>是第<span class="math inline">\(i\)</span>个高斯混合成分的参数，而<span class="math inline">\(\alpha_i &gt; 0\)</span>为相应的“混合系数”（mixture coefficient），<span class="math inline">\(\sum_{i=1}^k \alpha_i = 1\)</span>。<br>
+假设样本的生成过程由高斯混合分布给出：</p>
+<ul>
+<li>首先，根据<span class="math inline">\(\alpha_1,\alpha_2,\cdots,\alpha_k\)</span>定义的先验分布选择高斯混合成分，其中<span class="math inline">\(\alpha_i\)</span>为选择第<span class="math inline">\(i\)</span>个混合成分的概率；</li>
+<li>然后，根据被选择的混合成分的概率密度函数进行采样，从而生成相应的样本。</li>
+</ul>
+<p>若训练集<span class="math inline">\(D = \{\pmb{x}_1, \pmb{x}_2, \cdots, \pmb{x}_m\}\)</span>有上述过程产生，令随机变量<span class="math inline">\(z_j \in \{1,2,\cdots,k\}\)</span>表示生成样本<span class="math inline">\(\pmb{x}_j\)</span>的高斯混合成分，其取值未知。显然，<span class="math inline">\(z_j\)</span>的先验概率<span class="math inline">\(P(z_j = i)\)</span>对应于<span class="math inline">\(\alpha_i (i=1,2,\cdots,k)\)</span>，根据贝叶斯定理，<span class="math inline">\(z_j\)</span>的后验分布为： <span class="math display">\[\begin{align}
+p_{\mathscr{M}}(z_j = i| \pmb{x}_j) &amp;= \frac{P(z_j = i)·p_{\mathscr{M}}(\pmb{x}_j|z_j = i)}{p_{\mathscr{M}}(\pmb{x}_j)} \nonumber \\
+&amp;= \frac{\alpha_i · p(\pmb{x}_j | \pmb{\mu}_i, \pmb{\Sigma}_i)}{\sum_{l=1}^k \alpha_l · p(\pmb{x}_j| \pmb{\mu}_l, \pmb{\Sigma}_l)} \nonumber 
+\end{align} \tag{3}\]</span> <span class="math inline">\(p_{\mathscr{M}}(z_j = i|\pmb{x}_j)\)</span>给出了样本<span class="math inline">\(\pmb{x}_j\)</span>由第<span class="math inline">\(i\)</span>个高斯混合成分生成的后验概率，为了方便叙述，将其简记为<span class="math inline">\(\gamma_{ji} (i=1,2,\cdots,k)\)</span>。<br>
+当高斯混合分布<span class="math inline">\(p_{\mathscr{M}}(\pmb{x}) = \sum_{i=1}^k \alpha_i · p(\pmb{x}| \pmb{\mu}_i, \pmb{\Sigma}_i)\)</span>已知时，高斯混合聚类吧样本集<span class="math inline">\(D\)</span>划分为<span class="math inline">\(k\)</span>个簇<span class="math inline">\(C = \{C_1,C_2,\cdots,C_k\}\)</span>，每个样本<span class="math inline">\(\pmb{x}_j\)</span>的簇标记<span class="math inline">\(\lambda_j\)</span>如下确定： <span class="math display">\[\lambda_j = \arg \max_{i \in \{1,2,\cdots,k\}} \gamma_{ji} \tag{4}\]</span> 因此，从原型聚类的角度来看，高斯混合聚类是采用概率模型（高斯分布）对原型进行刻画，簇划分由原型对应后验概率确定。</p>
+<p>下面是如何求解模型参数<span class="math inline">\(\{(\alpha_i,\pmb{\mu}_i, \pmb{\Sigma}_i)|1 \leq i \leq k\}\)</span>。<br>
+给定样本集<span class="math inline">\(D\)</span>，可采用极大似然估计，即最大化对数似然： <span class="math display">\[\begin{align}
+    LL(D) &amp;= \ln(\prod_{j=1}^m p_{\mathscr{M}}(\pmb{x}_i)) \nonumber \\
+    &amp;= \sum_{j=1}^m \ln(\sum_{i=1}^k \alpha_i·p(\pmb{x}_j|\pmb{\mu}_i,\pmb{\Sigma}_i)) \nonumber
+\end{align} \tag{5}\]</span> 常采用EM算法进行迭代优化求解，下面是简单的推导：<br>
+若参数<span class="math inline">\(\{(\alpha_i,\pmb{\mu}_i,\pmb{\Sigma}_i)|1 \leq i \leq k\}\)</span>能使对数似然函数最大化，则由<span class="math inline">\(\frac{\partial LL(D)}{\partial \pmb{\mu}_i} = 0\)</span>有 <span class="math display">\[\sum_{j=1}^m \frac{\alpha_i · p(\pmb{x}_j | \pmb{\mu}_i, \pmb{\Sigma}_i)}{\sum_{l=1}^k \alpha_l · p(\pmb{x}_j|\pmb{\mu}_l,\pmb{\Sigma}_l)} (\pmb{x}_j - \pmb{\mu}_i) = 0 \tag{6}\]</span> 由式（3）以及<span class="math inline">\(\gamma_{ji} = p_{\mathscr{M}}(z_j = i | \pmb{x}_j)\)</span>，有 <span class="math display">\[\pmb{\mu}_i= \frac{\sum_{j=1}^m \gamma_{ji} \pmb{x}_j}{\sum_{j=1}^m \gamma_{ji}} \tag{7}\]</span> 即各混合成分的均值可通过样本加权平均来估计，样本权重是每个样本属于该成分的后验概率。<br>
+在这一步的求导中，会用到下面两个知识点：</p>
+<ol style="list-style-type: decimal">
+<li>若<span class="math inline">\(\pmb{A}\)</span>是<span class="math inline">\(n\)</span>阶方阵，<span class="math inline">\(\pmb{x}\)</span>是<span class="math inline">\(n\)</span>维向量，则<span class="math inline">\(\frac{\partial (\pmb{x}^T \pmb{A} \pmb{x})}{\partial \pmb{x}} = (\pmb{A} + \pmb{A}^T) \pmb{x}\)</span>，当<span class="math inline">\(\pmb{A}\)</span>是<span class="math inline">\(n\)</span>阶对称方阵时，即<span class="math inline">\(\pmb{A} = \pmb{A}^T\)</span>，有<span class="math inline">\(\frac{\partial (\pmb{x}^T \pmb{A} \pmb{x})}{\partial \pmb{x}} = 2 \pmb{A} \pmb{x}\)</span>；</li>
+<li>如果<span class="math inline">\(n\)</span>阶方阵<span class="math inline">\(\pmb{A}\)</span>是可逆矩阵，<span class="math inline">\(\pmb{x}\)</span>是<span class="math inline">\(n\)</span>维列向量，那么方程<span class="math inline">\(\pmb{A} \pmb{x} = 0\)</span>有且仅有平凡解（零解），即<span class="math inline">\(\pmb{x} = 0\)</span>。</li>
+</ol>
+<p>类似的，由<span class="math inline">\(\frac{\partial LL(D)}{\partial \pmb{\Sigma}_i} = 0\)</span>可得 <span class="math display">\[\pmb{\Sigma}_i = \frac{\sum_{j=1}^m \gamma_{ji}(\pmb{x}_j - \pmb{\mu}_i)(\pmb{x}_j - \pmb{\mu}_i)^T}{\sum_{j=1}^m \gamma_{ji}} \tag{8}\]</span> 对于混合系数<span class="math inline">\(\alpha_i\)</span>，除了需要最大化<span class="math inline">\(LL(D)\)</span>，还需满足<span class="math inline">\(\alpha_i \geq 0\)</span>，<span class="math inline">\(\sum_{i=1}^k \alpha_i = 1\)</span>，考虑<span class="math inline">\(LL(D)\)</span>的拉格朗日形式 <span class="math display">\[LL(D) + \lambda (\sum_{i=1}^k \alpha_i - 1) \tag{9}\]</span> 其中<span class="math inline">\(\lambda\)</span>为拉格朗日乘子，由上式对<span class="math inline">\(\alpha_i\)</span>的导数为0，有 <span class="math display">\[\sum_{j=1}^m \frac{p(\pmb{x}_j|\pmb{\mu}_i, \pmb{\Sigma}_i)}{\sum_{l=1}^k \alpha_l · p(\pmb{x}_j | \pmb{\mu}_l, \pmb{\Sigma}_l)} + \lambda = 0 \tag{10}\]</span> 两边同时乘以<span class="math inline">\(\alpha_i\)</span>，有<br>
+<span class="math display">\[\sum_{j=1}^m \frac{\alpha_i·p(\pmb{x}_j|\pmb{\mu}_i, \pmb{\Sigma}_i)}{\sum_{l=1}^k \alpha_l · p(\pmb{x}_j | \pmb{\mu}_l, \pmb{\Sigma}_l)} + \lambda·\alpha_i = \sum_{j=1}^m \gamma_{ji} + \lambda · \alpha_i = 0\]</span> 对上式两边同时对<span class="math inline">\(i=1,2,\cdots,k\)</span>求和,即<br>
+<span class="math display">\[\sum_{i=1}^k[(\sum_{j=1}^m \gamma_{ji}) + \lambda · \alpha_i] = (\sum_{i=1}^k \sum_{j=1}^m \gamma_{ji}) + \lambda · \sum_{i=1}^k \alpha_i = m + \lambda = 0\]</span> 可以得到<span class="math inline">\(\lambda = -m\)</span>，所以有 <span class="math display">\[\alpha_i = \frac{1}{m} \sum_{j=1}^m \gamma_{ji} \tag{11}\]</span> 即每个高斯成分的混合系数由样本属于该成分的平均后验概率确定。</p>
+<p>有上述推导可获得高斯混合模型的EM算法：</p>
+<ol style="list-style-type: decimal">
+<li>E步：在每步迭代中，先根据当前参数来计算每个样本属于每个高斯成分的后验概率<span class="math inline">\(\gamma_{ji}\)</span>；</li>
+<li>M步：根据式（7）、（8）和（11）更新模型参数<span class="math inline">\(\{(\alpha_i,\pmb{\mu}_i, \pmb{\Sigma}_i)|1 \leq i \leq k\}\)</span>。</li>
+</ol>
+<p>算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午9.02.10.png">
+
+</div>
+<h2 id="密度聚类">5. 密度聚类</h2>
+<p>密度聚类也称为“基于密度的聚类”（density-based clustering），此类算法假设聚类结构能通过样本分布的紧密程度确定。通常情形下，密度聚类算法从样本密度的角度来考察样本之间的可连接性，并基于可连接样本不断扩展聚类簇以获得最终的聚类结果。<br>
+DBSCAN是一种著名的密度聚类算法，它基于一组“邻域”参数<span class="math inline">\((\epsilon,MinPts)\)</span>来刻画样本分布的紧密程度。给定数据集<span class="math inline">\(D = \{\pmb{x}_1, \pmb{x}_2,\cdots, \pmb{x}_m\}\)</span>。定义下列概念：</p>
+<ul>
+<li><strong><span class="math inline">\(\epsilon\)</span>-邻域</strong>：对<span class="math inline">\(\pmb{x}_j \in D\)</span>，其<span class="math inline">\(\epsilon\)</span>-邻域包含样本集<span class="math inline">\(D\)</span>中与<span class="math inline">\(\pmb{x}_j\)</span>的距离不大于<span class="math inline">\(\epsilon\)</span>的样本，即<span class="math inline">\(N_{\epsilon}(\pmb{x}_j) = \{\pmb{x}_i \in D | dist(\pmb{x}_i, \pmb{x}_j) \leq \epsilon\}\)</span>；</li>
+<li><strong>核心对象（core object）</strong>：若<span class="math inline">\(\pmb{x}_j\)</span>的<span class="math inline">\(\epsilon\)</span>-邻域至少包含<span class="math inline">\(MinPts\)</span>个样本，即<span class="math inline">\(|N_{\epsilon}(\pmb{x}_j)| \geq MinPts\)</span>，则<span class="math inline">\(\pmb{x}_j\)</span>是一个核心对象；</li>
+<li><strong>密度直达（directly density-reachable）</strong>：若<span class="math inline">\(\pmb{x}_j\)</span>位于<span class="math inline">\(\pmb{x}_i\)</span>的<span class="math inline">\(\epsilon\)</span>-邻域中，且<span class="math inline">\(\pmb{x}_i\)</span>是核心对象，则称<span class="math inline">\(\pmb{x}_j\)</span>由<span class="math inline">\(\pmb{x}_i\)</span>密度直达；</li>
+<li><strong>密度可达（density-reachable）</strong>：对<span class="math inline">\(\pmb{x}_i\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>，若存在这样的序列<span class="math inline">\(\pmb{p}_1,\pmb{p}_2,\cdots,\pmb{p}_n\)</span>，其中<span class="math inline">\(\pmb{p}_1 = \pmb{x}_i\)</span>，<span class="math inline">\(\pmb{p}_n = \pmb{x}_j\)</span>且<span class="math inline">\(\pmb{p}_{i+1}\)</span>由<span class="math inline">\(\pmb{p}_i\)</span>密度直达，则称<span class="math inline">\(\pmb{x}_i\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>密度可达；</li>
+<li><strong>密度相连（density-connected）</strong>：对<span class="math inline">\(\pmb{x}_i\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>，若存在<span class="math inline">\(\pmb{x}_k\)</span>使得<span class="math inline">\(\pmb{x}_i\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>均由<span class="math inline">\(\pmb{x}_k\)</span>密度可达，则称<span class="math inline">\(\pmb{x}_i\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>密度相连。</li>
+</ul>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-14%20下午9.45.22.png">
+
+</div>
+<p>基于上述概念，DBSCAN将“簇”定义为：有密度可达关系导出的最大的密度相连样本集合。形式化地说，给定领域参数<span class="math inline">\((\epsilon,MinPts)\)</span>，簇<span class="math inline">\(C \subseteq D\)</span>是满足以下性质的非空样本子集：</p>
+<ul>
+<li>连接性（connectivity）：<span class="math inline">\(\pmb{x}_i \in C, \pmb{x}_j \in C \Rightarrow \pmb{x}_i 与 \pmb{x}_j 密度相连\)</span></li>
+<li>最大性（maximality）：<span class="math inline">\(\pmb{x}_i \in C, \pmb{x}_j 由\pmb{x}_i 密度可达 \Rightarrow \pmb{x}_j \in C\)</span></li>
+</ul>
+<p>若<span class="math inline">\(\pmb{x}\)</span>为核心对象，由<span class="math inline">\(\pmb{x}\)</span>密度可达的所有样本组成的集合记为<span class="math inline">\(\pmb{X} = \{\pmb{x}&#39; \in D| \pmb{x}&#39;由\pmb{x}密度可达\}\)</span>，则不难证明<span class="math inline">\(\pmb{X}\)</span>即为满足连接性与最大性的簇。<br>
+<span class="math inline">\(D\)</span>中不属于任何簇的样本被认为是噪声或异常样本。<br>
+算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.00.56.png">
+
+</div>
+<h2 id="层次聚类">6. 层次聚类</h2>
+<p>层次聚类（hierarchical clustering）试图在不同层次对数据集进行划分，从而形成树形的聚类结构。数据集的划分可采用“自底向上”的聚类策略，也可采用“自顶向下”的分拆策略。<br>
+AGNES是一种采用自底向上聚合策略的层次聚类方法。它先将数据集中的每个样本看做一个初始聚类簇，然后在算法运行的每一步中找出距离最近的两个聚类簇进行合并，该过程不断重复，直至达到预设的聚类簇个数。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.33.01.png">
+
+</div>
+<p>给定聚类簇<span class="math inline">\(C_i\)</span>和<span class="math inline">\(C_j\)</span>，可通过下列公式计算距离：</p>
+<ul>
+<li>最小距离：<span class="math inline">\(d_{min}(C_i,C_j) = \min_{\pmb{x} \in C_i, \pmb{z} \in C_j} dist(\pmb{x},\pmb{z})\)</span></li>
+<li>最大距离：<span class="math inline">\(d_{max}(C_i,C_j) = \max_{\pmb{x} \in C_i, \pmb{z} \in C_j} dist(\pmb{x},\pmb{z})\)</span></li>
+<li>平均距离：<span class="math inline">\(d_{avg}(C_i,C_j) = \frac{1}{|C_i||C_j|} \sum_{\pmb{x} \in C_i,\pmb{z} \in C_j} dist(\pmb{x},\pmb{z})\)</span></li>
+</ul>
+<p>AGNES算法根据不同的距离计算公式被称为：</p>
+<ul>
+<li>单链接算法（single-linkage）：最小距离由两个簇的最近样本决定；</li>
+<li>全链接算法（complete-linkage）：最大距离由两个簇的最远样本决定；</li>
+<li>均链接算法（average-linkage）：平均距离由两个簇的所有样本共同决定。</li>
+</ul>
+<p>算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.31.22.png">
+
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/聚类/" rel="tag"># 聚类</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/13/机器学习/随机森林/" rel="next" title="随机森林">
+                <i class="fa fa-chevron-left"></i> 随机森林
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#聚类"><span class="nav-number">1.</span> <span class="nav-text">聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#聚类任务"><span class="nav-number">1.1.</span> <span class="nav-text">1. 聚类任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能度量"><span class="nav-number">1.2.</span> <span class="nav-text">2. 性能度量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#距离计算"><span class="nav-number">1.3.</span> <span class="nav-text">3. 距离计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型聚类"><span class="nav-number">1.4.</span> <span class="nav-text">4. 原型聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k均值算法"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1. \(k\)均值算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习向量量化"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2. 学习向量量化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯混合聚类"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3. 高斯混合聚类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#密度聚类"><span class="nav-number">1.5.</span> <span class="nav-text">5. 密度聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#层次聚类"><span class="nav-number">1.6.</span> <span class="nav-text">6. 层次聚类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
