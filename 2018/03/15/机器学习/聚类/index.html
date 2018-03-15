@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.00.56.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.33.01.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.31.22.png">
-<meta property="og:updated_time" content="2018-03-15T11:36:26.673Z">
+<meta property="og:updated_time" content="2018-03-15T11:54:16.788Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聚类">
 <meta name="twitter:description" content="聚类 1. 聚类任务 在无监督学习中，训练样本的标记信息是未知的，目标是通过对无标记训练样本的学习来揭示数据的内在性质和规律，为进一步的数据分析提供基础。此类学习任务中研究最多、应用最广的就是聚类。 聚类试图将数据集中的样本划分为若干个通常是不相交的子集，每个子集称为一个“簇”，通过这样的划分，每个簇可能对应于一些潜在的概念（类别）。这些概念对于聚类算法而言是事先未知的，聚类过程仅能自动形成簇结构">
@@ -503,11 +503,24 @@ AGNES是一种采用自底向上聚合策略的层次聚类方法。它先将数
 <li>全链接算法（complete-linkage）：最大距离由两个簇的最远样本决定；</li>
 <li>均链接算法（average-linkage）：平均距离由两个簇的所有样本共同决定。</li>
 </ul>
+<p>单链接算法易产生链化现象，全链接算法对离群点非常敏感。</p>
 <p>算法如下：</p>
 <div class="figure">
 <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-15%20下午7.31.22.png">
 
 </div>
+<p>层次聚类的优点：</p>
+<ul>
+<li>可以通过设置不同的参数值，得到不同粒度上的多层次聚类结构；</li>
+<li>对样本的输入顺序不敏感。</li>
+</ul>
+<p>层次聚类的缺点：</p>
+<ul>
+<li>算法的时间复杂度大；</li>
+<li>层次聚类的结果依赖聚类合并点和分裂点的选择；</li>
+<li>不可逆性，下一次聚类会在前一次聚类结果的基础上进行，一旦聚类结果形成，无法通过重新合并来优化聚类的性能；</li>
+<li>聚类终止条件的不精确性。</li>
+</ul>
 
       
     </div>
