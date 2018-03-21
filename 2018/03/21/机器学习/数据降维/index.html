@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="机器学习,降维," />
+
+
+<meta name="description" content="数据降维 在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面临的严重障碍，被称为“维数灾难”（curse of dimensionality）。 缓解维数灾难的一个重要途径就是降维（dimension reduction），也成为“维数约简”，即通过某种数学变换将原始高维属性空间转变为一个低维“子空间”（subspace），在这个子空间中样本密度大幅提高，距离计算也变得更">
+<meta name="keywords" content="机器学习,降维">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据降维">
+<meta property="og:url" content="http://yoursite.com/2018/03/21/机器学习/数据降维/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="数据降维 在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面临的严重障碍，被称为“维数灾难”（curse of dimensionality）。 缓解维数灾难的一个重要途径就是降维（dimension reduction），也成为“维数约简”，即通过某种数学变换将原始高维属性空间转变为一个低维“子空间”（subspace），在这个子空间中样本密度大幅提高，距离计算也变得更">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-17%20上午11.42.22.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-17%20下午2.33.48.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-19%20上午10.43.38.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-20%20下午8.55.44.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-20%20下午9.47.46.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.20.58.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.27.41.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.45.24.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午7.41.12.png">
+<meta property="og:updated_time" content="2018-03-21T11:45:30.231Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据降维">
+<meta name="twitter:description" content="数据降维 在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面临的严重障碍，被称为“维数灾难”（curse of dimensionality）。 缓解维数灾难的一个重要途径就是降维（dimension reduction），也成为“维数约简”，即通过某种数学变换将原始高维属性空间转变为一个低维“子空间”（subspace），在这个子空间中样本密度大幅提高，距离计算也变得更">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-17%20上午11.42.22.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/21/机器学习/数据降维/"/>
+
+
+  <title>数据降维 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/机器学习/数据降维/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据降维</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T19:44:45+08:00">2018-03-21</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="数据降维">数据降维</h1>
+<p>在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面临的严重障碍，被称为“维数灾难”（curse of dimensionality）。<br>
+缓解维数灾难的一个重要途径就是降维（dimension reduction），也成为“维数约简”，即通过某种数学变换将原始高维属性空间转变为一个低维“子空间”（subspace），在这个子空间中样本密度大幅提高，距离计算也变得更为容易。<br>
+数据降维的原因：很多时候，人们观测或收集到的数据样本虽然是高维的，但与学习任务密切相关的也许仅是某个低维分布，即高维空间中的一个低维“嵌入”（embedding），原始高维空间中的样本点，在这个低维嵌入子空间中更容易学习。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-17%20上午11.42.22.png">
+
+</div>
+<h2 id="mds算法">1. MDS算法</h2>
+<p>若要求原始空间中样本之间的距离在低维空间中得以保持，即得到“多维缩放”（Multiple Dimensional Scaling，MDS）这种经典的降维方法。<br>
+假设<span class="math inline">\(m\)</span>个样本在原始空间中的距离矩阵为<span class="math inline">\(\mathbf{D} \in \mathbf{R}^{m \times m}\)</span>，其第<span class="math inline">\(i\)</span>行<span class="math inline">\(j\)</span>列的元素<span class="math inline">\(dist_{ij}\)</span>为样本<span class="math inline">\(\pmb{x}_i\)</span>到<span class="math inline">\(\pmb{x}_j\)</span>的距离，我们的目标是获得样本在<span class="math inline">\(d&#39;\)</span>维空间的表示<span class="math inline">\(\mathbf{Z} \in \mathbf{R}^{d&#39; \times m},d&#39; &lt; d\)</span>，且任意两个样本在<span class="math inline">\(d&#39;\)</span>维空间中的欧氏距离等于原始空间中的距离，即<span class="math inline">\(||\pmb{z}_i - \pmb{z}_j|| = dist_{ij}\)</span>。<br>
+令<span class="math inline">\(\mathbf{B} = \mathbf{Z}^T \mathbf{Z} \in \mathbf{R}^{m \times m}\)</span>，其中<span class="math inline">\(\mathbf{B}\)</span>为降维后样本的内积矩阵，<span class="math inline">\(b_{ij} = \pmb{z}_i^T \pmb{z}_j\)</span>，有 <span class="math display">\[\begin{align}
+dist_{ij}^2 &amp;= ||\pmb{z}_i||^2 + ||\pmb{z}_j||^2 - 2 \pmb{z}_i^T \pmb{z}_j \nonumber \\
+&amp;= b_{ii} + b_{jj} - 2 b_{ij} \tag{10.3}
+\end{align}\]</span> 为了便于讨论，令降维后的样本<span class="math inline">\(\pmb{z}\)</span>被中心化，即<span class="math inline">\(\sum_{i=1}^m \pmb{z}_i = 0\)</span>。显然，矩阵<span class="math inline">\(\mathbf{B}\)</span>的行与列之和均为0，即<span class="math inline">\(\sum_{i=1}^m b_{ij} = \sum_{j=1}^m b_{ij} = 0\)</span>，易知 <span class="math display">\[\begin{equation}
+\sum_{i=1}^m dist_{ij}^2 = tr(\mathbf{B}) + mb_{jj}  \nonumber \\
+\sum_{j=1}^m dist_{ij}^2 = tr(\mathbf{B}) + mb_{ii}  \nonumber \\
+\sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 = 2m \times tr(\mathbf{B}) \nonumber
+\end{equation}\]</span> 其中<span class="math inline">\(tr(·)\)</span>表示矩阵的迹，<span class="math inline">\(tr(\mathbf{B}) = \sum_{i=1}^m ||\pmb{z}_i||^2\)</span>，令 <span class="math display">\[\begin{align}
+dist_{i·}^2 &amp;= \frac{1}{m} \sum_{j=1}^m dist_{ij}^2 \nonumber \\
+dist_{·j}^2 &amp;= \frac{1}{m} \sum_{i=1}^m dist_{ij}^2 \nonumber \\
+dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumber
+\end{align}\]</span> 由上述公式可推得 <span class="math display">\[b_{ij} = - \frac{1}{2} (dist_{ij}^2 - dist_{i·}^2 - dist_{·j}^2 + dist_{··}^2)\]</span> 由此即可通过降维前后保持不变的距离矩阵<span class="math inline">\(\mathbf{D}\)</span>求取内积矩阵<span class="math inline">\(\mathbf{B}\)</span>。<br>
+对矩阵<span class="math inline">\(\mathbf{B}\)</span>做特征分解（eigenvalue decomposition），<span class="math inline">\(\mathbf{B} = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^T\)</span>，其中<span class="math inline">\(\mathbf{\Lambda} = diag(\lambda_1, \lambda_2, \cdots, \lambda_d)\)</span>为特征值构成的对角矩阵，<span class="math inline">\(\lambda_1 \geq \lambda_2 \geq \cdots \geq \lambda_d\)</span>，<span class="math inline">\(\mathbf{V}\)</span>为特征向量矩阵，假定其中有<span class="math inline">\(d^*\)</span>个非零特征值，它们构成对角矩阵<span class="math inline">\(\mathbf{\Lambda}_{*} = diag(\lambda_1, \lambda_2, \cdots, \lambda_{d^*})\)</span>，令<span class="math inline">\(\mathbf{V}_*\)</span>表示相应的特征向量矩阵，则<span class="math inline">\(\mathbf{Z}\)</span>可表达为 <span class="math display">\[\mathbf{Z} = \mathbf{\Lambda}_*^{1/2} \mathbf{V}_*^T \in \mathbf{R}^{d^* \times m}\]</span> 在现实应用中为了有效降维，往往仅需降维后的距离与原始空间中的距离尽可能接近，而不必严格相等。此时可取<span class="math inline">\(d&#39; \ll d\)</span>个最大特征值构成对角矩阵<span class="math inline">\(\tilde{\mathbf{\Lambda}} = diag(\lambda_1, \lambda_2, \cdots, \lambda_{d&#39;})\)</span>，令<span class="math inline">\(\tilde{\mathbf{V}}\)</span>表示相应的特征向量矩阵，则<span class="math inline">\(\mathbf{Z}\)</span>可表达为 <span class="math display">\[\mathbf{Z} = \tilde{\mathbf{\Lambda}}^{1/2} \tilde{\mathbf{V}}^T \in \mathbf{R}^{d&#39; \times m}\]</span></p>
+<p>MDS算法描述如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-17%20下午2.33.48.png">
+
+</div>
+<p>一般来说，想要获得低维子空间，最简单的是对原始高维空间进行线性变换。<br>
+给定<span class="math inline">\(d\)</span>维空间中的样本<span class="math inline">\(\mathbf{X} = (\pmb{x}_1, \pmb{x}_2, \cdots, \pmb{x}_m) \in \mathbf{R}^{d \times m}\)</span>，变换之后得到<span class="math inline">\(d&#39; \leq d\)</span>维空间中的样本 <span class="math display">\[\mathbf{Z} = \mathbf{W}^T \mathbf{X} \tag{10.13} \]</span> 其中<span class="math inline">\(\mathbf{W} \in \mathbf{R}^{d \times d&#39;}\)</span>是变换矩阵，<span class="math inline">\(\mathbf{Z} \in \mathbf{R}^{d&#39; \times m}\)</span>是样本在新空间中的表达。<br>
+变换矩阵<span class="math inline">\(\mathbf{W}\)</span>可视为<span class="math inline">\(d&#39;\)</span>个<span class="math inline">\(d\)</span>维基向量，<span class="math inline">\(\pmb{z}_i = \mathbf{W}^T \pmb{x}_i\)</span>是第<span class="math inline">\(i\)</span>个样本与这<span class="math inline">\(d&#39;\)</span>个基向量分别做内积而得到的<span class="math inline">\(d&#39;\)</span>维属性向量。换言之，<span class="math inline">\(\pmb{z}_i\)</span>是原属性向量<span class="math inline">\(\pmb{x}_i\)</span>在新坐标系<span class="math inline">\(\{\pmb{w}_1, \pmb{w}_2, \cdots, \pmb{w}_{d&#39;}\}\)</span>中的坐标向量，若<span class="math inline">\(\pmb{w}_i\)</span>与<span class="math inline">\(\pmb{w}_j ( i \neq j)\)</span>正交，则新坐标系是一个正交坐标系，此时<span class="math inline">\(\mathbf{W}\)</span>为正交变换。显然，新空间中的属性是原空间中属性的线性组合。<br>
+基于线性变换来进行降维的方法称为线性降维方法，它们都符合式（10.13）的基本形式，不同之处是对低维子空间的性质有不同的要求，相当于对<span class="math inline">\(\mathbf{W}\)</span>施加了不同的约束，若要求低维子空间对样本具有最大可分性，则将得到一种极为常用的线性降维方法。<br>
+对降维效果的评估，通常是比较降维前后学习器的性能，若性能有所提高则认为降维起到了作用，若将维数降至二维或三维，则可通过可视化技术来直观地判断降维效果。</p>
+<h2 id="pca">2. PCA</h2>
+<p>主成分分析（Principal Component Analysis，PCA）是最常用的一种降维方法。降维是希望在损失尽量少的信息的情况下降低样本的维度，降维后的样本应尽可能的还原原数据样本的分布特征。<br>
+首先思考这样一个问题：对于正交属性空间中的样本点，如何用一个超平面（直线的高维推广）对所有样本进行恰当的表达？<br>
+若存在这样的超平面，那么它大概应具有这样的性质：</p>
+<ul>
+<li>最近重构性：样本点到这个超平面的距离都足够近；</li>
+<li>最大可分性：样本点在这个超平面上的投影能尽可能分开。</li>
+</ul>
+<p>基于最近重构性和最大可分性，能分别得到PCA的两种等价推导。</p>
+<p>（1）<strong>最近重构性推导</strong><br>
+假设数据样本进行了中心化，即<span class="math inline">\(\sum_{i} \pmb{x}_i = 0\)</span>；再假定投影变换后得到的新坐标系为<span class="math inline">\(\{\pmb{w}_1, \pmb{w}_2, \cdots, \pmb{w}_d\}\)</span>，其中<span class="math inline">\(\pmb{w}_i\)</span>是标准正交基向量，<span class="math inline">\(||\pmb{w}_i||_2 = 1\)</span>，<span class="math inline">\(\pmb{w}_i^T \pmb{w}_j = 0 (i \neq j)\)</span>。若丢弃新坐标系中的部分坐标，即将维度降低到<span class="math inline">\(d&#39; &lt; d\)</span>，则样本点<span class="math inline">\(\pmb{x}_i\)</span>在低维坐标系中的投影是<span class="math inline">\(\pmb{z}_i = (z_{i1}, z_{i2}, \cdots, z_{id&#39;})\)</span>，其中<span class="math inline">\(z_{ij} = \pmb{w}_j^T \pmb{w}_i\)</span>是<span class="math inline">\(\pmb{x}_i\)</span>在低维坐标系下第<span class="math inline">\(j\)</span>维的坐标。若基于<span class="math inline">\(\pmb{z}_i\)</span>来重构<span class="math inline">\(\pmb{x}_i\)</span>，则会得到<span class="math inline">\(\hat{\pmb{x}}_i = \sum_{j=1}^{d&#39;} z_{ij} \pmb{w}_j\)</span>。<br>
+考虑整个训练集，原样本点<span class="math inline">\(\pmb{x}_i\)</span>与基于投影重构的样本点<span class="math inline">\(\hat{\pmb{x}}_i\)</span>之间的距离为 <span class="math display">\[\begin{align}
+\sum_{i=1}^m ||\sum_{j=1}^{d&#39;} x_{ij} \pmb{w}_j - \pmb{x}_i||_2^2 &amp;= \sum_{i=1}^m \pmb{z}_i^T \pmb{z}_i - 2\sum_{i=1}^m \pmb{z}_i^T \mathbf{W}^T \pmb{x}_i + const \nonumber \\
+&amp; \propto -tr(\mathbf{W}^T (\sum_{i=1}^m \pmb{x}_i \pmb{x}_i^T) \mathbf{W}) \nonumber
+\end{align}\]</span> 其中<span class="math inline">\(\mathbf{W} = (\pmb{w}_1,\pmb{w}_2,\cdots,\pmb{w}_d)\)</span>。根据最近重构性，上式应该被最小化，考虑到<span class="math inline">\(\pmb{w}_j\)</span>是标准正交基，<span class="math inline">\(\sum_{i} \pmb{x}_i \pmb{x}_i^T\)</span>是协方差矩阵，有 <span class="math display">\[\begin{align}
+&amp; \min_{\mathbf{W}} \quad - tr(\mathbf{W}^T \mathbf{X} \mathbf{X}^T \mathbf{W}) \nonumber \\
+&amp; s.t. \qquad \mathbf{W}^T \mathbf{W} = 1 \nonumber
+\end{align}\]</span> 这是主成分分析从最近重构性角度思考需要优化的目标。</p>
+<p>（2）<strong>最大可分性推导</strong><br>
+样本点<span class="math inline">\(\pmb{x}_i\)</span>在新空间超平面上的投影是<span class="math inline">\(\mathbf{W}^T \pmb{x}_i\)</span>，若所有样本点的投影能尽可能分开，则应该使投影后样本点的方差最大化。在PCA中，我们可以认为<strong>数据的方差越大，包含的信息量越多</strong>（这句话其实并不严谨，因为根据信息论的知识，信息量的多少和数据的分布有关，而和数据量级没有关系），也就是在降维过程中损失的信息量越少。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-19%20上午10.43.38.png">
+
+</div>
+<p>上图中，在对图中数据进行降维时，<span class="math inline">\(u_1\)</span>是投影的最佳方向，数据越分散，越有可能发现数据分布的潜在规律，而<span class="math inline">\(u_2\)</span>方向可能只是因为数据中存在噪声而表现出的同一性。</p>
+<p>首先需要对数据进行<strong>标准化</strong>：</p>
+<ol style="list-style-type: decimal">
+<li>计算<span class="math inline">\(\pmb{\mu} = \frac{1}{m} \sum_{i=1}^m \pmb{x}^{(i)}\)</span>；</li>
+<li>将每个<span class="math inline">\(\pmb{x}^{(i)}\)</span>替换为<span class="math inline">\(\pmb{x}^{(i)} - \pmb{\mu}\)</span>；</li>
+<li>计算<span class="math inline">\(\sigma_j^2 = \frac{1}{m} \sum_i (x_j^{(i)})^2\)</span>；</li>
+<li>将每个<span class="math inline">\(x_j^{(i)}\)</span>替换为<span class="math inline">\(\frac{x_j^{(i)}}{\sigma_j}\)</span>。</li>
+</ol>
+<p>如果令投影方向的向量<span class="math inline">\(\pmb{u}\)</span>的模<span class="math inline">\(||\pmb{u}|| = 1\)</span>，那么样本点<span class="math inline">\(\pmb{x}^{(i)}\)</span>在<span class="math inline">\(\pmb{u}\)</span>的投影为<span class="math inline">\(\pmb{x}^{(i)^T} \pmb{u}\)</span>。<br>
+目标函数为： <span class="math display">\[\begin{align}
+ &amp; \max_{\pmb{u}} \quad \frac{1}{m} \sum_{i=1}^m (\pmb{x}^{(i)^T} \pmb{u})^2 \nonumber \\
+ &amp; s.t. \qquad ||\pmb{u}|| \nonumber  
+\end{align}\]</span></p>
+<p>其中目标公式可推导为： <span class="math display">\[\begin{align}
+    \frac{1}{m} \sum_{i=1}^m (\pmb{x}^{(i)^T} \pmb{u})^2 &amp;= \frac{1}{m} \sum_{i=1}^m (\pmb{u}^T \pmb{x}^{(i)})(\pmb{x}^{(i)^T} \pmb{u}) \nonumber \\
+    &amp; = \pmb{u}^T [\frac{1}{m} \sum_{i=1}^m \pmb{x}^{(i)} \pmb{x}^{(i)^T}] \pmb{u} \nonumber \\
+    &amp; = \pmb{u}^T \pmb{\Sigma} \pmb{u} \nonumber
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(\pmb{\Sigma}\)</span>为样本数据的协方差矩阵。<br>
+构造拉格朗日函数： <span class="math display">\[L(\pmb{u}, \lambda) = \pmb{u}^T \pmb{\Sigma} \pmb{u} - \lambda (\pmb{u}^T \pmb{u} - 1)\]</span> 对<span class="math inline">\(\pmb{u}\)</span>求偏导并令其为零得到 <span class="math display">\[\begin{equation}
+    \nabla_{\pmb{u}} L = \pmb{\Sigma} \pmb{u} - \lambda \pmb{u} = 0 \nonumber \\
+    \pmb{\Sigma} \pmb{u} = \lambda \pmb{u}
+\end{equation}\]</span> 有上式可以看出，<span class="math inline">\(\lambda\)</span>为协方差矩阵<span class="math inline">\(\pmb{\Sigma}\)</span>的特征值，<span class="math inline">\(\pmb{u}\)</span>为<span class="math inline">\(\pmb{\Sigma}\)</span>的特征向量。<br>
+如果要将数据投影到<span class="math inline">\(k\)</span>维子空间，应选取前<span class="math inline">\(k\)</span>大的特征值对应的特征向量构成<span class="math inline">\(\pmb{u}\)</span>。</p>
+<p><strong>实际上，从最近重构性和最大可分性两种角度得到的目标函数相同。</strong></p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-20%20下午8.55.44.png">
+
+</div>
+<p>降维后低维空间的维度<span class="math inline">\(d&#39;\)</span>通常需要事先指定，或者通过在<span class="math inline">\(d&#39;\)</span>值不同的低维空间中对k近邻分类器（或者其他开销较小的学习器）进行交叉验证来选取较好的<span class="math inline">\(d&#39;\)</span>值。对PCA，还可以从重构的角度设置一个重构阈值，例如<span class="math inline">\(t = 95\%\)</span>，然后选取使下式成立的最小<span class="math inline">\(d&#39;\)</span>值： <span class="math display">\[\frac{\sum_{i=1}^{d&#39;} \lambda_i}{\sum_{i=1}^d \lambda} \geq t\]</span></p>
+<h2 id="核化线性降维">3. 核化线性降维</h2>
+<p>线性降维方法假设从高维空间到低维空间的函数映射是线性的，但是在实际应用中，可能需要非线性映射才能找到恰当的低维嵌入。<br>
+下图中，样本点从二维空间中的矩形区域采样后以S曲面嵌入到三维空间，若直接使用线性降维方法对三维空间观察到的样本点进行降维，则会丢失原本的低维结构，为了对“原本采样的”低维空间与降维后的低维空间加以区别，称前者为“本真”低维空间。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-20%20下午9.47.46.png">
+
+</div>
+<p>非线性降维的一种常用方法，是基于核技巧对线性降维方法进行“核化”，下面将以<strong>核主成分分析（Kernelized PCA，KPCA）</strong>进行说明。</p>
+<p>假设将在高维特征数据中把数据投影到由<span class="math inline">\(\mathbf{W} = (\pmb{w}_1, \pmb{w}_2, \cdots, \pmb{w}_d)\)</span>确定的超平面上，则对于<span class="math inline">\(\pmb{w}_j\)</span>，有 <span class="math display">\[(\sum_{i=1}^m \pmb{z}_i \pmb{z}_i^T) \pmb{w}_j = \lambda_j \pmb{w}_j\]</span> 其中<span class="math inline">\(\pmb{z}_i\)</span>是样本点<span class="math inline">\(\pmb{x}_i\)</span>在高维特征空间中的像，所以有 <span class="math display">\[\pmb{w}_j = \frac{1}{\lambda_j} (\sum_{i=1}^m \pmb{z}_i \pmb{z}_i^T) \pmb{w}_j = \sum_{i=1}^m \pmb{z}_i \frac{\pmb{z}_i^T \pmb{w}_j}{\lambda_j} = \sum_{i=1}^m \pmb{z}_i \alpha_i^j\]</span> 其中<span class="math inline">\(\alpha_i^j = \frac{\pmb{z}_i^T \pmb{w}_j}{\lambda_j}\)</span>是<span class="math inline">\(\pmb{\alpha}_i\)</span>的第<span class="math inline">\(j\)</span>个分量，假定<span class="math inline">\(\pmb{z}_i\)</span>是由原始属性空间中的样本点<span class="math inline">\(\pmb{x}_i\)</span>通过映射<span class="math inline">\(\phi\)</span>产生，即<span class="math inline">\(\pmb{z}_i = \phi(\pmb{x}_i),i=1,2,\cdots,m\)</span>。若<span class="math inline">\(\phi\)</span>能被显式表达出来，则通过它将样本映射到高维特征空间，再在特征空间中实施PCA即可。公式变换为 <span class="math display">\[(\sum_{i=1}^m \phi(\pmb{x}_i) \phi(\pmb{x}_i)^T) \pmb{w}_j = \lambda_j \pmb{w}_j \tag{1}\]</span> 同时有 <span class="math display">\[\pmb{w}_j = \sum_{i=1}^m \phi(\pmb{x}_i) \alpha_i^j \tag(2)\]</span> 一般情况下，不清楚<span class="math inline">\(\phi\)</span>的具体形式，于是引入核函数 <span class="math display">\[\kappa(\pmb{x}_i, \pmb{x}_j) = \phi(\pmb{x}_i)^T \phi(\pmb{x}_j) \tag{3}\]</span> 将上述式（2）、（3）带入式（1）中化简，令<span class="math inline">\(\mathbf{Z} = (\phi(\pmb{x}_1),\phi(\pmb{x}_2),\cdots,\phi(\pmb{x}_m))\)</span>，得到 <span class="math display">\[\begin{equation}
+    (\sum_{i=1}^m \phi(\pmb{x}_i) \phi(\pmb{x}_i)^T) \pmb{w}_j = \lambda_j \pmb{w}_j \nonumber \\
+    (\sum_{i=1}^m \phi(\pmb{x}_i) \phi(\pmb{x}_i)^T) \sum_{i=1}^m \phi(\pmb{x}_i) \alpha_i^j = \lambda_j \sum_{i=1}^m \phi(\pmb{x}_i) \alpha_i^j \nonumber \\
+    \mathbf{Z} \mathbf{Z}^T (\mathbf{Z}· \pmb{\alpha}^j) = \lambda_j (\mathbf{Z}· \pmb{\alpha}^j) \nonumber \\
+    \mathbf{Z} \mathbf{K} \pmb{\alpha}^j = \mathbf{Z} (\lambda_j · \pmb{\alpha}^j) \nonumber \\
+    \mathbf{K} \pmb{\alpha}^j = \lambda_j · \pmb{\alpha}^j
+\end{equation}\]</span></p>
+<p>其中<span class="math inline">\(\mathbf{K}\)</span>为<span class="math inline">\(\kappa\)</span>对应的核矩阵，<span class="math inline">\((\mathbf{K})_{ij} = \kappa(\pmb{x}_i, \pmb{x}_j), \pmb{\alpha}^j = (\alpha_1^j, \alpha_2^j, \cdots, \alpha_m^j)\)</span>。显然，上式是特征值分解问题，取<span class="math inline">\(\mathbf{K}\)</span>最大的<span class="math inline">\(d&#39;\)</span>个特征值对应的特征向量即可。<br>
+对新样本<span class="math inline">\(\pmb{x}\)</span>，其投影后的第<span class="math inline">\(j(j=1,2,\cdots,d&#39;)\)</span>维坐标为 <span class="math display">\[z_j = \pmb{w}_j^T \phi(\pmb{x}) = \sum_{i=1}^m \alpha_i^j \phi(\pmb{x}_i)^T \phi(\pmb{x}) = \sum_{i=1}^m \alpha_i^j \kappa(\pmb{x}_i, \pmb{x})\]</span> 其中<span class="math inline">\(\pmb{\alpha}_i\)</span>经过规范化。从上式可以看出，为了获得投影后的坐标，KPCA需对所有样本进行求和，因此它的计算开销较大。</p>
+<h2 id="流形学习">4. 流形学习</h2>
+<p>流形学习（manifold learning）是一类借鉴拓扑流形概念的降维方法。“流形”是在局部与欧氏空间同胚的空间，即在局部具有欧氏空间的性质，能用欧氏距离来进行距离的计算。<br>
+对于降维方法的启发：若低维流形嵌入到高维空间中，则数据样本在高维空间的分布虽然看上去非常复杂，但在局部上仍具有欧氏空间的性质。因此，可以容易地在局部建立降维映射关系，然后再设法将局部映射关系推广到全局。当维数被降至二维或三维时，能对数据进行可视化展示，因此流形学习也可被用于可视化。<br>
+下面将介绍两种著名的流形学习方法。</p>
+<h3 id="等度量映射">4.1. 等度量映射</h3>
+<p>等度量映射（Isometric Mapping，Isomap）的基本出发点：低维流形嵌入到高维空间之后，直接在高维空间中计算直线距离具有误导性，因为高维空间中的直线距离在低维嵌入流形上式不可达的。<br>
+如下图所示，低维嵌入流形上的两点间的距离是“测地线”（geodesic）距离：如图10.7（a）中的红色曲线是距离最短的路径，即S曲面上的测地线，测地线距离是两点之间的本真距离。显然，直接在高维空间中计算直线距离是不恰当的。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.20.58.png">
+
+</div>
+<p>此时可以利用流形在局部上与欧氏空间同胚的性质，对每个点基于欧氏距离找出其近邻点，然后建立一个近邻连接图，图中近邻点之间存在连接，而非近邻点之间不存在连接。于是，计算两点之间测地线距离的问题就转变为计算近邻连接图上两点之间的最短路径问题。从图10.7（b）中可以看出，基于近邻距离逼近能获得低维流形上测地线距离很好的近似。</p>
+<p>在紧邻连接图上计算两点间的最短路径，可采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，可通过之前介绍的MDS算法来获得样本点在低维空间中的坐标。</p>
+<p>Isomap算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.27.41.png">
+
+</div>
+<p>需要注意的是，Isomap算法仅是得到训练样本在低维空间的坐标，对于新样本，将其映射到低维空间中的常用方法是将训练样本的高维坐标作为输入、低维空间坐标作为输出，训练一个回归学习器来对新样本的低维空间坐标进行预测。</p>
+<p>对近邻图的构建通常有两种做法：</p>
+<ol style="list-style-type: decimal">
+<li>一种是指定近邻点个数，例如欧氏距离最近的k个点作为近邻点，这样得到的近邻图称为k近邻图；</li>
+<li>另一种是指定距离阈值<span class="math inline">\(\epsilon\)</span>,距离小于<span class="math inline">\(\epsilon\)</span>的点被认为是近邻点，这样得到的近邻图称为<span class="math inline">\(\epsilon\)</span>近邻图。</li>
+</ol>
+<p>两种方式均有不足：</p>
+<ul>
+<li>若紧邻范围指定的较大，则距离很远的点可能被误认为近邻，这样就会出现“短路”的问题；</li>
+<li>近邻范围指定的较小，则图中有些区域可能与其他区域不存在连接，这样就会出现“断路”问题。</li>
+</ul>
+<p>短路与断路都会给后续的最短路径计算造成误导。</p>
+<h3 id="局部线性嵌入">4.2. 局部线性嵌入</h3>
+<p>与Isomap试图保持近邻样本之间的距离不同，局部线性嵌入（Locally Linear Embedding，LLE）试图保持邻域内样本之间的线性关系。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.45.24.png">
+
+</div>
+<p>如上图所示，假定样本点<span class="math inline">\(\pmb{x}_i\)</span>的坐标能通过它的邻域样本<span class="math inline">\(\pmb{x}_j,\pmb{x}_k, \pmb{x}_l\)</span>的坐标通过线性组合而重构出来，即 <span class="math display">\[\pmb{x}_i = w_{ij} \pmb{x}_j + w_{ik} \pmb{x}_k + w_{il} \pmb{x}_l\]</span></p>
+<p>LLE希望上式的关系在低维空间中得以保持。</p>
+<p>LLE先为每个样本<span class="math inline">\(\pmb{x}_i\)</span>找到其近邻下标集合<span class="math inline">\(Q_i\)</span>，然后计算出基于<span class="math inline">\(Q_i\)</span>中的样本点对<span class="math inline">\(\pmb{x}_i\)</span>进行线性重构的系数<span class="math inline">\(\pmb{w}_i\)</span>： <span class="math display">\[\begin{align}
+    &amp; \min_{\pmb{w}_1, \pmb{w}_2, \cdots, \pmb{w}_m} \quad \sum_{i=1}^m ||\pmb{x}_i - \sum_{j \in Q_i} w_{ij} \pmb{x}_j||_2^2 \nonumber \\
+    &amp; \quad s.t. \qquad \sum_{j \in Q_i} w_{ij} = 1 \nonumber
+\end{align} \tag{4}\]</span></p>
+<p>其中<span class="math inline">\(\pmb{x}_i\)</span>和<span class="math inline">\(\pmb{x}_j\)</span>均已知，令<span class="math inline">\(C_{jk} = (\pmb{x}_i - \pmb{x}_j)^T (\pmb{x}_i - \pmb{x}_k)\)</span>，<span class="math inline">\(w_{ij}\)</span>有闭式解： <span class="math display">\[w_{ij} = \frac{\sum_{k \in Q_i} C_{jk}^{-1}}{\sum_{l,s \in Q_i} C_{ls}^{-1}}\]</span></p>
+<p><strong>推导</strong>：<br>
+为了表示方便，对于每个样本点<span class="math inline">\(\pmb{x}\)</span>，其邻近点集为<span class="math inline">\(\{\pmb{Z}_{i1},\pmb{Z}_{i2},\cdots,\pmb{Z}_{iK}\}\)</span>。<br>
+接下来计算每个样本点的局部线性重构矩阵<span class="math inline">\(W_{ij}\)</span>，目标函数可写为 <span class="math display">\[\begin{align}
+    &amp; \arg \min_{\pmb{W}} \quad \sum_{i=1}^m ||\pmb{x}_i - \sum_{j=1}^K W_{ij} \pmb{Z}_{ij}||^2 \nonumber \\
+    &amp; s.t. \qquad \quad \sum_{j=1}^K W_{ij} = 1, \quad i=1,2,\cdots,m \nonumber
+\end{align}\]</span> <span class="math inline">\(W_{ij}\)</span>为样本点<span class="math inline">\(\pmb{x}_i\)</span>对应的第<span class="math inline">\(j\)</span>个重构系数。<br>
+观察单个样本点的目标函数： <span class="math display">\[\begin{align}
+    \varepsilon &amp;= ||\pmb{x}_i - \sum_{j=1}^K W_{ij} \pmb{Z}_{ij}||^2 = ||\sum_{j=1}^K (W_{ij} \pmb{x}_i - W_{ij} \pmb{Z}_{ij})||^2 \nonumber \\
+    &amp;= ||\sum_{j=1}^K W_{ij} (\pmb{x}_i - \pmb{Z}_{ij})||^2 = ||\pmb{Q}_i \pmb{W}_i||^2 \nonumber
+\end{align}\]</span> 上式中<span class="math inline">\(\pmb{Q}_i = [\pmb{x}_i - \pmb{Z}_{i1}, \pmb{x}_i - \pmb{Z}_{i2}, \cdots, \pmb{x}_i - \pmb{Z}_{iK}]\)</span>，重构系数向量<span class="math inline">\(\pmb{W}_i = [W_{i1},W_{i2},\cdots,W_{iK}]\)</span>，为使<span class="math inline">\(\varepsilon\)</span>最小，可以用拉格朗日乘数法求解<span class="math inline">\(\pmb{W}_i\)</span>的值： <span class="math display">\[\begin{align}
+    \mathscr{L}_i &amp;= ||\pmb{x}_i - \sum_{j=1}^K W_{ij} \pmb{Z}_{ij}||^2 - \lambda_i (\sum_{j=1}^K W_{ij} - 1) \nonumber \\
+    &amp;= ||\pmb{Q}_i \pmb{W}_i||^2 - \lambda_i(\pmb{1}^T \pmb{W}_i - 1) \nonumber \\
+    &amp;= \pmb{W}_i^T \pmb{Q}_i^T \pmb{Q}_i \pmb{W}_i - \lambda_i(\pmb{1}^T \pmb{W}_i - 1) \nonumber
+ \end{align}\]</span> 其中<span class="math inline">\(\pmb{1} = [1,1,\cdots,1]\)</span>，长度为<span class="math inline">\(K\)</span>。<br>
+将<span class="math inline">\(\mathscr{L}_i\)</span>对<span class="math inline">\(\pmb{W}_i\)</span>求偏导： <span class="math display">\[\frac{\partial \mathscr{L}_i}{\partial \pmb{W}_i} = \pmb{Q}_i^T \pmb{Q}_i \pmb{W}_i - \lambda_i \pmb{1} = 0\]</span> 可推出 <span class="math display">\[\pmb{W}_i = \lambda_i \pmb{C}_i^{-1} \pmb{1}\]</span> 式中<span class="math inline">\(\pmb{C}_i = \pmb{Q}_i^T \pmb{Q}_i\)</span>，另外有<span class="math inline">\(\sum_{j=1}^K W_{ij} = \pmb{1}^T \pmb{W}_i = 1\)</span>，则有 <span class="math display">\[\pmb{1}^T \lambda_i \pmb{C}_i^{-1} \pmb{1} = 1 \Rightarrow \lambda_i = (\pmb{1}^T \pmb{C}_i^{-1} \pmb{1})^{-1}\]</span> 最终 <span class="math display">\[\begin{align}
+ \pmb{W}_i &amp;= \lambda_i \pmb{C}_i^{-1} \pmb{1} = (\pmb{1}^T \pmb{C}_i^{-1} \pmb{1})^{-1} \pmb{C}_i^{-1} \pmb{1} \nonumber \\
+ &amp;= \frac{\pmb{C}_i^{-1} \pmb{1}}{\pmb{1}^T \pmb{C}_i^{-1} \pmb{1}} \nonumber
+ \end{align}\]</span> 若令<span class="math inline">\(C_{jk} = (\pmb{x}_i - \pmb{x}_j)^T (\pmb{x}_i - \pmb{x}_k)\)</span>，有 <span class="math display">\[\frac{\pmb{C}_i^{-1} \pmb{1}}{\pmb{1}^T \pmb{C}_i^{-1} \pmb{1}} = \frac{\sum_{k \in Q_i} C_{jk}^{-1}}{\sum_{l,s \in Q_i} C_{ls}^{-1}} \]</span></p>
+<p>LLE在低维空间中保持<span class="math inline">\(\pmb{w}_i\)</span>不变，于是<span class="math inline">\(\pmb{x}_i\)</span>对应的低维空间坐标<span class="math inline">\(\pmb{z}_i\)</span>可通过下式求解： <span class="math display">\[\min_{\pmb{z}_1,\pmb{z}_2,\cdots,\pmb{z}_m} \quad \sum_{i=1}^m ||\pmb{z}_i - \sum_{j \in Q_i} w_{ij} \pmb{z}_j||_2^2\]</span> 上式需要确定<span class="math inline">\(\pmb{x}_i\)</span>对应的低维空间坐标<span class="math inline">\(\pmb{z}_i\)</span>。</p>
+<p>令<span class="math inline">\(\pmb{Z} = (\pmb{z}_1, \pmb{z}_2, \cdots, \pmb{z}_m) \in \mathbf{R}^{d&#39; \times m},\quad (\mathbf{W})_{ij} = w_{ij}\)</span>，并且令<span class="math inline">\(\mathbf{M} = (\mathbf{I} - \mathbf{W})^T(\mathbf{I} - \mathbf{W})\)</span>，则目标公式可写为： <span class="math display">\[\begin{align}
+    &amp; \min_{\mathbf{Z}} \quad tr(\mathbf{Z} \mathbf{M} \mathbf{Z}^T) \nonumber \\
+    &amp; s.t. \qquad \mathbf{Z} \mathbf{Z}^T = \mathbf{I} \nonumber
+ \end{align}\]</span> 可通过特征值分解求解：<span class="math inline">\(\mathbf{M}\)</span>最小的<span class="math inline">\(d&#39;\)</span>个特征值对应的特征向量组成的矩阵即为<span class="math inline">\(\mathbf{Z}^T\)</span>。</p>
+<p>详细推导可见：https://github.com/ArrowLuo/LLE_Algorithm/blob/master/%E5%B1%80%E9%83%A8%E7%BA%BF%E6%80%A7%E5%B5%8C%E5%85%A5%EF%BC%88Locally%20linear%20embedding%EF%BC%89.pdf</p>
+<p>LLE算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午7.41.12.png">
+
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/降维/" rel="tag"># 降维</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/16/机器学习/k近邻法/" rel="next" title="k近邻法">
+                <i class="fa fa-chevron-left"></i> k近邻法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据降维"><span class="nav-number">1.</span> <span class="nav-text">数据降维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mds算法"><span class="nav-number">1.1.</span> <span class="nav-text">1. MDS算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pca"><span class="nav-number">1.2.</span> <span class="nav-text">2. PCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核化线性降维"><span class="nav-number">1.3.</span> <span class="nav-text">3. 核化线性降维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流形学习"><span class="nav-number">1.4.</span> <span class="nav-text">4. 流形学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#等度量映射"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1. 等度量映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局部线性嵌入"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2. 局部线性嵌入</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
