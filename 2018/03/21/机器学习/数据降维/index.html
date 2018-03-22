@@ -100,11 +100,11 @@
 
 
   
-  <meta name="keywords" content="机器学习,降维," />
+  <meta name="keywords" content="机器学习,预处理," />
 
 
 <meta name="description" content="数据降维 在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面临的严重障碍，被称为“维数灾难”（curse of dimensionality）。 缓解维数灾难的一个重要途径就是降维（dimension reduction），也成为“维数约简”，即通过某种数学变换将原始高维属性空间转变为一个低维“子空间”（subspace），在这个子空间中样本密度大幅提高，距离计算也变得更">
-<meta name="keywords" content="机器学习,降维">
+<meta name="keywords" content="机器学习,预处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据降维">
 <meta property="og:url" content="http://yoursite.com/2018/03/21/机器学习/数据降维/index.html">
@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.27.41.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.45.24.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午7.41.12.png">
-<meta property="og:updated_time" content="2018-03-21T12:01:01.168Z">
+<meta property="og:updated_time" content="2018-03-22T10:12:27.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据降维">
 <meta name="twitter:description" content="数据降维 在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面临的严重障碍，被称为“维数灾难”（curse of dimensionality）。 缓解维数灾难的一个重要途径就是降维（dimension reduction），也成为“维数约简”，即通过某种数学变换将原始高维属性空间转变为一个低维“子空间”（subspace），在这个子空间中样本密度大幅提高，距离计算也变得更">
@@ -219,13 +219,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -296,7 +296,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T19:44:45+08:00">2018-03-21</time>
             
@@ -422,6 +422,7 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
 <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-20%20下午8.55.44.png">
 
 </div>
+<p><strong>实际应用中常常通过对<span class="math inline">\(\mathbf{X}\)</span>进行奇异值分解来代替协方差矩阵的特征值分解</strong>。</p>
 <p>降维后低维空间的维度<span class="math inline">\(d&#39;\)</span>通常需要事先指定，或者通过在<span class="math inline">\(d&#39;\)</span>值不同的低维空间中对k近邻分类器（或者其他开销较小的学习器）进行交叉验证来选取较好的<span class="math inline">\(d&#39;\)</span>值。对PCA，还可以从重构的角度设置一个重构阈值，例如<span class="math inline">\(t = 95\%\)</span>，然后选取使下式成立的最小<span class="math inline">\(d&#39;\)</span>值： <span class="math display">\[\frac{\sum_{i=1}^{d&#39;} \lambda_i}{\sum_{i=1}^d \lambda} \geq t\]</span></p>
 <h2 id="核化线性降维">3. 核化线性降维</h2>
 <p>线性降维方法假设从高维空间到低维空间的函数映射是线性的，但是在实际应用中，可能需要非线性映射才能找到恰当的低维嵌入。<br>
@@ -531,7 +532,7 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
           
             <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
           
-            <a href="/tags/降维/" rel="tag"># 降维</a>
+            <a href="/tags/预处理/" rel="tag"># 预处理</a>
           
         </div>
       
@@ -607,10 +608,10 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Overview
           </li>
         </ul>
       
@@ -630,8 +631,8 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">27</span>
-                    <span class="site-state-item-name">Artikel</span>
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -644,7 +645,7 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
                 <div class="site-state-item site-state-tags">
                   
                     <span class="site-state-item-count">18</span>
-                    <span class="site-state-item-name">Tags</span>
+                    <span class="site-state-item-name">tags</span>
                   
                 </div>
               
@@ -713,7 +714,7 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
 
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
