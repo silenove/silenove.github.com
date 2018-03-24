@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.46.39.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.51.41.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.16.18.png">
-<meta property="og:updated_time" content="2018-03-13T11:20:57.795Z">
+<meta property="og:updated_time" content="2018-03-23T13:53:00.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XGBoost">
 <meta name="twitter:description" content="XGBoost XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。 XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失">
@@ -221,7 +221,7 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Accueil</a>
         </li>
       
         
@@ -298,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T20:02:38+08:00">2018-03-11</time>
             
@@ -346,7 +346,7 @@ XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多
 <p>给定训练数据集<span class="math inline">\(\mathscr{D} = \{(\pmb{x}_i,y_i)\} (|\mathscr{D}|=n,\pmb{x}_i \in \mathbf{R}^m, y\in \mathbf{R})\)</span>，其中<span class="math inline">\(n\)</span>为训练数据集包含的样例数，<span class="math inline">\(m\)</span>为没个样例包含的特征数。我们使用Tree Ensemble，将模型写成 <span class="math display">\[\hat{y}_i = \phi(\pmb{x}_i) = \sum_{k=1}^K f_k(\pmb{x}_i), \quad f_k \in \mathscr{F} \tag{1}\]</span> 其中<span class="math inline">\(\mathscr{F} = \{f(\pmb{x}) = w_{q(\pmb{x})}\} (q: \mathbf{R}^m \to T,w \in \mathbf{R}^T)\)</span>，<span class="math inline">\(\mathscr{F}\)</span>为对应的回归树的假设空间。<span class="math inline">\(q\)</span>代表每棵回归树的结构，并且将一个样例对应到一个相应的叶节点上。<span class="math inline">\(T\)</span>表示回归树的叶节点个数。每棵回归树<span class="math inline">\(f_k\)</span>对应于一个树结构<span class="math inline">\(p\)</span>和叶节点权重<span class="math inline">\(w\)</span>。由于回归树的叶节点包含连续值，所以用<span class="math inline">\(w_i\)</span>表示第<span class="math inline">\(i\)</span>个叶节点上的权重。当用所学模型对测试样例进行预测时，只需要每棵回归树根据规则将样例分类到对应的叶节点上，之后将叶节点对应的权重累加作为最终的预测值。<br>
 为了学习该模型，需要最小化正则化后的目标函数： <span class="math display">\[\mathscr{L}(\phi) = \sum_{i} l(\hat{y}_i,y_i) + \sum_{k} \Omega (f_k) \tag{2}\]</span> 其中<span class="math inline">\(\Omega(f) = \gamma T + \frac{1}{2} \lambda ||w||^2\)</span>。<span class="math inline">\(l(\hat{y}_i,y_i)\)</span>为可微的凸函数，表示将真实标记<span class="math inline">\(y_i\)</span>预测为<span class="math inline">\(\hat{y}_i\)</span>的损失代价。第二项<span class="math inline">\(\Omega\)</span>表示对于模型复杂度的惩罚，附加的正则项可以平滑最终学习到的权重，并且避免过拟合。当正则化项的参数为0时，目标函数退化为传统的GBDT。</p>
 <h3 id="梯度拟合">1.2. 梯度拟合</h3>
-<p>用<span class="math inline">\(\hat{y}_i^{(t)}\)</span>表示模型在第<span class="math inline">\(t\)</span>轮对第<span class="math inline">\(i\)</span>个样例的预测结果，我们需要最小化下面的目标函数： <span class="math display">\[\mathscr{L}^{(t)} = \sum_{i=1}^n l(y_i,\hat{y}_i^{(t-1)} + f_t(\pmb{x}_i)) + \Omega (f_t)\]</span> 一般情况下，<strong>为了能够快速的优化目标函数，可以使用二级泰勒展开近似该目标函数</strong>： <span class="math display">\[\mathscr{L}^{(t)} \simeq = \sum_{i=1}^n [l(y_i,\hat{y}^{(t-1)}) + g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \Omega (f_t)\]</span> 其中，<span class="math inline">\(g_i = \partial_{\hat{y}^{(t-1)}} l(y_i,\hat{y}^{(t-1)})\)</span>，<span class="math inline">\(h_i = \partial_{\hat{y}^{(t-1)}}^2 l(y_i,\hat{y}^{(t-1)})\)</span>，<span class="math inline">\(g_i\)</span>和<span class="math inline">\(h_i\)</span>分别表示损失函数的一阶导数和二阶导数。移除常数项后，可以将第<span class="math inline">\(t\)</span>轮学习的目标函数化简为 <span class="math display">\[\tilde{\mathscr{L}}^{(t)} = \sum_{i=1}^n [g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \Omega (f_t) \tag{3}\]</span> 定义<span class="math inline">\(I_j = \{i | q(\pmb{x}_i) = j\}\)</span>为叶节点<span class="math inline">\(j\)</span>包含的样例集合。在第<span class="math inline">\(t\)</span>轮中，当<span class="math inline">\(i \in I_j\)</span>时，有<span class="math inline">\(f_t(\pmb{x}_i) = w_j\)</span>。我们可以将正则项<span class="math inline">\(\Omega\)</span>展开，将上述公式重写为 <span class="math display">\[\begin{align}
+<p>用<span class="math inline">\(\hat{y}_i^{(t)}\)</span>表示模型在第<span class="math inline">\(t\)</span>轮对第<span class="math inline">\(i\)</span>个样例的预测结果，我们需要最小化下面的目标函数： <span class="math display">\[\mathscr{L}^{(t)} = \sum_{i=1}^n l(y_i,\hat{y}_i^{(t-1)} + f_t(\pmb{x}_i)) + \Omega (f_t)\]</span> 一般情况下，<strong>为了能够快速的优化目标函数，可以使用二级泰勒展开近似该目标函数</strong>： <span class="math display">\[\mathscr{L}^{(t)} \simeq  \sum_{i=1}^n [l(y_i,\hat{y}^{(t-1)}) + g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \Omega (f_t)\]</span> 其中，<span class="math inline">\(g_i = \partial_{\hat{y}^{(t-1)}} l(y_i,\hat{y}^{(t-1)})\)</span>，<span class="math inline">\(h_i = \partial_{\hat{y}^{(t-1)}}^2 l(y_i,\hat{y}^{(t-1)})\)</span>，<span class="math inline">\(g_i\)</span>和<span class="math inline">\(h_i\)</span>分别表示损失函数的一阶导数和二阶导数。移除常数项后，可以将第<span class="math inline">\(t\)</span>轮学习的目标函数化简为 <span class="math display">\[\tilde{\mathscr{L}}^{(t)} = \sum_{i=1}^n [g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \Omega (f_t) \tag{3}\]</span> 定义<span class="math inline">\(I_j = \{i | q(\pmb{x}_i) = j\}\)</span>为叶节点<span class="math inline">\(j\)</span>包含的样例集合。在第<span class="math inline">\(t\)</span>轮中，当<span class="math inline">\(i \in I_j\)</span>时，有<span class="math inline">\(f_t(\pmb{x}_i) = w_j\)</span>。我们可以将正则项<span class="math inline">\(\Omega\)</span>展开，将上述公式重写为 <span class="math display">\[\begin{align}
     \tilde{\mathscr{L}}^{(t)} &amp;= \sum_{i=1}^n [g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \gamma T + \frac{1}{2} \lambda \sum_{j=1}^T w_j^2 \nonumber \\
     &amp;= \sum_{j=1}^T [(\sum_{i \in I_j} g_i)w_j + \frac{1}{2} (\sum_{i \in I_j} h_i + \lambda) w_j^2] + \gamma T \nonumber
 \end{align} \tag{4}\]</span> 为了构建最优的树结构，我们可以对上面的公式求导，计算叶节点<span class="math inline">\(j\)</span>对应的最优的权重<span class="math inline">\(w_j^*\)</span>： <span class="math display">\[w_j^* = - \frac{\sum_{i \in I_j} g_i}{\sum_{i \in I_j} h_i + \lambda} \tag{5}\]</span> 对应的最优目标函数值为 <span class="math display">\[\tilde{\mathscr{L}}^{(t)} (q) = - \frac{1}{2} \sum_{j=1}^T \frac{(\sum_{i \in I_j} g_i)^2}{\sum_{i \in I_j} h_i + \lambda} + \gamma T \tag{6}\]</span> 上述公式可以作为评分函数来衡量一个结构为<span class="math inline">\(q\)</span>的树的质量，<strong>分数越低，树结构越好</strong>。</p>
@@ -549,10 +549,10 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Ensemble
           </li>
         </ul>
       
@@ -572,8 +572,8 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">28</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">articles</span>
                   </a>
                 </div>
               
@@ -663,7 +663,7 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Thème &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

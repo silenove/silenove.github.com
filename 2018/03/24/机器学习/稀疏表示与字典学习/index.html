@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="机器学习," />
+
+
+<meta name="description" content="稀疏表示与字典学习 在文档分类任务中，通常将每个文档看作一个样本，每个字（词）看做一个特征，其在文档中的频率或次数作为特征的取值。特征的个数也就是词汇量的个数，这样给定一个文档，相当多的字是不出现在这个文档中的，于是矩阵的每一行都有大量的零元素，对于不同的文档，零元素出现的列往往不同。 当样本具有这样的稀疏表达之后，对学习任务来说会有不少好处，例如线性支持向量机之所以能在文本数据中有很好的性能，恰">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="稀疏表示与字典学习">
+<meta property="og:url" content="http://yoursite.com/2018/03/24/机器学习/稀疏表示与字典学习/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="稀疏表示与字典学习 在文档分类任务中，通常将每个文档看作一个样本，每个字（词）看做一个特征，其在文档中的频率或次数作为特征的取值。特征的个数也就是词汇量的个数，这样给定一个文档，相当多的字是不出现在这个文档中的，于是矩阵的每一行都有大量的零元素，对于不同的文档，零元素出现的列往往不同。 当样本具有这样的稀疏表达之后，对学习任务来说会有不少好处，例如线性支持向量机之所以能在文本数据中有很好的性能，恰">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:updated_time" content="2018-03-24T05:56:30.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="稀疏表示与字典学习">
+<meta name="twitter:description" content="稀疏表示与字典学习 在文档分类任务中，通常将每个文档看作一个样本，每个字（词）看做一个特征，其在文档中的频率或次数作为特征的取值。特征的个数也就是词汇量的个数，这样给定一个文档，相当多的字是不出现在这个文档中的，于是矩阵的每一行都有大量的零元素，对于不同的文档，零元素出现的列往往不同。 当样本具有这样的稀疏表达之后，对学习任务来说会有不少好处，例如线性支持向量机之所以能在文本数据中有很好的性能，恰">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/24/机器学习/稀疏表示与字典学习/"/>
+
+
+  <title>稀疏表示与字典学习 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Accueil</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/机器学习/稀疏表示与字典学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">稀疏表示与字典学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-24T13:56:04+08:00">2018-03-24</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="稀疏表示与字典学习">稀疏表示与字典学习</h1>
+<p>在文档分类任务中，通常将每个文档看作一个样本，每个字（词）看做一个特征，其在文档中的频率或次数作为特征的取值。特征的个数也就是词汇量的个数，这样给定一个文档，相当多的字是不出现在这个文档中的，于是矩阵的每一行都有大量的零元素，对于不同的文档，零元素出现的列往往不同。<br>
+当样本具有这样的稀疏表达之后，对学习任务来说会有不少好处，例如线性支持向量机之所以能在文本数据中有很好的性能，恰是由于文本数据在使用上述的字频表示之后具有高度的稀疏性，是大多数问题变得线性可分。同时，稀疏样本并不会造成存储上的巨大负担，因为稀疏矩阵已有很多高效的存储方法。<br>
+若给定数据集<span class="math inline">\(D\)</span>是稠密的，即普通非稀疏数据，我们希望将其转化为“稀疏表示”（sparse representation）形式，例如在文档分类任务中，我们可以基于《现代汉语常用字表》得到数据的恰当稀疏，而在一般学习任务中，我们需要学习出这样一个“字典”，为普通稠密表达的样本找到合适的字典，将样本转化为合适的稀疏表示形式，使学习任务得以简化，模型的复杂度得以降低，通常称为“字典学习”（dictionary learning），亦称“稀疏编码”（sparse coding）。字典学习更侧重于学得字典的过程，而稀疏编码更侧重于对样本进行稀疏表达的过程。</p>
+<p>给定数据集<span class="math inline">\(\{\pmb{x}_1,\pmb{x}_2,\cdots,\pmb{x}_m\}\)</span>，字典学习最简单的形式为 <span class="math display">\[\min_{\mathbf{B},\pmb{\alpha}_i} \sum_{i=1}^m ||\pmb{x}_i - \mathbf{B} \pmb{\alpha}_i||_2^2 + \lambda \sum_{i=1}^m ||\pmb{\alpha}_i||_1\]</span> 其中<span class="math inline">\(\mathbf{B} \in \mathbf{R}^{d \times k}\)</span>为字典矩阵，<span class="math inline">\(k\)</span>称为字典的词汇量，通常由用户指定，<span class="math inline">\(\pmb{\alpha}_i \in \mathbf{R}^k\)</span>则是样本<span class="math inline">\(\pmb{x}_i \in \mathbf{R}^d\)</span>的稀疏表示。上式第一项是希望由<span class="math inline">\(\pmb{\alpha}_i\)</span>能很好地重构<span class="math inline">\(\pmb{x}_i\)</span>，第二项则是希望<span class="math inline">\(\pmb{\alpha}_i\)</span>尽量稀疏。</p>
+<p>与LASSO相比，上式较为复杂，除了需要学习类似于<span class="math inline">\(\pmb{w}\)</span>的<span class="math inline">\(\pmb{\alpha}_i\)</span>，还需要学习字典矩阵<span class="math inline">\(\mathbf{B}\)</span>。不过，受LASSO的启发，可采用变量交替优化的策略来求解。</p>
+<p>首先第一步，固定字典<span class="math inline">\(\mathbf{B}\)</span>，若将目标公式按分量展开，其中不涉及<span class="math inline">\(\alpha_i^u \alpha_i^v (u \neq v)\)</span>这样的交叉项，于是可参照LASSO的解法求解下式，从而为每个样本<span class="math inline">\(\pmb{x}_i\)</span>找到相应的<span class="math inline">\(\pmb{\alpha}_i\)</span>： <span class="math display">\[\min_{\pmb{\alpha}_i} ||\pmb{x}_i - \mathbf{B} \pmb{\alpha}_i||_2^2 + \lambda ||\pmb{\alpha}_i||_1\]</span> 第二步，以<span class="math inline">\(\pmb{\alpha}_i\)</span>为初值来更新字典<span class="math inline">\(\mathbf{B}\)</span>，此时可将目标公式写为 <span class="math display">\[\min_{\pmb{B}} ||\mathbf{X} - \mathbf{B} \mathbf{A}||_F^2\]</span> 其中<span class="math inline">\(\mathbf{X} = (\pmb{x}_1, \pmb{x}_2, \cdots, \pmb{x}_m) \in \mathbf{R}^{d \times m}\)</span>，<span class="math inline">\(\mathbf{A} = (\pmb{\alpha}_1, \pmb{\alpha}_2, \cdots, \pmb{\alpha}_m) \in \mathbf{R}^{k \times m}\)</span>，<span class="math inline">\(||·||_F\)</span>是矩阵的Frobenius范数，定义<span class="math inline">\(||\mathbf{A}||_F = \sqrt{\sum_{i=1}^m \sum_{j=1}^n |a_{ij}|^2 }\)</span>，类似向量的<span class="math inline">\(L_2\)</span>范数，可衡量矩阵的大小。<br>
+上式有多种求解方法，常用的有基于逐列更新策略的KSVD。令<span class="math inline">\(\pmb{b}_i\)</span>表示字典矩阵<span class="math inline">\(\mathbf{B}\)</span>的第<span class="math inline">\(i\)</span>列，<span class="math inline">\(\pmb{\alpha}_i\)</span>表示稀疏矩阵<span class="math inline">\(\mathbf{A}\)</span>的第<span class="math inline">\(i\)</span>行，上式重写为 <span class="math display">\[\begin{align}
+    \min_{\mathbf{B}} ||\mathbf{X} - \mathbf{B} \mathbf{A}||_F^2 &amp;= \min_{\pmb{b}_i} ||\mathbf{X} - \sum_{j=1}^k \pmb{b}_j \pmb{\alpha}^j||_F^2 \nonumber \\
+    &amp;= \min_{\pmb{b}_i} ||(\mathbf{X} - \sum_{j \neq i} \pmb{b}_j \pmb{\alpha}^j) - \pmb{b}_i \pmb{\alpha}^i||_F^2 \nonumber \\
+    &amp;= \min_{\pmb{b}_i} ||\mathbf{E}_i - \pmb{b}_i \pmb{\alpha}^i||_F^2 \nonumber
+\end{align}\]</span></p>
+<p>在更新字典的第<span class="math inline">\(i\)</span>列时，其他各列都是固定的，因此<span class="math inline">\(\mathbf{E} = \mathbf{X} - \sum_{j \neq i} \pmb{b}_j \pmb{\alpha}^j\)</span>是固定的，于是最小化上式原则上只需对<span class="math inline">\(\mathbf{E}_i\)</span>进行奇异值分解以取得最大奇异值所对应的正交向量。然而，直接对<span class="math inline">\(\mathbf{E}_i\)</span>进行奇异值分解会同时修改<span class="math inline">\(\pmb{b}_i\)</span>和<span class="math inline">\(\pmb{\alpha}_i\)</span>，从而可能破坏<span class="math inline">\(\mathbf{A}\)</span>的稀疏性。为了避免这种情况，KSVD对<span class="math inline">\(\mathbf{E}_i\)</span>和<span class="math inline">\(\pmb{\alpha}_i\)</span>进行专门处理：<span class="math inline">\(\pmb{\alpha}_i\)</span>仅保留非零元素，<span class="math inline">\(\mathbf{E}_i\)</span>则仅保留<span class="math inline">\(\pmb{b}_i\)</span>与<span class="math inline">\(\pmb{\alpha}_i\)</span>的非零元素的乘积项，然后再进行奇异值分解，这样就保持了第一步所得到的稀疏性。</p>
+<p><strong>具体过程如下</strong>：<br>
+定义集合<span class="math inline">\(\pmb{w}_i = \{ j| 1 \leq j \leq N, \pmb{\alpha}^i(j) \neq 0\}\)</span>为用到<span class="math inline">\(\pmb{b}_i\)</span>所有信号集合<span class="math inline">\(\{\pmb{x}_i\}\)</span>的索引所构成的集合，即<span class="math inline">\(\pmb{\alpha}^i(j) \neq 0\)</span>的点的索引值。定义<span class="math inline">\(\mathbf{\Omega}_i\)</span>为<span class="math inline">\(m \times |\pmb{w}_i|\)</span>矩阵，他在<span class="math inline">\((\pmb{w}_i(j), j)\)</span>处的值都为1，其他点为0。定义<span class="math inline">\(\pmb{\alpha}_R^i = \pmb{\alpha}^i \mathbf{\Omega}_i\)</span>、<span class="math inline">\(\mathbf{X}_R^i = \mathbf{X} \mathbf{\Omega}_i\)</span>、<span class="math inline">\(\mathbf{E}_R^i = \mathbf{E}_i \mathbf{\Omega}_i\)</span>，则三者分别为<span class="math inline">\(\pmb{\alpha}^i\)</span>、<span class="math inline">\(\mathbf{X}\)</span>、<span class="math inline">\(\mathbf{E}_i\)</span>中去掉零输入后的收缩结果，<span class="math inline">\(\mathbf{X}_R^i\)</span>为当前用到原子<span class="math inline">\(\pmb{b}_i\)</span>的样本集合，<span class="math inline">\(\mathbf{E}_R^i\)</span>为去掉不受原子<span class="math inline">\(\pmb{b}_i\)</span>影响的样本后，如果不考虑<span class="math inline">\(\pmb{b}_i\)</span>在受其影响的样本中成分时，带来的误差。<span class="math inline">\(\pmb{\alpha}_R^i\)</span>的长度为<span class="math inline">\(|\pmb{w}_i|\)</span>，<span class="math inline">\(\mathbf{X}_R^i\)</span>和<span class="math inline">\(\mathbf{E}_R^i\)</span>是<span class="math inline">\(k \times |\pmb{w}_i|\)</span>矩阵。 <span class="math display">\[||\mathbf{E}_i \mathbf{\Omega}_i - \pmb{b}_i \pmb{\alpha}^i \mathbf{\Omega}_i||_F^2 = ||\mathbf{E}_R^i - \pmb{b}_i \pmb{\alpha}_R^i||_F^2\]</span> <span class="math inline">\(\mathbf{E}_R^i\)</span>做SVD分解，则<span class="math inline">\(\mathbf{E}_R^i = \mathbf{U} \Delta \mathbf{V}^T\)</span>，，令<span class="math inline">\(\tilde{\pmb{b}}_i\)</span>为<span class="math inline">\(\mathbf{U}\)</span>的第一列，则<span class="math inline">\(\tilde{\pmb{b}}_i\)</span>为<span class="math inline">\(\pmb{b}_i\)</span>的更新结果。同时，用<span class="math inline">\(\mathbf{V}\)</span>的第一列和<span class="math inline">\(\Delta(1,1)\)</span>的乘积更新<span class="math inline">\(\pmb{\alpha}_R^i\)</span>。在逐列更新完成后用新字典<span class="math inline">\(\tilde{\mathbf{B}}\)</span>做稀疏分解，并判断是否达到停止条件（停止条件可以是既定的迭代次数后者重构信号和原信号之间的误差率），已决定迭代是否继续。<br>
+在上述字典学习过程中，用户能通过设置<span class="math inline">\(k\)</span>的大小控制字典的规模，从而影响稀疏程度。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/22/机器学习/特征选择/" rel="next" title="特征选择">
+                <i class="fa fa-chevron-left"></i> 特征选择
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table Des Matières
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Ensemble
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">articles</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#稀疏表示与字典学习"><span class="nav-number">1.</span> <span class="nav-text">稀疏表示与字典学习</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Thème &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
