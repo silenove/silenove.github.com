@@ -100,30 +100,31 @@
 
 
   
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="碎碎,统计学," />
 
 
-<meta name="description" content="hexo玩坏了，全都删了。。。 重新开始吧！">
+<meta name="description" content="泊松分布 根据可汗学院统计学整理。 假如一个交通工程师想知道任意时刻通过街上某一点的车辆数，如在某一小时内街上某点通过100辆汽车的概率。可以定义一个变量\(X\)表示一小时内通过的车辆数，然后求出该变量的概率分布。 这里需要做如下两个假设：  街上此点任意时刻的情况没有差异（即在每个时间段内在车流量方面没有差异，显然有些不真实，高峰时段的车流量大于其它时段）； 一段时间内的车流量对另一段时间没有">
+<meta name="keywords" content="碎碎,统计学">
 <meta property="og:type" content="article">
-<meta property="og:title" content="又一个起点">
-<meta property="og:url" content="http://yoursite.com/2018/01/13/想法/起点/index.html">
+<meta property="og:title" content="泊松分布">
+<meta property="og:url" content="http://yoursite.com/2018/03/26/碎碎/泊松分布/index.html">
 <meta property="og:site_name" content="silenove blogs">
-<meta property="og:description" content="hexo玩坏了，全都删了。。。 重新开始吧！">
+<meta property="og:description" content="泊松分布 根据可汗学院统计学整理。 假如一个交通工程师想知道任意时刻通过街上某一点的车辆数，如在某一小时内街上某点通过100辆汽车的概率。可以定义一个变量\(X\)表示一小时内通过的车辆数，然后求出该变量的概率分布。 这里需要做如下两个假设：  街上此点任意时刻的情况没有差异（即在每个时间段内在车流量方面没有差异，显然有些不真实，高峰时段的车流量大于其它时段）； 一段时间内的车流量对另一段时间没有">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:updated_time" content="2018-01-13T13:16:09.243Z">
+<meta property="og:updated_time" content="2018-03-25T16:12:13.877Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="又一个起点">
-<meta name="twitter:description" content="hexo玩坏了，全都删了。。。 重新开始吧！">
+<meta name="twitter:title" content="泊松分布">
+<meta name="twitter:description" content="泊松分布 根据可汗学院统计学整理。 假如一个交通工程师想知道任意时刻通过街上某一点的车辆数，如在某一小时内街上某点通过100辆汽车的概率。可以定义一个变量\(X\)表示一小时内通过的车辆数，然后求出该变量的概率分布。 这里需要做如下两个假设：  街上此点任意时刻的情况没有差异（即在每个时间段内在车流量方面没有差异，显然有些不真实，高峰时段的车流量大于其它时段）； 一段时间内的车流量对另一段时间没有">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/13/想法/起点/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/26/碎碎/泊松分布/"/>
 
 
-  <title>又一个起点 | silenove blogs</title>
+  <title>泊松分布 | silenove blogs</title>
   
 
 
@@ -258,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/想法/起点/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/26/碎碎/泊松分布/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="silen Zhou">
@@ -275,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">又一个起点</h1>
+          <h1 class="post-title" itemprop="name headline">泊松分布</h1>
         
 
         <div class="post-meta">
@@ -287,7 +288,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-13T20:44:32+08:00">2018-01-13</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-26T00:11:45+08:00">2018-03-26</time>
             
 
             
@@ -324,8 +325,35 @@
       
 
       
-        <p>hexo玩坏了，全都删了。。。</p>
-<p>重新开始吧！</p>
+        <h1 id="泊松分布">泊松分布</h1>
+<p>根据可汗学院统计学整理。</p>
+<p>假如一个交通工程师想知道任意时刻通过街上某一点的车辆数，如在某一小时内街上某点通过100辆汽车的概率。可以定义一个变量<span class="math inline">\(X\)</span>表示一小时内通过的车辆数，然后求出该变量的概率分布。</p>
+<p>这里需要做如下两个假设：</p>
+<ul>
+<li>街上此点任意时刻的情况没有差异（即在每个时间段内在车流量方面没有差异，显然有些不真实，高峰时段的车流量大于其它时段）；</li>
+<li>一段时间内的车流量对另一段时间没有影响，相互独立。</li>
+</ul>
+<p>首先可以估计<span class="math inline">\(X\)</span>的均值，即在路边观察几个小时内通过的车辆数，之后再取平均，可能就会获得一个不错的总体均值的估计值，这里假设期望值的最好估计值为<span class="math inline">\(\lambda\)</span>，即<span class="math inline">\(E(X) = \lambda\)</span>。</p>
+<p>二项分布均值的估计值为<span class="math inline">\(n \times p\)</span>，<span class="math inline">\(n\)</span>表示实验次数，<span class="math inline">\(p\)</span>表示每次实验成功的概率。我们也可以对1小时内通过的车辆数进行类似的建模：将1小时划分为60分钟，即进行60次实验，每次实验成功表示这一分钟内有车通过，成功概率显然为<span class="math inline">\(\frac{\lambda}{60}\)</span>，即有 <span class="math display">\[\lambda(cars/hour) = 60(mins/hour) \times \frac{\lambda}{60}(cars/min)\]</span> 那么一小时内通过<span class="math inline">\(k\)</span>辆车的概率为 <span class="math display">\[P(X=k) = \binom{60}{k} (\frac{\lambda}{60})^k (1 - \frac{\lambda}{60})^{60 - k}\]</span></p>
+<p>这时会出现一个问题：如果一分钟之内不止一辆车通过怎么办？<br>
+解决方法：分更多的区间，例如将时间段从1分钟改为1秒钟。<br>
+一小时内通过<span class="math inline">\(k\)</span>辆车的概率为 <span class="math display">\[P(X=k) = \binom{3600}{k} (\frac{\lambda}{3600})^k (1 - \frac{\lambda}{3600})^{3600 - k}\]</span></p>
+<p>如果1秒钟没有不止一辆车通过怎么办？继续缩小时间段，一直缩小下去就能得到泊松分布。</p>
+<p><strong>预备知识</strong>： <span class="math display">\[\begin{equation}
+    \lim_{x \to \infty} (1 + \frac{a}{x})^x = e^a \nonumber \\
+    \lim_{x \to a} f(x) g(x) = \lim_{x \to a} f(x) \times \lim_{x \to a} g(x) \nonumber
+\end{equation}\]</span></p>
+<p><strong>推导</strong>：<br>
+<span class="math display">\[\begin{align}
+    P(X = k) &amp;= \lim_{n \to \infty} \binom{n}{k} (\frac{\lambda}{n})^k (1 - \frac{\lambda}{n})^{n-k} \nonumber \\
+    &amp;= \lim_{n \to \infty} \frac{n!}{(n-k)! k!} \frac{\lambda^k}{n^k}(1 - \frac{\lambda}{n})^n (1 - \frac{\lambda}{n})^{-k} \nonumber \\
+    &amp;= \lim_{n \to \infty} \frac{n(n-1)(n-2) \cdots (n-k+1)}{n^k} \frac{\lambda^k}{k!} (1 - \frac{\lambda}{n})^n (1 - \frac{\lambda}{n})^{-k} \nonumber \\
+    &amp;= \lim_{x \to \infty} \frac{n^k + \cdots}{n^k}·\frac{\lambda^k}{k!} · \lim_{x \to \infty} (1 - \frac{\lambda}{n})^n (1 - \frac{\lambda}{n})^{-k} \nonumber \\
+    &amp;= 1 · \frac{\lambda^k}{k!} · e^{- \lambda} · 1 \nonumber \\
+    &amp;= \frac{\lambda^k}{k!} e^{- \lambda} \nonumber
+\end{align}\]</span></p>
+<p>泊松分布的概率函数为： <span class="math display">\[P(X = k) = \frac{\lambda^k}{k!} e^{- \lambda}, k=0,1,\cdots\]</span> 泊松分布的参数<span class="math inline">\(\lambda\)</span>是单位时间（或单位面积）内随机事件的平均发生率。<strong>泊松分布适合描述单位时间内随机事件发生次数的概率</strong>。<br>
+泊松分布的期望和方差均为<span class="math inline">\(\lambda\)</span>。</p>
 
       
     </div>
@@ -341,6 +369,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/碎碎/" rel="tag"># 碎碎</a>
+          
+            <a href="/tags/统计学/" rel="tag"># 统计学</a>
+          
+        </div>
+      
 
       
       
@@ -350,15 +386,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/03/25/机器学习/计算学习理论/" rel="next" title="计算学习理论">
+                <i class="fa fa-chevron-left"></i> 计算学习理论
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/14/机器学习/统计学习方法概论/" rel="prev" title="统计学习方法概论">
-                统计学习方法概论 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -407,8 +443,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -462,6 +507,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#泊松分布"><span class="nav-number">1.</span> <span class="nav-text">泊松分布</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
