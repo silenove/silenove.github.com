@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="机器学习," />
+
+
+<meta name="description" content="计算学习理论 1. 基础知识 计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。 给定样例集\(D = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots, (\pmb{x}_m,y_m)\">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算学习理论">
+<meta property="og:url" content="http://yoursite.com/2018/03/25/机器学习/计算学习理论/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="计算学习理论 1. 基础知识 计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。 给定样例集\(D = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots, (\pmb{x}_m,y_m)\">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20上午10.28.49.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20上午11.03.42.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午1.34.06.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午3.29.49.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午3.57.17.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午5.15.52.png">
+<meta property="og:updated_time" content="2018-03-25T09:18:44.844Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算学习理论">
+<meta name="twitter:description" content="计算学习理论 1. 基础知识 计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。 给定样例集\(D = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots, (\pmb{x}_m,y_m)\">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20上午10.28.49.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/25/机器学习/计算学习理论/"/>
+
+
+  <title>计算学习理论 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/25/机器学习/计算学习理论/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算学习理论</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-25T17:18:13+08:00">2018-03-25</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="计算学习理论">计算学习理论</h1>
+<h2 id="基础知识">1. 基础知识</h2>
+<p>计算学习理论（computational learning theory）研究的是关于通过“计算”来进行“学习”的理论，即关于机器学习的理论基础，其目的是分析学习任务的困难本质，为学习算法提供理论保证，并根据分析结果指导算法设计。<br>
+给定样例集<span class="math inline">\(D = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots, (\pmb{x}_m,y_m)\},\pmb{x}_i \in \mathscr{X}\)</span>，这里主要讨论二分类问题，<span class="math inline">\(y_i \in \mathscr{Y} = \{-1,+1\}\)</span>。假设<span class="math inline">\(\mathscr{X}\)</span>中的所有样本服从一个隐含未知的分布<span class="math inline">\(\mathscr{D}\)</span>，<span class="math inline">\(D\)</span>中所有样本都是独立地从这个分布上采样而得，即独立同分布（independent and identically distributed，iid）样本。<br>
+令<span class="math inline">\(h\)</span>为从<span class="math inline">\(\mathscr{X}\)</span>到<span class="math inline">\(\mathscr{Y}\)</span>的一个映射，其泛化误差为 <span class="math display">\[E(h;\mathscr{D}) = P_{\pmb{x} \sim\mathscr{D}} (h(\pmb{x}) \neq y)\]</span> <span class="math inline">\(h\)</span>在<span class="math inline">\(D\)</span>上的经验误差为 <span class="math display">\[\hat{E}(h;D) = \frac{1}{m} \sum_{i=1}^m I(h(\pmb{x}_i) \neq y_i)\]</span> 由于<span class="math inline">\(D\)</span>是<span class="math inline">\(\mathscr{D}\)</span>的独立同分布采样，因此<span class="math inline">\(h\)</span>的经验误差的期望等于其泛化误差。上下文明确时，将<span class="math inline">\(E(h;\mathscr{D})\)</span>和<span class="math inline">\(\hat{E}(h;D)\)</span>分别简记为<span class="math inline">\(E(h)\)</span>和<span class="math inline">\(\hat{E}(h)\)</span>。令<span class="math inline">\(\epsilon\)</span>为<span class="math inline">\(E(h)\)</span>的上限，即<span class="math inline">\(E(h) \leqslant \epsilon\)</span>；通常用<span class="math inline">\(\epsilon\)</span>表示预先设定的学得模型所应满足的误差要求，亦称“误差参数”。<br>
+若<span class="math inline">\(h\)</span>在数据集<span class="math inline">\(D\)</span>上的经验误差为0，则称<span class="math inline">\(h\)</span>与<span class="math inline">\(D\)</span>一致，否则称其与<span class="math inline">\(D\)</span>不一致。对任意两个映射<span class="math inline">\(h_1,h_2 \in \mathscr{X} \to \mathscr{Y}\)</span>，可通过其“不合”（disagreement）来度量它们之间的差别： <span class="math display">\[d(h_1,h_2) = P_{\pmb{x} \sim \mathscr{D}} (h_1(\pmb{x}) \neq h_2(\pmb{x}))\]</span> 会用到以下不等式：<br>
+<strong>Jensen不等式</strong>：对任意凸函数<span class="math inline">\(f(x)\)</span>，有 <span class="math display">\[f(E(x)) \leqslant E(f(x))\]</span> <strong>Hoeffding不等式</strong>：若<span class="math inline">\(x_1,x_2,\cdots,x_m\)</span>为<span class="math inline">\(m\)</span>个独立随机变量，且满足<span class="math inline">\(0 \leqslant x_i \leqslant 1\)</span>，则对任意<span class="math inline">\(\epsilon &gt; 0\)</span>，有 <span class="math display">\[\begin{equation}
+    P(\frac{1}{m} \sum_{i=1}^m x_i - \frac{1}{m} \sum_{i=1}^m E(x_i) \geqslant \epsilon) \leqslant exp(-2 m \epsilon^2) \nonumber \\
+    P(|\frac{1}{m} \sum_{i=1}^m x_i - \frac{1}{m} \sum_{i=1}^m E(x_i)| \geqslant \epsilon) \leqslant 2 exp(-2 m \epsilon^2) \nonumber
+\end{equation}\]</span> <strong>McDiarmid不等式</strong>：若<span class="math inline">\(x_1,x_2,\cdots,x_m\)</span>为<span class="math inline">\(m\)</span>个独立随机变量，且对任意<span class="math inline">\(1 \leqslant i \leqslant m\)</span>，函数<span class="math inline">\(f\)</span>满足 <span class="math display">\[\sup_{x_1,\cdots,x_m,x_i&#39;}||f(x_1,\cdots,x_m) - f(x_1,\cdots,x_{i-1},x_i&#39;,x_{i+1},\cdots,x_m)|| \leqslant c_i\]</span> 则对任意<span class="math inline">\(\epsilon &gt; 0\)</span>，有 <span class="math display">\[\begin{equation}
+P(f(x_1,\cdots,x_m) - E(f(x_1,\cdots,x_m)) \geqslant \epsilon) \leqslant \exp(\frac{-2 \epsilon^2}{\sum_i c_i^2}) \nonumber \\
+P(|f(x_1,\cdots,x_m) - E(f(x_1,\cdots,x_m))| \geqslant \epsilon) \leqslant 2 \exp(\frac{-2 \epsilon^2}{\sum_i c_i^2}) \nonumber
+\end{equation}\]</span></p>
+<h2 id="pac学习">2. PAC学习</h2>
+<p>计算学习理论中最基本的是<strong>概率近似正确（Probably Approximately Correct，PAC）</strong>学习理论。<br>
+令<span class="math inline">\(c\)</span>表示“概念”（concept），这是从样本空间<span class="math inline">\(\mathscr{X}\)</span>到标记空间<span class="math inline">\(\mathscr{Y}\)</span>的映射，它决定实例<span class="math inline">\(\pmb{x}\)</span>的真实标记<span class="math inline">\(y\)</span>，若对任何样例<span class="math inline">\((\pmb{x},y)\)</span>有<span class="math inline">\(c(\pmb{x}) = y\)</span>成立，则称<span class="math inline">\(c\)</span>为目标概念；所有我们希望学得的目标概念所构成的集合称为“概念类”（concept class），用<span class="math inline">\(\mathscr{C}\)</span>表示。<br>
+给定学习算法<span class="math inline">\(\mathscr{L}\)</span>，它所考虑的所有可能概念的集合称为“假设空间”（hypothesis space），用户号<span class="math inline">\(\mathscr{H}\)</span>表示。由于学习算法事先并不知道概念类的真实存在，因此<span class="math inline">\(\mathscr{H}\)</span>和<span class="math inline">\(\mathscr{C}\)</span>通常是不同的，学习算法会把自认为可能的目标概念集中起来构成<span class="math inline">\(\mathscr{H}\)</span>，对<span class="math inline">\(h \in \mathscr{H}\)</span>，由于并不能确定它是否真是目标概念，因此称为“假设”（hypothesis）。显然，假设<span class="math inline">\(h\)</span>也是从样本空间<span class="math inline">\(\mathscr{X}\)</span>到标记空间<span class="math inline">\(\mathscr{Y}\)</span>的映射。<br>
+若目标概念<span class="math inline">\(c \in \mathscr{H}\)</span>，则<span class="math inline">\(\mathscr{H}\)</span>中存在假设能将所有示例按与真实标记一致的方式完全分开，称该问题对学习算法<span class="math inline">\(\mathscr{L}\)</span>是“可分的”（separable），亦称“一致的”（consistent）；若<span class="math inline">\(c \notin \mathscr{H}\)</span>，则<span class="math inline">\(\mathscr{H}\)</span>中不存在任何假设能将所有示例完全正确分开，称该问题对学习算法<span class="math inline">\(\mathscr{L}\)</span>是“不可分的”（non-separable），亦称“不一致的”（non-consistent）。<br>
+给定训练集<span class="math inline">\(D\)</span>，希望基于学习算法<span class="math inline">\(\mathscr{L}\)</span>学得的模型所对应的假设<span class="math inline">\(h\)</span>尽可能接近目标概念<span class="math inline">\(c\)</span>。这里是尽可能的接近，因为想要精确地学到目标概念<span class="math inline">\(c\)</span>是很困难的，由于机器学习过程受到很多因素的制约，例如获得训练集<span class="math inline">\(D\)</span>往往仅包含有限数量的样例，从分布<span class="math inline">\(\mathscr{D}\)</span>采样得到的<span class="math inline">\(D\)</span>的过程有一定偶然性，即便对同样大小的不同训练集，学得结果也可能有所不同。因此，我们是希望以比较大的把握学得比较好的模型，即以较大的概率学得误差满足预设上限的模型，这就是“概率”“近似正确”的含义。形式化地说，令<span class="math inline">\(\delta\)</span>表示置信度，可定义： <strong>PAC辨识（PAC Identify）</strong>：对<span class="math inline">\(0 &lt; \epsilon, \delta &lt; 1\)</span>，所有<span class="math inline">\(c \in \mathscr{C}\)</span>和分布<span class="math inline">\(\mathscr{D}\)</span>，若存在学习算法<span class="math inline">\(\mathscr{L}\)</span>，其输出假设<span class="math inline">\(h \in \mathscr{H}\)</span>满足 <span class="math display">\[P(E(h) \leqslant \epsilon) \geqslant 1 - \delta\]</span> 则称学习算法<span class="math inline">\(\mathscr{L}\)</span>能从假设空间<span class="math inline">\(\mathscr{H}\)</span>中PAC辨识概念类<span class="math inline">\(\mathscr{C}\)</span>。</p>
+<p>这样的学习算法<span class="math inline">\(\mathscr{L}\)</span>能以较大的概率（至少<span class="math inline">\(1-\delta\)</span>）学得目标概念<span class="math inline">\(c\)</span>的近似（误差最多为<span class="math inline">\(\epsilon\)</span>）。在此基础上定义：</p>
+<p><strong>PAC可学习（PAC Learnable）</strong>：，令<span class="math inline">\(m\)</span>表示从分布<span class="math inline">\(\mathscr{D}\)</span>中独立同分布采样得到的样例数目，<span class="math inline">\(0 &lt; \epsilon, \delta &lt; 1\)</span>，对所有分布<span class="math inline">\(\mathscr{D}\)</span>，若存在学习算法<span class="math inline">\(\mathscr{L}\)</span>和多项式函数<span class="math inline">\(poly(·,·,·,·)\)</span>，使得对任何<span class="math inline">\(m \geqslant poly(1 / \epsilon, 1 / \delta, size(\pmb{x}),size(c))\)</span>，<span class="math inline">\(\mathscr{L}\)</span>能从假设空间<span class="math inline">\(\mathscr{H}\)</span>中PAC辨识概念类<span class="math inline">\(\mathscr{C}\)</span>，则称概念类<span class="math inline">\(\mathscr{C}\)</span>对假设空间<span class="math inline">\(\mathscr{H}\)</span>而言是PAC可学习的，有时也简称概念类<span class="math inline">\(\mathscr{C}\)</span>是PAC可学习的。</p>
+<p>对计算机算法来说，必然要考虑时间复杂度，于是：<br>
+<strong>PAC学习算法（PAC Learning Algorithm）</strong>：若学习算法<span class="math inline">\(\mathscr{L}\)</span>使概念类<span class="math inline">\(\mathscr{C}\)</span>为PAC可学习的，且<span class="math inline">\(\mathscr{L}\)</span>的运行时间也是多项式函数<span class="math inline">\(poly(1 / \epsilon, 1 / \delta, size(\pmb{x}),size(c))\)</span>，则称概念类<span class="math inline">\(\mathscr{C}\)</span>是高效PAC可学习（efficiently PAC learnable）的，称<span class="math inline">\(\mathscr{L}\)</span>为概念类<span class="math inline">\(\mathscr{C}\)</span>的PAC学习算法。<br>
+假定学习算法<span class="math inline">\(\mathscr{L}\)</span>处理每个样本的时间为常数，则<span class="math inline">\(\mathscr{L}\)</span>的时间复杂度等价于样本复杂度。于是，对算法时间复杂度的关注就转化为对样本复杂度的关注： <strong>样本复杂度（Sample complexity）</strong>：满足PAC学习算法<span class="math inline">\(\mathscr{L}\)</span>所需的<span class="math inline">\(m \geqslant poly(1 / \epsilon, 1 / \delta, size(\pmb{x}),size(c))\)</span>中最小的<span class="math inline">\(m\)</span>，称为学习算法<span class="math inline">\(\mathscr{L}\)</span>的样本复杂度。</p>
+<p>PAC学习给出了一个抽象地刻画机器学习能力的框架，基于这个框架能对很多重要问题进行理论探讨，例如研究某任务在什么样的条件下可学得较好的模型？某算法在什么样的条件下可进行有效的学习？需多少训练样例才能获得较好的模型？</p>
+<p>PAC学习中一个关键因素是假设空间<span class="math inline">\(\mathscr{H}\)</span>的复杂度，<span class="math inline">\(\mathscr{H}\)</span>包含了学习算法<span class="math inline">\(\mathscr{L}\)</span>所有可能输出的假设，若在PAC学习中假设空间与概念类完全相同，即<span class="math inline">\(\mathscr{H} = \mathscr{C}\)</span>，这称为”恰PAC可学习“（properly PAC learnable）；这意味着学习算法的能力与学习任务”恰好匹配“。然而，这种让所有候选假设都来自概念类的要求看似合理，但却并不实际。因为现实应用中我们队概念类通常一无所知，更别说获得一个假设空间与概念类恰好相同的学习算法。显然，更重要的是研究假设空间与概念类不同的情形，即<span class="math inline">\(\mathscr{H} \neq \mathscr{C}\)</span>。一般而言，<span class="math inline">\(\mathscr{H}\)</span>越大，其包含的目标概念的可能性越大，但从中找到某个具体目标概念的难度也越大。<span class="math inline">\(|\mathscr{H}|\)</span>有限时，称<span class="math inline">\(\mathscr{H}\)</span>为”有限假设空间“，否则称为”无限假设空间“。</p>
+<h2 id="有限假设空间">3. 有限假设空间</h2>
+<h3 id="可分情形">3.1. 可分情形</h3>
+<p>可分情形意味着目标概念<span class="math inline">\(c\)</span>属于假设空间<span class="math inline">\(\mathscr{H}\)</span>，即<span class="math inline">\(c \in \mathscr{H}\)</span>。我们的目标是在给定包含<span class="math inline">\(m\)</span>个样例的训练集<span class="math inline">\(D\)</span>的情况下找出满足误差参数的假设。<br>
+一种简单的学习策略：既然<span class="math inline">\(D\)</span>中样例标记都是由目标概念<span class="math inline">\(c\)</span>赋予的，并且<span class="math inline">\(c\)</span>存在于假设空间<span class="math inline">\(\mathscr{H}\)</span>中，那么，任何在训练集<span class="math inline">\(D\)</span>上出现标记错误的假设肯定不是目标概念<span class="math inline">\(c\)</span>。所以只需要保留与<span class="math inline">\(D\)</span>一致的假设，剔除与<span class="math inline">\(D\)</span>不一致的假设即可。若训练集<span class="math inline">\(D\)</span>足够大，则可不断借助<span class="math inline">\(D\)</span>中的样例剔除不一致的假设，直到<span class="math inline">\(\mathscr{H}\)</span>中仅剩下一个假设为止，这个假设就是目标概念<span class="math inline">\(c\)</span>。通常情形下，由于训练及规模有限，假设空间<span class="math inline">\(\mathscr{H}\)</span>中可能存在不止一个与<span class="math inline">\(D\)</span>一致的”等效“假设，对这些等效假设，无法根据<span class="math inline">\(D\)</span>来对它们的优劣做进一步区分。<br>
+<strong>数据规模</strong>：对PAC学习来说，只要训练集<span class="math inline">\(D\)</span>的规模能使学习算法<span class="math inline">\(\mathscr{L}\)</span>以概率<span class="math inline">\(1 - \delta\)</span>找到目标假设的<span class="math inline">\(\epsilon\)</span>近似即可。<br>
+首先估计泛化误差大于<span class="math inline">\(\epsilon\)</span>但在训练集上仍表现完美的假设出现的概率。假设<span class="math inline">\(h\)</span>的泛化误差大于<span class="math inline">\(\epsilon\)</span>，对分布<span class="math inline">\(\mathscr{D}\)</span>上随机采样而得的任何样例<span class="math inline">\((\pmb{x},y)\)</span>,有 <span class="math display">\[\begin{align}
+    P(h(\pmb{x}) = y) &amp;= 1 - P(h(\pmb{x}) \neq y) \nonumber \\
+    &amp;= 1 - E(h) \nonumber \\
+    &amp;&lt; 1 - \epsilon \nonumber
+\end{align}\]</span> 由于<span class="math inline">\(D\)</span>包含<span class="math inline">\(m\)</span>个从<span class="math inline">\(\mathscr{D}\)</span>独立同分布采样而得的样例，因此，<span class="math inline">\(h\)</span>与<span class="math inline">\(D\)</span>表现一致的概率为 <span class="math display">\[P((h(\pmb{x}_1) = y_1) \wedge \cdots \wedge (h(\pmb{x}_m) = y_m)) = (1 - P(h(\pmb{x}) \neq y))^m &lt; (1 - \epsilon)^m\]</span> 我们事先并不知道学习算法<span class="math inline">\(\mathscr{L}\)</span>会输出<span class="math inline">\(\mathscr{H}\)</span>中的哪个假设，但仅需保证泛化误差大于<span class="math inline">\(\epsilon\)</span>，且在训练集上表现完美的所有假设出现概率之和不大于<span class="math inline">\(\delta\)</span>即可： <span class="math display">\[P(h \in \mathscr{H}:E(h) &gt; \epsilon \wedge \hat{E}(h) = 0) &lt; |\mathscr{H}|(1 - \epsilon)^m &lt; |\mathscr{H}| e^{- m \epsilon}\]</span> 令上式不大于<span class="math inline">\(\delta\)</span>，即 <span class="math display">\[|\mathscr{H}| e^{-m \epsilon} \leqslant \delta\]</span> 可得 <span class="math display">\[m \geqslant \frac{1}{\delta} (\ln |\mathscr{H}| + \ln \frac{1}{\delta})\]</span> 有限假设空间<span class="math inline">\(\mathscr{H}\)</span>都是PAC可学习的，所需样例数目如上式所示，输出假设<span class="math inline">\(h\)</span>的泛化误差随样例数目的增多而收敛到0，收敛速率为<span class="math inline">\(O(\frac{1}{m})\)</span>。</p>
+<h3 id="不可分情形">3.2. 不可分情形</h3>
+<p>对于较为困难的学习问题，目标概念<span class="math inline">\(c\)</span>往往不存在与假设空间<span class="math inline">\(\mathscr{H}\)</span>中。假定对任何<span class="math inline">\(h \in \mathscr{H}, \hat{E}(h) \neq 0\)</span>，即<span class="math inline">\(\mathscr{H}\)</span>中的任意一个假设都会在训练集上出现或多或少的错误，由Hoeffding不等式可知： <strong>引理</strong>：若训练集包含<span class="math inline">\(m\)</span>个从分布<span class="math inline">\(\mathscr{D}\)</span>上独立同分布采样而得的样例，<span class="math inline">\(0 &lt; \epsilon &lt; 1\)</span>，则对任意<span class="math inline">\(h \in \mathscr{H}\)</span>，有 <span class="math display">\[\begin{equation}
+    P(\hat{E}(h) - E(h) \geqslant \epsilon) \leqslant \exp(-2m \epsilon^2) \nonumber \\
+    P(E(h) - \hat{E}(h) \geqslant \epsilon) \leqslant \exp(-2m \epsilon^2) \nonumber \\
+    P(|E(h) - \hat{E}(h)| \geqslant \epsilon) \leqslant 2 \exp(-2m \epsilon^2) \nonumber
+\end{equation}\]</span></p>
+<p><strong>推论</strong>：若训练集<span class="math inline">\(D\)</span>包含<span class="math inline">\(m\)</span>个从分布<span class="math inline">\(\mathscr{D}\)</span>上独立同分布采样而得的样例，<span class="math inline">\(0 &lt; \epsilon &lt; 1\)</span>，则对任意<span class="math inline">\(h \in \mathscr{H}\)</span>，下式以至少<span class="math inline">\(1 - \delta\)</span>的概率成立： <span class="math display">\[\hat{E}(h) - \sqrt{\frac{\ln(2 / \delta)}{2m}} \leqslant E(h) \leqslant \hat{E}(h) + \sqrt{\frac{\ln(2 / \delta)}{2m}}\]</span> 上式表明，样例数目<span class="math inline">\(m\)</span>较大时，<span class="math inline">\(h\)</span>的经验误差是其泛化误差很好的近似。对于有限假设空间<span class="math inline">\(\mathscr{H}\)</span>，有</p>
+<p><strong>定理</strong>：若<span class="math inline">\(\mathscr{H}\)</span>为有限假设空间，<span class="math inline">\(0 &lt; \epsilon &lt; 1\)</span>，则对任意<span class="math inline">\(h \in \mathscr{H}\)</span>，有 <span class="math display">\[P(|E(h) - \hat{E}(h)| \leqslant \sqrt{\frac{\ln|\mathscr{H}|+\ln(2/\delta)}{2m}}) \geqslant 1 - \delta\]</span> <strong>证明</strong>：令<span class="math inline">\(h_1,h_2,\cdots,h_{|\mathscr{H}|}\)</span>表示假设空间<span class="math inline">\(\mathscr{H}\)</span>中的假设，有 <span class="math display">\[\begin{align}
+    &amp; \quad P(\exists h \in \mathscr{H}:|E(h) - \hat{E}(h)| &gt; \epsilon) \nonumber \\
+    &amp;= P((|E_{h_1} - \hat{E}_{h_1}|&gt; \epsilon) \vee \cdots \vee(|E_{h_{|\mathscr{H}|}} - E_{h_{\mathscr{H}}}|&gt; \epsilon)) \nonumber \\
+    &amp; \leqslant \sum_{h \in \mathscr{H}} P(|E(h) - \hat{E}(h)| &gt; \epsilon) \nonumber
+\end{align}\]</span></p>
+<p>根据引理可得 <span class="math display">\[\sum_{h \in \mathscr{H}} P(|E(h) - \hat{E}(h)| &gt; \epsilon) \leqslant 2 |\mathscr{H}| \exp(-2 m \epsilon^2)\]</span> 令<span class="math inline">\(\delta = 2 |\mathscr{H}| \exp(-2 m \epsilon^2)\)</span>即可得到 <span class="math display">\[P(|E(h) - \hat{E}(h)| \leqslant \sqrt{\frac{\ln|\mathscr{H}|+\ln(2/\delta)}{2m}}) \geqslant 1 - \delta\]</span></p>
+<p>当<span class="math inline">\(c \notin \mathscr{H}\)</span>时，学习算法<span class="math inline">\(\mathscr{L}\)</span>无法学得目标概念<span class="math inline">\(c\)</span>的<span class="math inline">\(\epsilon\)</span>近似。但当假设空间<span class="math inline">\(\mathscr{H}\)</span>给定时，其中必存在一个泛化误差最小的假设，找出此假设的<span class="math inline">\(\epsilon\)</span>近似也是一个不错的目标。<span class="math inline">\(\mathscr{H}\)</span>中泛化误差最小的假设是<span class="math inline">\(\arg \min_{h \in \mathscr{H}} E(h)\)</span>，以此为目标可将PAC学习推广到<span class="math inline">\(c \notin \mathscr{H}\)</span>的情况，这称为”不可知学习“。<br>
+<strong>不可知PAC可学习（agnostic PAC learnable）</strong>：令<span class="math inline">\(m\)</span>表示从分布<span class="math inline">\(\mathscr{D}\)</span>中独立同分布采样得到的样例数目，<span class="math inline">\(0 &lt; \epsilon, \delta &lt; 1\)</span>，对所有分布<span class="math inline">\(\mathscr{D}\)</span>，若存在学习算法<span class="math inline">\(\mathscr{L}\)</span>和多项式函数<span class="math inline">\(poly(·,·,·,·)\)</span>，使得对于任何<span class="math inline">\(m \geqslant poly(1/\epsilon, 1/\delta, size(\pmb{x}), size(c))\)</span>，<span class="math inline">\(\mathscr{L}\)</span>能从假设空间<span class="math inline">\(\mathscr{H}\)</span>中输出满足下式的假设<span class="math inline">\(h\)</span>： <span class="math display">\[P(E(h) - \min_{h&#39; \in \mathscr{H}} (h&#39;) \leqslant \epsilon) \geqslant 1 - \delta\]</span> 则称假设空间<span class="math inline">\(\mathscr{H}\)</span>是不可知PAC可学习的。</p>
+<p>与PAC可学习类似，若学习算法<span class="math inline">\(\mathscr{L}\)</span>的运行时间也是多项式函数<span class="math inline">\(poly(1/\epsilon, 1/\delta, size(\pmb{x}), size(c))\)</span>，则称假设空间<span class="math inline">\(\mathscr{H}\)</span>是高效不可知PAC科学系的，学习算法<span class="math inline">\(\mathscr{L}\)</span>则称为假设空间<span class="math inline">\(\mathscr{H}\)</span>的不可知PAC学习算法，满足上述要求的最小<span class="math inline">\(m\)</span>称为学习算法<span class="math inline">\(\mathscr{L}\)</span>的样本复杂度。</p>
+<h2 id="vc维">4. VC维</h2>
+<p>现实学习任务中所面临的通常是无限假设空间，如<span class="math inline">\(\mathbf{R}^d\)</span>空间中的所有线性超平面，对这种情形的可学习型进行研究，需度量假设空间的复杂度，最常见的办法是考虑假设空间的”VC维“。<br>
+首先引入几个概念：<strong>增长函数</strong>、<strong>对分</strong>和<strong>打散</strong>。<br>
+给定假设空间<span class="math inline">\(\mathscr{H}\)</span>和样例集<span class="math inline">\(D = \{\pmb{x}_1, \pmb{x}_2,\cdots,\pmb{x}_m\}\)</span>，<span class="math inline">\(\mathscr{H}\)</span>中每个假设<span class="math inline">\(h\)</span>都能对<span class="math inline">\(D\)</span>中样例赋予标记，标记结果为 <span class="math display">\[h|_D = \{(h(\pmb{x}_1), h(\pmb{x}_2),\cdots, h(\pmb{x}_m))\}\]</span> 随着<span class="math inline">\(m\)</span>的增大，<span class="math inline">\(\mathscr{H}\)</span>中所有假设对<span class="math inline">\(D\)</span>中的样例所能赋予标记的可能结果数也会增大。<br>
+<strong>增长函数（growth function）</strong>：对所有<span class="math inline">\(m \in \mathbf{N}\)</span>，假设空间<span class="math inline">\(\mathscr{H}\)</span>的增长函数<span class="math inline">\(\Pi_{\mathscr{H}}(m)\)</span>为 <span class="math display">\[\Pi_{\mathscr{H}}(m) = \max_{\{\pmb{x}_1,\cdots,\pmb{x}_m\} \subseteq \mathscr{X}} | \{(h(\pmb{x}_1),\cdots, h(\pmb{x}_m))| h \in \mathscr{H}\} |\]</span> 增长函数<span class="math inline">\(\Pi_{\mathscr{H}}(m)\)</span>表示假设空间<span class="math inline">\(\mathscr{H}\)</span>对<span class="math inline">\(m\)</span>个样例所能赋予标记的最大可能结果数。<span class="math inline">\(\mathscr{H}\)</span>对样例所能赋予标记的可能结果数越大，<span class="math inline">\(\mathscr{H}\)</span>的表示能力越强，对学习任务的适应能力也越强。因此，增长函数描述了假设空间<span class="math inline">\(\mathscr{H}\)</span>的表示能力，由此反映出假设空间的复杂度。可利用增长函数来估计经验误差与泛化误差之间的关系： <strong>定理12.2</strong>：对假设空间<span class="math inline">\(\mathscr{H}\)</span>，<span class="math inline">\(m \in \mathbf{N}\)</span>，<span class="math inline">\(0 &lt; \epsilon &lt; 1\)</span>和任意<span class="math inline">\(h \in \mathscr{H}\)</span>有 <span class="math display">\[P(|E(h) - \hat{E}(h)| &gt; \epsilon) \leqslant 4 \Pi_{\mathscr{H}} (2m) \exp(- \frac{m \epsilon^2}{8})\]</span> 假设空间<span class="math inline">\(\mathscr{H}\)</span>中不同的假设对于<span class="math inline">\(D\)</span>中样例赋予标记的结果可能相同，也可能不同；尽管<span class="math inline">\(\mathscr{H}\)</span>可能包含无穷多个假设，但其对<span class="math inline">\(D\)</span>中样例赋予标记的可能结果是有限的：对<span class="math inline">\(m\)</span>个样例，最多有<span class="math inline">\(2^m\)</span>个可能的结果（二分类问题）。对于二分类问题来说，<span class="math inline">\(\mathscr{H}\)</span>中的假设对<span class="math inline">\(D\)</span>中样例赋予标记的每种可能结果成为对<span class="math inline">\(D\)</span>的一种”对分“。若假设空间<span class="math inline">\(\mathscr{H}\)</span>能实现样例集上的所有对分，即<span class="math inline">\(\Pi_{\mathscr{H}}(m) = 2^m\)</span>，则称样例集<span class="math inline">\(D\)</span>能被假设空间<span class="math inline">\(\mathscr{H}\)</span>”打散“。</p>
+<p><strong>定义</strong>：假设空间<span class="math inline">\(\mathscr{H}\)</span>的VC维是能被<span class="math inline">\(\mathscr{H}\)</span>打散的最大样例集的大小，即 <span class="math display">\[VC(\mathscr{H}) = \max \{m: \Pi_{\mathscr{H}}(m) = 2^m\}\]</span> <span class="math inline">\(VC(\mathscr{H}) = d\)</span>表明存在大小为<span class="math inline">\(d\)</span>的样例集能被假设空间<span class="math inline">\(\mathscr{H}\)</span>打散。<br>
+<strong>注意</strong>：<span class="math inline">\(VC(\mathscr{H}) = d\)</span>并不意味着所有大小为<span class="math inline">\(d\)</span>的样例集都能被假设空间<span class="math inline">\(\mathscr{H}\)</span>打散。VC维的定义与数据分布<span class="math inline">\(\mathscr{D}\)</span>无关。因此，在数据分布未知时仍能计算出假设空间<span class="math inline">\(\mathscr{H}\)</span>的VC维。<br>
+<span class="math inline">\(\mathscr{H}\)</span>的VC维计算方式：若存在大小为<span class="math inline">\(d\)</span>的样例集能被<span class="math inline">\(\mathscr{H}\)</span>打散，但不存在任何大小为<span class="math inline">\(d+1\)</span>的样例集能被<span class="math inline">\(\mathscr{H}\)</span>打散，则<span class="math inline">\(\mathscr{H}\)</span>的VC维是<span class="math inline">\(d\)</span>。</p>
+<p><strong>示例</strong>： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20上午10.28.49.png"></p>
+<p><strong>引理</strong>：若假设空间<span class="math inline">\(\mathscr{H}\)</span>的VC维为<span class="math inline">\(d\)</span>，则对任意<span class="math inline">\(m \in \mathbf{N}\)</span>有 <span class="math display">\[\Pi_{\mathscr{H}} (m) \leqslant \sum_{i=0}^d \binom m i\]</span></p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20上午11.03.42.png">
+
+</div>
+<p><strong>推论12.2</strong>：若假设空间<span class="math inline">\(\mathscr{H}\)</span>的VC维为<span class="math inline">\(d\)</span>，则对任意整数<span class="math inline">\(m \geqslant d\)</span>有 <span class="math display">\[\Pi_{\mathscr{H}} (m) \leqslant (\frac{e·m}{d})^d\]</span> <strong>证明</strong>： <span class="math display">\[\begin{align}
+    \Pi_{\mathscr{H}} (m) &amp; \leqslant \sum_{i=0} is ^d \binom m i \nonumber \\
+    &amp; \leqslant \sum_{i=0}^d \binom m i  (\frac{m}{d})^{d - i} \nonumber \\
+    &amp; = (\frac{m}{d})^d \sum_{i=0}^d \binom m i (\frac{d}{m})^i \nonumber \\
+    &amp; \leqslant (\frac{m}{d})^d \sum_{i=0}^m \binom m i (\frac{d}{m})^i \nonumber \\
+    &amp; = (\frac{m}{d})^d (1 + \frac{d}{m})^m \nonumber \\
+    &amp; \leqslant (\frac{e·m}{d})^d \nonumber
+\end{align}\]</span></p>
+<p><strong>定理12.3</strong>：若假设空间<span class="math inline">\(\mathscr{H}\)</span>的VC维为<span class="math inline">\(d\)</span>，则对任意<span class="math inline">\(m &gt; d\)</span>，<span class="math inline">\(0 &lt; \delta &lt; 1\)</span>和<span class="math inline">\(h \in \mathscr{H}\)</span>有 <span class="math display">\[P(|E(h) - \hat{E}(h)| \leqslant \sqrt{\frac{8d \ln \frac{2em}{d} + 8 \ln \frac{4}{\delta}}{m}}) \geqslant 1 - \delta\]</span> <strong>证明</strong>：令<span class="math inline">\(4 \Pi_{\mathscr{H}} (2m) \exp(- \frac{m \epsilon^2}{8}) \leqslant 4 (\frac{2em}{d})^d \exp(- \frac{m \epsilon^2}{8}) = \delta\)</span>，解得 <span class="math display">\[\epsilon = \sqrt{\frac{8d \ln \frac{2em}{d} + 8 \ln \frac{4}{\delta}}{m}})\]</span> 带入定理12.2，定理12.3得证。<br>
+由定理12.3的公式可知，泛化误差界只与样例数目<span class="math inline">\(m\)</span>有关，收敛速率为<span class="math inline">\(O(\frac{1}{\sqrt{m}})\)</span>，与数据分布<span class="math inline">\(\mathscr{D}\)</span>和样例集<span class="math inline">\(D\)</span>无关。<br>
+<strong>基于VC维的泛化误差界是分布无关、数据独立的</strong>。</p>
+<p>令<span class="math inline">\(h\)</span>表示学习算法<span class="math inline">\(\mathscr{L}\)</span>输出的假设，若<span class="math inline">\(h\)</span>满足 <span class="math display">\[\hat{E}(h) = \min_{h&#39; \in \mathscr{H}} \hat{E}(h&#39;)\]</span> 则称<span class="math inline">\(\mathscr{L}\)</span>为满足经验风险最小化（ERM）原则的算法，并有以下的定理：<br>
+<strong>定理12.4</strong>：任何VC维有限的假设空间<span class="math inline">\(\mathscr{H}\)</span>都是（不可知）PAC可学习的。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午1.34.06.png">
+
+</div>
+<h2 id="rademacher复杂度">5. Rademacher复杂度</h2>
+<p>基于VC维的泛化误差界是分布无关、数据独立的，即对任何数据分布都成立。这使得基于VC维的可学习性分析结果具有一定的”普适性“；但从另一方面看，由于没有考虑数据自身，基于VC维得到的泛化误差界通常比较”松“，对那些与学习问题的典型情况相差甚远的较”坏“分布来说尤其如此。<br>
+<strong>Rademacher复杂度（Rademacher complexity）</strong>是另一种刻画假设空间复杂度的途径，与VC维不同的是，它在一定程度上考虑了数据分布。</p>
+<p>给定训练集<span class="math inline">\(D = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_m,y_m)\}\)</span>，假设<span class="math inline">\(h\)</span>的经验误差为 <span class="math display">\[\begin{align}
+    \hat{E}(h) &amp;= \frac{1}{m} \sum_{i=1}^m I(h(\pmb{x}_i) \neq y_i) \nonumber \\
+    &amp;= \frac{1}{m} \sum_{i=1}^m \frac{1 - y_i h(\pmb{x}_i)}{2} \nonumber \\
+    &amp;= \frac{1}{2} - \frac{1}{2m} \sum_{i=1}^m y_i h(\pmb{x}_i) \nonumber 
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(\frac{1}{m} \sum_{i=1}^m y_i h(\pmb{x}_i)\)</span>体现了预测值<span class="math inline">\(h(\pmb{x}_i)\)</span>与样例真实标记<span class="math inline">\(y_i\)</span>之间的一致性，若对于所有<span class="math inline">\(i \in \{1,2,\cdots,m\}\)</span>都有<span class="math inline">\(h(\pmb{x}_i) = y_i\)</span>，则<span class="math inline">\(\frac{1}{m} \sum_{i=1}^m y_i h(\pmb{x}_i)\)</span>取最大值1。也就是说，经验误差最小的假设是 <span class="math display">\[\arg \min_{h \in \mathscr{H}} \frac{1}{m} \sum_{i=1}^m y_i h(\pmb{x}_i)\]</span></p>
+<p>然而，现实任务中样例的标记有时会受到噪声的影响，即对某些样例<span class="math inline">\((\pmb{x}_i,y_i)\)</span>，其<span class="math inline">\(y_i\)</span>或许是已受到随机因素的影响，不再是<span class="math inline">\(\pmb{x}_i\)</span>的真实标记，在此情形下，选择假设空间<span class="math inline">\(\mathscr{H}\)</span>中在训练集上表现最好的假设，有时还不如选择<span class="math inline">\(\mathscr{H}\)</span>中事先已经考虑了随机噪声影响的假设。</p>
+<p>考虑随机变量<span class="math inline">\(\sigma_i\)</span>，它以0.5的概率取值-1，0.5的概率取值+1，称为Rademacher随机变量，基于<span class="math inline">\(\sigma_i\)</span>，可将上式重写为 <span class="math display">\[\sup_{h \in \mathscr{H}} \frac{1}{m} \sum_{i=1}^m \sigma_i h(\pmb{x}_i)\]</span> 考虑<span class="math inline">\(\mathscr{H}\)</span>中的所有假设，对上式取期望可得 <span class="math display">\[E_{\pmb{\sigma}}[\sup_{h \in \mathscr{H}} \frac{1}{m} \sum_{i=1}^m \sigma_i h(\pmb{x}_i)]\]</span> 其中<span class="math inline">\(\pmb{\sigma} = \{\sigma_1,\sigma_2,\cdots,\sigma_m\}\)</span>。上式的取值范围是<span class="math inline">\([0,1]\)</span>，它体现了假设空间<span class="math inline">\(\mathscr{H}\)</span>的表达能力，例如当<span class="math inline">\(|\mathscr{H}| = 1\)</span>时，<span class="math inline">\(\mathscr{H}\)</span>中仅有一个假设，这时可计算出上式的值为0；当<span class="math inline">\(|\mathscr{H}| = 2^m\)</span>且<span class="math inline">\(\mathscr{H}\)</span>能打散<span class="math inline">\(D\)</span>时，对任意<span class="math inline">\(\pmb{\sigma}\)</span>总有一个假设使得<span class="math inline">\(h(\pmb{x}_i) = \sigma_i (i=1,2,\cdots,m)\)</span>，此时可计算上式值为1。</p>
+<p>考虑实值函数空间<span class="math inline">\(\mathscr{F}:\mathscr{Z} \to \mathbf{R}\)</span>,令<span class="math inline">\(\pmb{Z} = \{\pmb{z}_1,\pmb{z}_2,\cdots,\pmb{z}_m\}\)</span>，其中<span class="math inline">\(\pmb{z}_i \in \mathscr{Z}\)</span>，将上式中的<span class="math inline">\(\mathscr{X}\)</span>和<span class="math inline">\(\mathscr{H}\)</span>替换为<span class="math inline">\(\mathscr{Z}\)</span>和<span class="math inline">\(\mathscr{F}\)</span>可得 <strong>定义12.8</strong>：函数空间<span class="math inline">\(\mathscr{F}\)</span>关于<span class="math inline">\(\pmb{Z}\)</span>的经验Rademacher复杂度 <span class="math display">\[\hat{R}_{\pmb{Z}} (\mathscr{F}) = E_{\pmb{\sigma}} [\sup_{f \in \mathscr{F}} \frac{1}{m} \sum_{i=1}^m \sigma_i f(\pmb{z}_i)]\]</span></p>
+<p>经验Rademacher复杂度衡量了函数空间<span class="math inline">\(\mathscr{F}\)</span>与随机噪声在集合<span class="math inline">\(\pmb{Z}\)</span>中的相关性。通常希望了解函数空间<span class="math inline">\(\mathscr{F}\)</span>在<span class="math inline">\(\mathscr{Z}\)</span>上关于分布<span class="math inline">\(\mathscr{D}\)</span>的相关性，因此，对所有从<span class="math inline">\(\mathscr{D}\)</span>独立同分布采样而得的大小为<span class="math inline">\(m\)</span>的集合<span class="math inline">\(\pmb{Z}\)</span>求期望可得<br>
+<strong>定义12.9</strong>：函数空间<span class="math inline">\(\mathscr{F}\)</span>关于<span class="math inline">\(\mathscr{Z}\)</span>上分布<span class="math inline">\(\mathscr{D}\)</span>的Rademacher复杂度 <span class="math display">\[R_m (\mathscr{F}) = E_{\pmb{Z} \in \mathscr{Z}:|\pmb{Z}| = m} [\hat{R}_{\pmb{Z}}(\mathscr{F})]\]</span> 基于Rademacher复杂度可得关于函数空间<span class="math inline">\(\mathscr{F}\)</span>的泛化误差界：<br>
+<strong>定理12.5</strong>：对实值函数空间<span class="math inline">\(\mathscr{F}:\mathscr{Z} \to [0,1]\)</span>，根据分布<span class="math inline">\(\mathscr{D}\)</span>从<span class="math inline">\(\mathscr{Z}\)</span>中独立同分布采样得到样例集<span class="math inline">\(\pmb{Z} = \{\pmb{z}_1,\pmb{z}_2,\cdots,\pmb{z}_m\}, \pmb{z}_i \in \mathscr{Z}, 0 &lt; \delta &lt; 1\)</span>，对任意<span class="math inline">\(f \in \mathscr{F}\)</span>，以至少<span class="math inline">\(1 - \delta\)</span>的概率有 <span class="math display">\[E[f(\pmb{z})] \leqslant \frac{1}{m} \sum_{i=1}^m f(\pmb{z}_i) + 2 R_m(\mathscr{F}) + \sqrt{\frac{\ln (1/ \delta)}{2m}} \tag{12.42}\]</span> <span class="math display">\[E[f(\pmb{z})] \leqslant \frac{1}{m} \sum_{i=1}^m f(\pmb{z}_i) + 2 \hat{R}_{\pmb{Z}}(\mathscr{F}) + 3 \sqrt{\frac{\ln (2/ \delta)}{2m}} \tag{12.43}\]</span></p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午3.29.49.png">
+
+</div>
+<p><strong>注意</strong>：上述定理中的函数空间<span class="math inline">\(\mathscr{F}\)</span>是区间<span class="math inline">\([0,1]\)</span>上的实值函数，因此上述定理只适用于回归问题。对二分类问题有如下定理：</p>
+<p><strong>定理12.6</strong>：对假设空间<span class="math inline">\(\mathscr{H}:\mathscr{X} \to \{-1,+1\}\)</span>，根据分布<span class="math inline">\(\mathscr{D}\)</span>从<span class="math inline">\(\mathscr{X}\)</span>中独立同分布采样得到样例集<span class="math inline">\(D = \{\pmb{x}_1,\pmb{x}_2,\cdots,\pmb{x}_m\}, \pmb{x}_i \in \mathscr{X}, 0 &lt; \delta &lt; 1\)</span>，对任意<span class="math inline">\(h \in \mathscr{H}\)</span>，以至少<span class="math inline">\(1 - \delta\)</span>的概率有 <span class="math display">\[ E(h) \leqslant \hat{E}(h) + R_m(\mathscr{H}) + \sqrt{\frac{\ln (1 / \delta)}{2m}} \tag{12.47}\]</span></p>
+<p><span class="math display">\[E(h) \leqslant \hat{E}(h) + \hat{R}_D (\mathscr{H}) + 3 \sqrt{\frac{\ln(2 / \delta)}{2m}} \tag{12.48}\]</span></p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午3.57.17.png">
+
+</div>
+<p>定理12.6给出了基于Rademacher复杂度的泛化误差界，其更依赖于具体学习问题上的数据分布，有点类似于为该学习问题”量身定制“的，因此<strong>它通常比基于VC维的泛化误差界更紧一些</strong>。</p>
+<p>关于Rademacher复杂度与增长函数，有如下定理：<br>
+<strong>定理12.7</strong>：假设空间<span class="math inline">\(\mathscr{H}\)</span>的Rademacher复杂度<span class="math inline">\(R_m(\mathscr{H})\)</span>与增长函数<span class="math inline">\(\Pi_{\mathscr{H}} (m)\)</span>满足 <span class="math display">\[R_m(\mathscr{H}) \leqslant \sqrt{\frac{2 \ln \Pi_{\mathscr{H}} (m)}{m}}\]</span></p>
+<p>由式（12.47）和上式还有推论12.2可得 <span class="math display">\[E(h) \leqslant \hat{E}(h) + \sqrt{\frac{2d \ln (\frac{em}{d})}{m}} + \sqrt{\frac{\ln(1/ \delta)}{2m}}\]</span> 也就是说，<strong>从Rademacher复杂度和增长函数能推导出基于VC维的泛化误差界</strong>。</p>
+<h2 id="稳定性">6. 稳定性</h2>
+<p>无论是基于VC维还是Rademacher复杂度来推导泛化误差界，所得到的结果均与具体学习算法无关，对所有学习算法都适用，能够脱离具体学习算法的设计来考虑学习问题本身的性质。但是若希望获得与算法有关的分析结果，则需要进行<strong>稳定性（stability）分析</strong>。<br>
+<strong>稳定性</strong>考察的是算法在输入发生变化时，输出是否会随之发生较大的变化。<br>
+学习算法的输入是训练集，先定义训练集的两种变化：<br>
+给定<span class="math inline">\(D = \{\pmb{z}_1 = (\pmb{x}_1,y_1),\pmb{z}_2 = (\pmb{x}_2,y_2),\cdots, \pmb{z}_m = (\pmb{x}_m,y_m)\}\)</span>，<span class="math inline">\(\pmb{x}_i \in \mathscr{X}\)</span>是来自分布<span class="math inline">\(\mathscr{D}\)</span>的独立同分布样例，<span class="math inline">\(y_i \in \{-1,+1\}\)</span>。对假设空间<span class="math inline">\(\mathscr{H}: \mathscr{X} \to \{-1,+1\}\)</span>和学习算法<span class="math inline">\(\mathscr{L}\)</span>，令<span class="math inline">\(\mathscr{L}_D \in \mathscr{H}\)</span>表示基于训练集<span class="math inline">\(D\)</span>从假设空间<span class="math inline">\(\mathscr{H}\)</span>中学得的假设。考虑<span class="math inline">\(D\)</span>的以下变化：</p>
+<ul>
+<li><span class="math inline">\(D^{\backslash i}\)</span>表示移除<span class="math inline">\(D\)</span>中第<span class="math inline">\(i\)</span>个样例得到的集合：<span class="math inline">\(D^{\backslash i} = \{\pmb{z}_1,\pmb{z}_2,\cdots, \pmb{z}_{i-1}, \pmb{z}_{i+1}, \cdots, \pmb{z}_m\}\)</span>；</li>
+<li><span class="math inline">\(D^i\)</span>表示替换<span class="math inline">\(D\)</span>中第<span class="math inline">\(i\)</span>个样例得到的集合：<span class="math inline">\(D^i = \{\pmb{z}_1,\pmb{z}_2,\cdots, \pmb{z}_{i-1}, \pmb{z}_i&#39;, \pmb{z}_{i+1}, \cdots, \pmb{z}_m\}\)</span>，其中<span class="math inline">\(\pmb{z}_i&#39; = (\pmb{x}_i&#39;,y_i&#39;)\)</span>服从分布<span class="math inline">\(\mathscr{D}\)</span>并独立于<span class="math inline">\(D\)</span>。</li>
+</ul>
+<p>损失函数<span class="math inline">\(\mathscr{l}(\mathscr{L}_D(\pmb{x}),y):\mathscr{Y} \times \mathscr{Y} \to \mathbf{R}^+\)</span>刻画了假设<span class="math inline">\(\mathscr{L}_D\)</span>的预测标记<span class="math inline">\(\mathscr{L}_D(\pmb{x})\)</span>与真实标记<span class="math inline">\(y\)</span>之间的差别，简记为<span class="math inline">\(\mathscr{l} (\mathscr{L}_D, \pmb{z})\)</span>，关于假设<span class="math inline">\(\mathscr{L}_D\)</span>的几种损失如下：</p>
+<ul>
+<li>泛化损失：<span class="math inline">\(\mathscr{l} (\mathscr{L},\mathscr{D}) = E_{\pmb{x} \in \mathscr{X},\pmb{z} = (\pmb{x},y)}[\mathscr{l} (\mathscr{L}_D,\pmb{z})]\)</span></li>
+<li>经验损失：<span class="math inline">\(\hat{\mathscr{l}} (\mathscr{L},D) = \frac{1}{m} \sum_{i=1}^m \mathscr{l} (\mathscr{L}_D, \pmb{z}_i)\)</span></li>
+<li>留一损失：<span class="math inline">\(\mathscr{l}_{loo} (\mathscr{L}, D) = \frac{1}{m} \sum_{i=1}^m \mathscr{l} (\mathscr{L}_{D^{\backslash i}}, \pmb{z}_i)\)</span></li>
+</ul>
+<p><strong>定义12.10</strong>：对任何<span class="math inline">\(\pmb{x} \in \mathscr{X}, \pmb{z} = (\pmb{x},y)\)</span>，若学习算法<span class="math inline">\(\mathscr{L}\)</span>满足 <span class="math display">\[|\mathscr{l} (\mathscr{L}_D, \pmb{z}) - \mathscr{l}(\mathscr{L}_{D^{\backslash i}}, \pmb{z})| \leqslant \beta , \quad i=1,2,\cdots,m\]</span> 则称<span class="math inline">\(\mathscr{L}\)</span>关于损失函数<span class="math inline">\(\mathscr{l}\)</span>满足<span class="math inline">\(\beta\)</span>-均匀稳定性。</p>
+<p>若算法<span class="math inline">\(\mathscr{L}\)</span>关于损失函数<span class="math inline">\(\mathscr{l}\)</span>满足<span class="math inline">\(\beta\)</span>-均匀稳定性，则有 <span class="math display">\[\begin{align}
+    &amp; \quad |\mathscr{l}(\mathscr{L}_D, \pmb{z}) - \mathscr{l}(\mathscr{L}_{D^i},\pmb{z})| \nonumber \\
+    &amp; \leqslant |\mathscr{l}(\mathscr{L}_D, \pmb{z}) - \mathscr{l}(\mathscr{L}_{D^{\backslash i}},\pmb{z})| + |\mathscr{l}(\mathscr{L}_{D^i}, \pmb{z}) - \mathscr{l}(\mathscr{L}_{D^{\backslash i}},\pmb{z})| \nonumber \\
+    &amp; \leqslant 2 \beta \nonumber
+\end{align}\]</span></p>
+<p>移除样例的稳定性包含了替换样例的稳定性。</p>
+<p>若损失函数<span class="math inline">\(\mathscr{l}\)</span>有界，即对所有<span class="math inline">\(D\)</span>和<span class="math inline">\(\pmb{z} = (\pmb{x},y)\)</span>有<span class="math inline">\(0 \leqslant \mathscr{l} (\mathscr{L}_D, \pmb{z}) \leqslant M\)</span>，则有：<br>
+<strong>定理12.8</strong>：给定从分布<span class="math inline">\(\mathscr{D}\)</span>上独立同分布采样得到的大小为<span class="math inline">\(m\)</span>的样例集<span class="math inline">\(D\)</span>，弱学习算法<span class="math inline">\(\mathscr{L}\)</span>满足关于损失函数<span class="math inline">\(\mathscr{l}\)</span>的<span class="math inline">\(\beta\)</span>-均匀稳定性，且损失函数<span class="math inline">\(\mathscr{l}\)</span>的上界为<span class="math inline">\(M\)</span>，<span class="math inline">\(0 &lt; \delta &lt; 1\)</span>，则对任意<span class="math inline">\(m \geqslant 1\)</span>，以至少<span class="math inline">\(1 - \delta\)</span>的概率有 <span class="math display">\[\mathscr{l} (\mathscr{L}, \mathscr{D}) \leqslant \hat{\mathscr{l}}(\mathscr{L},D) + 2 \beta + (4m \beta + M) \sqrt{\frac{\ln(1 / \delta)}{2m}} \tag{12.58}\]</span> <span class="math display">\[\mathscr{l} (\mathscr{L}, \mathscr{D}) \leqslant \mathscr{l}_{loo} (\mathscr{L},D) + \beta + (4m \beta + M) \sqrt{\frac{\ln(1 / \delta)}{2m}} \tag{12.59}\]</span></p>
+<p>定理12.8给出了基于稳定性分析推导出的学习算法<span class="math inline">\(\mathscr{L}\)</span>学得假设的泛化误差界。从式（12.58）可看出，经验损失与泛化损失之间差别的收敛率为<span class="math inline">\(\beta \sqrt{m}\)</span>；若<span class="math inline">\(\beta = O(\frac{1}{m})\)</span>，则可保证收敛率为<span class="math inline">\(O(\frac{1}{\sqrt{m}})\)</span>，这与基于VC维和Rademacher复杂度得到的收敛度一致。</p>
+<p><strong>注意</strong>：学习算法的稳定性分析所关注的是<span class="math inline">\(|\hat{\mathscr{l}}(\mathscr{L},D) - \mathscr{l}(\mathscr{L}, \mathscr{D})|\)</span>，而假设空间复杂度分析所关注的是<span class="math inline">\(\sup_{h \in \mathscr{H}}|\hat{E}(h) - E(h)|\)</span>；也就是说，<strong>稳定性分析不必考虑假设空间中所有可能的假设，只需根据算法自身的特性（稳定性）来讨论输出假设<span class="math inline">\(\mathscr{L}_D\)</span>的泛化误差界</strong>。<br>
+必须假设<span class="math inline">\(\beta \sqrt{m} \to 0\)</span>才能保证稳定的学习算法<span class="math inline">\(\mathscr{L}\)</span>具有一定的泛化能力，即经验损失收敛与泛化损失。为便于计算，假设<span class="math inline">\(\beta = \frac{1}{m}\)</span>，带入式（12.58）可得 <span class="math display">\[\mathscr{l} (\mathscr{L}, \mathscr{D}) \leqslant \hat{\mathscr{l}}(\mathscr{L},D) + \frac{2}{m} + (4 + M) \sqrt{\frac{\ln(1 / \delta)}{2m}}\]</span> 对损失函数<span class="math inline">\(\mathscr{l}\)</span>，若学习算法<span class="math inline">\(\mathscr{L}\)</span>所输出的假设满足经验损失最小化，则称算法<span class="math inline">\(\mathscr{L}\)</span>满足经验风险最小化原则，简称算法是ERM的。</p>
+<p>关于学习算法的稳定性和可学习性，有如下定理：<br>
+<strong>定理12.9</strong>：若学习算法<span class="math inline">\(\mathscr{L}\)</span>是ERM且稳定的，则假设空间<span class="math inline">\(\mathscr{H}\)</span>可学习。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-25%20下午5.15.52.png">
+
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/24/机器学习/稀疏表示与字典学习/" rel="next" title="稀疏表示与字典学习">
+                <i class="fa fa-chevron-left"></i> 稀疏表示与字典学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算学习理论"><span class="nav-number">1.</span> <span class="nav-text">计算学习理论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础知识"><span class="nav-number">1.1.</span> <span class="nav-text">1. 基础知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pac学习"><span class="nav-number">1.2.</span> <span class="nav-text">2. PAC学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有限假设空间"><span class="nav-number">1.3.</span> <span class="nav-text">3. 有限假设空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可分情形"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1. 可分情形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可分情形"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 不可分情形</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vc维"><span class="nav-number">1.4.</span> <span class="nav-text">4. VC维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rademacher复杂度"><span class="nav-number">1.5.</span> <span class="nav-text">5. Rademacher复杂度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稳定性"><span class="nav-number">1.6.</span> <span class="nav-text">6. 稳定性</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
