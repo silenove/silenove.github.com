@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="机器学习,半监督学习," />
+
+
+<meta name="description" content="半监督学习 1. 未标记样本 在现实学习任务中，我们获取到的数据大多数包含有标记数据和未标记数据，若直接使用传统的监督学习算法学习有标记数据，那么未标记数据中所包含的信息就被浪费了。同时，通常有标记数据的样本容量较小，所以学得模型的泛化能力往往不佳，我们需要思考能否在构建模型的过程中利用未标记数据。 主动学习：先利用有标记样本训练一个模型，利用这个模型去对未标记样本进行预测，选出对改善模型性能帮助">
+<meta name="keywords" content="机器学习,半监督学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="半监督学习">
+<meta property="og:url" content="http://yoursite.com/2018/03/28/机器学习/半监督学习/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="半监督学习 1. 未标记样本 在现实学习任务中，我们获取到的数据大多数包含有标记数据和未标记数据，若直接使用传统的监督学习算法学习有标记数据，那么未标记数据中所包含的信息就被浪费了。同时，通常有标记数据的样本容量较小，所以学得模型的泛化能力往往不佳，我们需要思考能否在构建模型的过程中利用未标记数据。 主动学习：先利用有标记样本训练一个模型，利用这个模型去对未标记样本进行预测，选出对改善模型性能帮助">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-27%20下午4.43.13.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-27%20下午4.56.03.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-27%20下午8.27.36.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20上午10.26.47.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午2.10.56.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午3.24.51.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午4.21.10.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午4.28.55.png">
+<meta property="og:updated_time" content="2018-03-28T09:53:15.275Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="半监督学习">
+<meta name="twitter:description" content="半监督学习 1. 未标记样本 在现实学习任务中，我们获取到的数据大多数包含有标记数据和未标记数据，若直接使用传统的监督学习算法学习有标记数据，那么未标记数据中所包含的信息就被浪费了。同时，通常有标记数据的样本容量较小，所以学得模型的泛化能力往往不佳，我们需要思考能否在构建模型的过程中利用未标记数据。 主动学习：先利用有标记样本训练一个模型，利用这个模型去对未标记样本进行预测，选出对改善模型性能帮助">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-27%20下午4.43.13.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/28/机器学习/半监督学习/"/>
+
+
+  <title>半监督学习 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/机器学习/半监督学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">半监督学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-28T17:52:39+08:00">2018-03-28</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="半监督学习">半监督学习</h1>
+<h1 id="未标记样本">1. 未标记样本</h1>
+<p>在现实学习任务中，我们获取到的数据大多数包含有标记数据和未标记数据，若直接使用传统的监督学习算法学习有标记数据，那么未标记数据中所包含的信息就被浪费了。同时，通常有标记数据的样本容量较小，所以学得模型的泛化能力往往不佳，我们需要思考能否在构建模型的过程中利用未标记数据。</p>
+<p><strong>主动学习</strong>：先利用有标记样本训练一个模型，利用这个模型去对未标记样本进行预测，选出对改善模型性能帮助大的样本进行专家预测，这样就能通过很少的人工成本构建出性能较强的模型。例如，基于有标记样本训练一个SVM，挑选距离分类超平面最近的未标记样本进行查询，之后加入有标记样本中重新训练模型。</p>
+<p>主动学习引入了额外的专家知识，通过与外界的交互将部分未标记样本转换为有标记样本，我们希望通过不与专家交互的形式，利用未标记样本提高模型的泛化性能。</p>
+<p>事实上，未标记样本虽未直接包含标记信息，但若它们与有标记样本是从同样的数据源独立同分布采样而来，那么它们所包含的信息对于模型的建立还是很有帮助。如下图，若只基于图中的一个正例和一个负例，对于待判别样本只能是随机猜测；若能观察到图中其他未标记样本，将有很大的把握判别为正例。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-27%20下午4.43.13.png">
+
+</div>
+<p><strong>半监督学习（semi-supervised learning）：让学习器不依赖外界交互、自动地利用未标记样本来提升学习性能。</strong></p>
+<p>要利用未标记样本，需要做一些将未标记样本所揭示的数据分布信息与类别标记相联系的假设：</p>
+<ul>
+<li><strong>聚类假设（cluster assumption）</strong>：假设数据存在簇结构，同一个簇的样本属于同一类别；</li>
+<li><strong>流形假设（manifold assumption）</strong>：假设数据分布在一个流形结构上，邻近的样本拥有相似的输出值。“邻近”程度常用“相似”程度来刻画，因此，流形假设可看作聚类假设的推广，但流形假设对输出值没有限制，因此比聚类假设的适用范围更广，可用于更多类型的学习任务。</li>
+</ul>
+<p>无论是聚类假设还是流形假设，其本质都是<strong>相似的样本拥有相似的输出</strong>这个基本假设。</p>
+<p>半监督学习可进一步划分为<strong>纯半监督学习</strong>和<strong>直推学习（transductive learning）</strong>：</p>
+<ul>
+<li><strong>纯半监督学习</strong>：假定训练数据中的未标记样本并非待预测的数据，希望学得模型能使用于训练过程中未观察到的数据；</li>
+<li><strong>直推学习</strong>：假定学习过程中所考虑的未标记样本恰是待预测数据，学习的目的就是在这些未标记样本上获得最优泛化性能，即试图对学习过程中观察到的未标记数据进行预测。</li>
+</ul>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-27%20下午4.56.03.png">
+
+</div>
+<h2 id="生成式方法">2. 生成式方法</h2>
+<p><strong>生成式方法（generative methods）是直接基于生成式模型的方法</strong>。此类方法假设所有数据（标记和未标记）都是由同一个潜在的模型”生成“的。这个假设使得我们能通过潜在模型的参数将未标记数据与学习目标联系起来，而未标记数据的标记可看作模型的缺失参数，通常可基于EM算法进行极大似然估计求解。</p>
+<p>此类方法的区别主要在于<strong>生成式模型的假设，不同的模型假设将产生不同的方法</strong>。</p>
+<p>给定样本<span class="math inline">\(\pmb{x}\)</span>，其真实类别标记记为<span class="math inline">\(y \in \mathscr{Y}\)</span>，其中<span class="math inline">\(\mathscr{Y} = \{1,2,\cdots,N\}\)</span>为所有可能的类别。假设样本由高斯混合模型生成，且每个类别对应一个高斯混合成分。即数据样本是基于如下概率分布产生： <span class="math display">\[p(\pmb{x}) = \sum_{i=1}^N \alpha_i \cdot p(\pmb{x}|\pmb{\mu}_i, \pmb{\Sigma}_i)\]</span> 其中，混合系数<span class="math inline">\(\alpha_i \geqslant 0, \sum_{i=1}^N \alpha_i = 1\)</span>；<span class="math inline">\(p(\pmb{x}|\pmb{\mu}_i, \pmb{\Sigma}_i)\)</span>是样本<span class="math inline">\(\pmb{x}\)</span>属于第<span class="math inline">\(i\)</span>个高斯混合成分的概率；<span class="math inline">\(\pmb{\mu}_i\)</span>和<span class="math inline">\(\pmb{\Sigma}_i\)</span>为该高斯混合成分的参数。</p>
+<p>令<span class="math inline">\(f(\pmb{x}) \in \mathscr{Y}\)</span>表示模型<span class="math inline">\(f\)</span>对<span class="math inline">\(\pmb{x}\)</span>的预测标记，<span class="math inline">\(\Theta \in \{1,2,\cdots,N\}\)</span>表示样本<span class="math inline">\(\pmb{x}\)</span>所属的高斯混合成分。由最大化后验概率可知 <span class="math display">\[\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\begin{align}
+    f(\pmb{x}) &amp;= \argmax_{j \in \mathscr{Y}}  p(y = j | \pmb{x}) \nonumber  \\
+    &amp;= \argmax_{j \in \mathscr{Y}} \sum_{i=1}^N p(y=j, \Theta = i | \pmb{x}) \nonumber \\
+    &amp;= \argmax_{j \in \mathscr{Y}} \sum_{i=1}^N p(y = j| \Theta = i, \pmb{x})\cdot p(\Theta = i| \pmb{x}) \nonumber
+\end{align}\]</span></p>
+<p>其中 <span class="math display">\[p(\Theta = i | \pmb{x}) = \frac{\alpha_i \cdot p(\pmb{x}|\pmb{\mu}_i, \pmb{\Sigma}_i)}{\sum_{i=1}^N \alpha_i \cdot p(\pmb{x}|\pmb{\mu}_i, \pmb{\Sigma}_i)}\]</span> 为样本<span class="math inline">\(\pmb{x}\)</span>由第<span class="math inline">\(i\)</span>个高斯混合成分生成的后验概率，<span class="math inline">\(p(y = j| \Theta = i, \pmb{x})\)</span>为<span class="math inline">\(\pmb{x}\)</span>由第<span class="math inline">\(i\)</span>个高斯混合成分生成且其类别为<span class="math inline">\(j\)</span>的概率。由于假设每个类别对应一个高斯混合成分，因此<span class="math inline">\(p(y=j|\Theta = i. \pmb{x})\)</span>仅与样本<span class="math inline">\(\pmb{x}\)</span>所属的高斯混合成分<span class="math inline">\(\Theta\)</span>有关，可用<span class="math inline">\(p(y=j|\Theta=i)\)</span>代替。不失一般性，假定第<span class="math inline">\(i\)</span>个类别对应于第<span class="math inline">\(i\)</span>个高斯混合成分，即<span class="math inline">\(p(y=j|\Theta = i) = 1\)</span>当且仅当<span class="math inline">\(i=j\)</span>，否则<span class="math inline">\(p(y=j|\Theta = i) = 0\)</span>。</p>
+<p>从式中可以看出估计<span class="math inline">\(p(y=j | \Theta = i, \pmb{x})\)</span>需要知道样本标记，因此使用有标记数据；而<span class="math inline">\(p(\Theta = i| \pmb{x})\)</span>不涉及样本标记，因此有标记和未标记数据均可利用，通过引入大量的未标记数据，对这一项的估计可望由于数据量的增长而更为准确，于是公式整体的估计可能也会更准确。从这里也可以看出未标记数据对于分类模型性能的提升。</p>
+<p>给定有标记样本集<span class="math inline">\(D_l = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_l,y_l)\}\)</span>和未标记样本集<span class="math inline">\(D_u = \{\pmb{x}_{l+1},\pmb{x}_{l+2},\cdots,\pmb{x}_{l+u}\}, l \ll u, l+u = m\)</span>，假设所有样本独立同分布，且都是由同一个高斯混合模型生成的。用极大似然法来估计高斯混合模型的参数<span class="math inline">\(\{(\alpha_i, \pmb{\mu}_i, \pmb{\Sigma}_i)| 1 \leqslant i \leqslant N\}\)</span>，<span class="math inline">\(D_l \cup D_u\)</span>的对数似然为 <span class="math display">\[\begin{align}
+    LL(D_l \cup D_u) = &amp; \sum_{(\pmb{x}_j,y_j) \in D_l} \ln (\sum_{i=1}^N \alpha_i \cdot p(\pmb{x}_j | \pmb{\mu}_i, \pmb{\Sigma}_i) \cdot p(y_j | \Theta = i, \pmb{x}_j)) \nonumber \\ 
+    &amp;+ \sum_{\pmb{x}_j \in D_u} \ln(\sum_{i=1}^N \alpha_i \cdot p(\pmb{x}_j | \pmb{\mu}_i, \pmb{\Sigma}_i)) \nonumber
+\end{align}\]</span></p>
+<p>上式由两项组成：基于有标记数据<span class="math inline">\(D_l\)</span>的有监督项和基于未标记数据<span class="math inline">\(D_u\)</span>的无监督项。显然，高斯混合模型参数估计可用EM算法求解，迭代更新式如下：<br>
+<strong>E步</strong>：根据当前模型参数计算未标记样本<span class="math inline">\(\pmb{x}_j\)</span>属于各高斯混合成分的概率 <span class="math display">\[\gamma_{ji} = \frac{\alpha_i \cdot p(\pmb{x}_j | \pmb{\mu}_i, \pmb{\Sigma}_i)}{\sum_{i=1}^N \alpha_i \cdot p(\pmb{x}_j | \pmb{\mu}_i, \pmb{\Sigma}_i)}\]</span></p>
+<p><strong>M步</strong>：基于<span class="math inline">\(\gamma_{ji}\)</span>更新模型参数，其中<span class="math inline">\(l_i\)</span>表示第<span class="math inline">\(i\)</span>类的有标记样本数目 <span class="math display">\[\begin{align}
+    \pmb{\mu}_i &amp;= \frac{1}{\sum_{\pmb{x}_j \in D_u}\gamma_{ji} + l_i} (\sum_{\pmb{x}_j \in D_u} \gamma_{ji} \pmb{x}_j + \sum_{(\pmb{x}_j,y_j) \in D_l \wedge y_j = i} \pmb{x}_j) \nonumber \\
+    \pmb{\Sigma}_i &amp;= \frac{1}{\sum_{\pmb{x}_j \in D_u}\gamma_{ji} + l_i} (\sum_{\pmb{x}_j \in D_u} \gamma_{ji} (\pmb{x}_j - \pmb{\mu}_i)(\pmb{x}_j - \pmb{\mu}_i)^T \nonumber \\
+    &amp;\quad + \sum_{(\pmb{x}_j,y_j) \in D_l \wedge y_j = i} (\pmb{x}_j - \pmb{\mu}_i)(\pmb{x}_j - \pmb{\mu}_i)^T ) \nonumber \\
+    \alpha_i &amp;= \frac{1}{m} (\sum_{\pmb{x}_j \in D_u} \gamma_{ji} + l_i) \nonumber
+\end{align}\]</span></p>
+<p>以上过程不断迭代直至收敛，即可获得模型参数。由<span class="math inline">\(f(\pmb{x})\)</span>就能对样本进行分类。</p>
+<p>将上述过程中的高斯混合模型换成混合专家模型、朴素贝叶斯模型等即可推导出其他的生成式监督学习方法。此类方法简单，易于实现，在有标记数据极少的情形下往往比其他方法性能更好。<br>
+此类方法有一个关键：<strong>模型假设必须准确，即假设的生成式模型必须与真实数据分布吻合；否则利用未标记数据反倒会降低泛化性能</strong>。遗憾的是，现实任务中往往很难实现做出准确的模型预测，除非拥有充分可靠的领域知识。</p>
+<h2 id="半监督svm">3. 半监督SVM</h2>
+<p>半监督支持向量机（Semi-Supervised Support Vector Machine，S3VM）是支持向量机在半监督学习上的推广。在不考虑未标记样本时，支持向量机试图找到最大间隔划分超平面，而在考虑未标记样本后，<strong>S3VM试图找到能将两类有标记样本分开，且穿过数据低密度区域的划分超平面</strong>。如下图所示，这里的基本假设是<strong>“低密度分隔”（low-density separation）</strong>，这是聚类假设在考虑线性超平面划分后的推广。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-27%20下午8.27.36.png">
+
+</div>
+<p>半监督支持向量机中最著名的是<strong>TSVM（Transductive Support Vector Machine）</strong>。与标准SVM一样，TSVM也是针对二分类问题的学习方法。<strong>TSVM试图考虑对未标记样本进行各种可能的标记指派（label assignment），即尝试将每个未标记样本分别作为正例或反例，然后在所有这些结果中，寻求一个在所有样本（包括有标记样本和进行了标记指派的未标记样本）上间隔最大化的划分超平面。一旦划分超平面得以确定，未标记样本的最终标记指派就是其预测结果</strong>。</p>
+<p>形式化地说，给定<span class="math inline">\(D_l = \{(\pmb{x}_1,y_1), (\pmb{x}_2,y_2),\cdots,(\pmb{x}_l,y_l)\}\)</span>和<span class="math inline">\(D_u = \{\pmb{x}_{l+1}, \pmb{x}_{l+2},\cdots,\pmb{x}_{l+u}\}\)</span>，其中<span class="math inline">\(y_i \in \{-1,+1\}, l \ll u,l + u = m\)</span>。TSVM的学习目标是为<span class="math inline">\(D_u\)</span>中的样本给出预测标记<span class="math inline">\(\hat{\pmb{y}} = (\hat{y}_{l+1}, \hat{y}_{l+2},\cdots, \hat{y}_{l+u}), \hat{y}_i \in \{-1,+1\}\)</span>，使得 <span class="math display">\[\begin{align}
+    &amp; \min_{\pmb{w},b,\hat{\pmb{y}},\pmb{\xi}} \quad  \frac{1}{2} ||\pmb{w}||_2^2 + C_l \sum_{i=1}^l \xi_i C_u \sum_{i=l+1}^m \xi_i \nonumber \\
+    &amp; s.t. \qquad y_i (\pmb{w}^T \pmb{x}_i + b) \geqslant 1 - \xi_i, \quad i=1,2,\cdots,l \nonumber \\
+    &amp; \qquad \qquad \hat{y}_i (\pmb{w}^T \pmb{x}_i + b)  \geqslant 1 - \xi_i, \quad i=l+1,l+2,\cdots,m \nonumber \\
+    &amp; \qquad \qquad \xi_i \geqslant 0, i=1,2,\cdots,m \nonumber 
+\end{align}\]</span></p>
+<p>其中，<span class="math inline">\((\pmb{w},b)\)</span>确定了一个划分超平面；<span class="math inline">\(\pmb{\xi}\)</span>为松弛变量，<span class="math inline">\(\xi_i(i=1,2,\cdots,l)\)</span>对应于标记样本，<span class="math inline">\(\xi_i(i=l+1,l+2,\cdots,m)\)</span>对应于未标记样本；<span class="math inline">\(C_l\)</span>与<span class="math inline">\(C_u\)</span>是由用户指定的用于平衡模型复杂度、有标记样本与未标记样本重要程度的折中参数。</p>
+<p>显然，尝试未标记样本的各种指派是一个穷举过程，仅当未标记样本很少时才有可能直接求解。一般情形下，<strong>必须考虑更高效的优化策略</strong>。</p>
+<p>TSVM采用<strong>局部搜索</strong>来迭代寻找上式的近似解：</p>
+<ol style="list-style-type: decimal">
+<li>先利用有标记样本学得一个SVM，即忽略上式中涉及<span class="math inline">\(C_u\)</span>与<span class="math inline">\(\hat{\pmb{y}}\)</span>的项及约束。然后利用这个SVM对未标记数据进行标记指派，即将SVM预测的结果作为“伪标记”赋予未标记样本，此时<span class="math inline">\(\hat{\pmb{y}}\)</span>成为已知；</li>
+<li>将其带入上式即得到一个标准SVM问题，于是可求解出新的划分超平面和松弛变量；<strong>此时未标记样本的伪标记很可能不准确，因此<span class="math inline">\(C_u\)</span>要设置为比<span class="math inline">\(C_l\)</span>小的值，是有标记样本所起的作用更大。</strong></li>
+<li>TSVM找出两个标记指派为异类且很可能发生错误的未标记样本，交换它们的标记，重新基于上式求解更新后的划分超平面和松弛变量，对此过程迭代；</li>
+<li>标记指派完成后，逐渐增大<span class="math inline">\(C_u\)</span>以提高未标记样本对优化目标的影响，进行下一轮标记指派调整，直至<span class="math inline">\(C_u = C_l\)</span>为止。此时求解得到的SVM不仅给未标记样本提供标记，还能对训练过程中未见的示例进行预测。</li>
+</ol>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20上午10.26.47.png">
+
+</div>
+<p>在对未标记样本进行标记指派及调整的过程中，有可能出现<strong>类别不平衡问题</strong>，即某类的样本远多于另一类，这将对SVM的训练过程造成困扰。为了减轻类别不平衡所造成的不利影响，可对上述算法进行改进：<strong>将优化目标的<span class="math inline">\(C_u\)</span>项拆分为<span class="math inline">\(C_u^+\)</span>和<span class="math inline">\(C_u^-\)</span>两项，分别对应基于伪标记而当作正、反例使用的未标记样本，并在初始化令：</strong> <span class="math display">\[C_u^+ = \frac{u_-}{u_+} C_u^-\]</span> 其中<span class="math inline">\(u_+\)</span>与<span class="math inline">\(u_-\)</span>为基于伪标记而当作正、反例使用的未标记样本数。</p>
+<p>显然，搜寻标记指派可能出错的每一对未标记样本进行调整，是一个涉及巨大计算开销的大规模优化问题。因此，半监督SVM研究的一个重点是<strong>如何设计出高效的优化求解策略</strong>。由此发展出很多方法，如基于图核（graph kernel）函数梯度下降的LDS、基于标记均值估计的meanS3VM等。</p>
+<h2 id="图半监督学习">4. 图半监督学习</h2>
+<h3 id="二分类问题">4.1. 二分类问题</h3>
+<p>给定一个数据集，我们可将其映射为一个图，数据集中每个样本对应于图中一个节点，<strong>若两个节点之间的相似度很高（或相关性很强），则对应的节点之间存在一条边，边的“强度”正比于样本之间的相似度（或相关性）</strong>。可将有标记样本所对应的节点想象为染过色，而未标记样本所对应的节点未染色，于是，半监督学习就对应于“颜色”在图上扩散或传播的过程。由于一个图就对应一个矩阵，使得我们能基于矩阵运算来进行半监督学习算法的推导与分析。</p>
+<p>给定<span class="math inline">\(D_l = \{(\pmb{x}_1,y_1), (\pmb{x}_2,y_2),\cdots,(\pmb{x}_l,y_l)\}\)</span>和$D_u = {<em>{l+1}, </em>{l+2},,_{l+u}}, l u, l+u = m <span class="math inline">\(，首先基于\)</span>D_l D_u<span class="math inline">\(构建一个图\)</span>G = (V,E)<span class="math inline">\(，其中节点集\)</span>V = {<em>1,,<em>l,</em>{l+1},, </em>{l+u}}<span class="math inline">\(，边集\)</span>E$可表示为一个亲和矩阵（affinity matrix），常基于高斯函数定义为 <span class="math display">\[(\mathbf{W})_{ij} = 
+    \begin{cases}
+        \exp(\frac{- ||\pmb{x}_i - \pmb{x}_j||_2^2}{2 \sigma^2}), \quad if \quad i \neq j ; \\
+        0, \qquad \qquad \qquad \quad otherwise
+    \end{cases} \tag{13.11}\]</span> 其中<span class="math inline">\(i,j \in \{1,2,\cdots,m\},\sigma &gt; 0\)</span>使用户指定的高斯函数带宽参数。</p>
+<p>假定从图<span class="math inline">\(G=(V,E)\)</span>将学得一个实值函数<span class="math inline">\(f:V \to \mathbf{R}\)</span>，其对应的分类规则为：<span class="math inline">\(y_i = sign(f(\pmb{x}_i)), y_i \in \{-1,+1\}\)</span>。直观上看，相似的样本应具有相似的标记，于是可定义关于<span class="math inline">\(f\)</span>的<strong>能量函数（energy function）</strong>： <span class="math display">\[\begin{align}
+    E(f) &amp;= \frac{1}{2} \sum_{i=1}^m \sum_{j=1}^m (\mathbf{W})_{ij} (f(\pmb{x}_i) - f(\pmb{x}_j))^2 \nonumber \\
+    &amp;= \frac{1}{2} \left(\sum_{i=1}^m d_i f^2(\pmb{x}_i) + \sum_{j=1}^m d_j f^2(\pmb{x}_j) - 2 \sum_{i=1}^m \sum_{j=1}^m (\mathbf{W})_{ij} f(\pmb{x}_i) f(\pmb{x}_j) \right) \nonumber \\
+    &amp;= \sum_{i=1}^m d_i f^2(\pmb{x}_i) - \sum_{i=1}^m \sum_{j=1}^m (\mathbf{W})_{ij} f(\pmb{x}_i) f(\pmb{x}_j) \nonumber \\
+    &amp;= \pmb{f}^T(\mathbf{D} - \mathbf{W}) \pmb{f} \tag{13.12}
+\end{align}\]</span></p>
+<p>其中<span class="math inline">\(\pmb{f} = (\pmb{f}_l^T;\pmb{f}_u^T), \pmb{f}_l = (f(\pmb{x}_1),f(\pmb{x}_2),\cdots,f(\pmb{x}_l)),f_u=(f(\pmb{x}_{l+1}),f(\pmb{x}_{l+2}),\cdots,f(\pmb{x}_{l+u}))\)</span>分别为函数<span class="math inline">\(f\)</span>在有标记样本与未标记样本上的预测结果，<span class="math inline">\(\mathbf{D} = diag(d_1,d_2,\cdots,d_{l+u})\)</span>是一个对角矩阵，其对角元素<span class="math inline">\(d_i = \sum_{j=1}^{l+u} (\mathbf{W})_{ij}\)</span>为矩阵<span class="math inline">\(\mathbf{W}\)</span>的第<span class="math inline">\(i\)</span>行元素之和（<span class="math inline">\(\mathbf{W}\)</span>为对称矩阵，因此<span class="math inline">\(d_i\)</span>也为<span class="math inline">\(\mathbf{W}\)</span>第<span class="math inline">\(i\)</span>列元素之和），<strong>能量函数最小化时即得到最优结果</strong>。</p>
+<p>具有最小能量的函数<span class="math inline">\(f\)</span>在有标记样本上满足<span class="math inline">\(f(\pmb{x}_i) = y_i(i=1,2,\cdots,l)\)</span>，在未标记样本上满足<span class="math inline">\(\mathbf{\Delta} \pmb{f} = \pmb{0}\)</span>，其中<span class="math inline">\(\mathbf{\Delta} = \mathbf{D} - \mathbf{W}\)</span>为拉普拉斯矩阵（Laplacian matrix）。以第<span class="math inline">\(l\)</span>行与第<span class="math inline">\(l\)</span>列为界，采用分块矩阵表示方式:<span class="math inline">\(\mathbf{W} = \left[ \begin{matrix} \mathbf{W}_{ll} &amp; \mathbf{W}_{lu} \\ \mathbf{W}_{ul} &amp; \mathbf{W}_{uu} \end{matrix} \right]\)</span>，<span class="math inline">\(\mathbf{D} = \left[ \begin{matrix} \mathbf{D}_{ll} &amp; \mathbf{D}_{lu} \\ \mathbf{D}_{ul} &amp; \mathbf{D}_{uu} \end{matrix} \right]\)</span>，则能量函数可重写为 <span class="math display">\[\begin{align}
+    E(f) &amp;= (\pmb{f}_l^T \pmb{f}_u^T) \left( \left[ \begin{matrix} \mathbf{D}_{ll} &amp; \mathbf{D}_{lu} \\ \mathbf{D}_{ul} &amp; \mathbf{D}_{uu} \end{matrix} \right] - \left[ \begin{matrix} \mathbf{W}_{ll} &amp; \mathbf{W}_{lu} \\ \mathbf{W}_{ul} &amp; \mathbf{W}_{uu} \end{matrix} \right] \right) \left[ \begin{matrix} \pmb{f}_l \\ \pmb{f}_u \end{matrix} \right] \nonumber \\
+    &amp;= \pmb{f}_l^T (\mathbf{D}_{ll} - \mathbf{W}_{ll}) \pmb{f}_l - 2 \pmb{f}_u^T \mathbf{W}_{ul} \pmb{f}_l + \pmb{f}_u^T (\mathbf{D}_{uu} - \mathbf{W}_{uu}) \pmb{f}_u \nonumber 
+\end{align}\]</span></p>
+<p>由<span class="math inline">\(\frac{\partial E(f)}{ \partial \pmb{f}_u} = \pmb{0}\)</span>可得 <span class="math display">\[\pmb{f}_u = (\mathbf{D}_{uu} - \mathbf{W}_{uu})^{-1} \mathbf{W}_{ul} \pmb{f}_l \tag{13.15}\]</span> 令 <span class="math display">\[\begin{align}
+    \mathbf{P} &amp;= \mathbf{D}^{-1} \mathbf{W} = \left[ \begin{matrix} \mathbf{D}_{ll}^{-1} &amp; \mathbf{0}_{lu} \\ \mathbf{0}_{ul} &amp; \mathbf{D}_{uu}^{-1} \end{matrix} \right] \left[ \begin{matrix} \mathbf{W}_{ll} &amp; \mathbf{W}_{lu} \\ \mathbf{W}_{ul} &amp; \mathbf{W}_{uu} \end{matrix} \right] \nonumber \\
+    &amp;= \left[ \begin{matrix} \mathbf{D}_{ll}^{-1} \mathbf{W}_{ll} &amp; \mathbf{D}_{ll}^{-1} \mathbf{W}_{lu} \\ \mathbf{D}_{uu}^{-1} \mathbf{W}_{ul} &amp; \mathbf{D}_{uu}^{-1} \mathbf{W}_{uu} \end{matrix} \right] \nonumber 
+\end{align}\]</span></p>
+<p>即<span class="math inline">\(\mathbf{P}_{uu} = \mathbf{D}_{uu}^{-1} \mathbf{W}_{uu}, \mathbf{P}_{ul} = \mathbf{D}_{uu}^{-1} \mathbf{W}_{ul}\)</span>，则式（13.15）可重写为 <span class="math display">\[\begin{align}
+    \pmb{f}_u &amp;= (\mathbf{D}_{uu} (\mathbf{I} - \mathbf{D}_{uu}^{-1} \mathbf{W}_{uu}))^{-1} \mathbf{W}_{ul} \pmb{f}_l \nonumber \\
+    &amp;= (\mathbf{I} - \mathbf{D}_{uu}^{-1} \mathbf{W}_{uu})^{-1} \mathbf{D}_{uu}^{-1} \mathbf{W}_{ul} \pmb{f}_l \nonumber \\
+    &amp;= (\mathbf{I} - \mathbf{P}_{uu})^{-1} \mathbf{P}_{ul} \pmb{f}_l \nonumber
+\end{align}\]</span> 将<span class="math inline">\(D_l\)</span>上的标记信息作为<span class="math inline">\(\pmb{f}_l = (y_1,y_2,\cdots,y_l)\)</span>代入上式即可利用求得的<span class="math inline">\(\pmb{f}_u\)</span>对未标记样本进行预测。</p>
+<h3 id="多分类问题">4.2. 多分类问题</h3>
+<p>假定<span class="math inline">\(y_i \in \mathscr{Y}\)</span>，仍基于<span class="math inline">\(D_l \cup D_u\)</span>构建一个图<span class="math inline">\(G=(V,E)\)</span>，其中节点集<span class="math inline">\(V = \{\pmb{x}_1,\cdots, \pmb{x}_l, \cdots, \pmb{x}_{l+u}\}\)</span>，边集<span class="math inline">\(E\)</span>所对应的<span class="math inline">\(\mathbf{W}\)</span>仍使用式（13.11），对角矩阵<span class="math inline">\(\mathbf{D} = diag(d_1,d_2,\cdots,d_{l+u})\)</span>的对角元素<span class="math inline">\(d_i= \sum_{j=1}^{l+u} (\mathbf{W})_{ij}\)</span>。定义一个<span class="math inline">\((l+u) \times \mathscr{Y}\)</span>的非负标记矩阵<span class="math inline">\(\mathbf{F} = (\mathbf{F}_1^T,(\mathbf{F}_2^T,\cdots,(\mathbf{F}_{l+u}^T)^T\)</span>，其中第<span class="math inline">\(i\)</span>行元素<span class="math inline">\(\mathbf{F}_i = ((\mathbf{F})_{i1},(\mathbf{F})_{i2}, \cdots, (\mathbf{F})_{i|\mathscr{Y}|})\)</span>为示例<span class="math inline">\(\pmb{x}_i\)</span>的标记向量，相应的分类规则为：<span class="math inline">\(y_i = \arg \max_{1 \leqslant j \leqslant |\mathscr{Y}|} (\mathbf{F})_{ij}\)</span>。</p>
+<p>对<span class="math inline">\(i=1,2,\cdots,m, j=1,2,\cdots, |\mathscr{Y}|\)</span>，将<span class="math inline">\(\mathbf{F}\)</span>初始化为 <span class="math display">\[\mathbf{F}(0) = (\mathbf{Y})_{ij} = 
+    \begin{cases}
+    1, \quad if \quad (1 \leqslant i \leqslant l) \wedge (y_i = j); \\
+    0, \quad otherwise
+    \end{cases}\]</span> 显然，<span class="math inline">\(\mathbf{Y}\)</span>的前<span class="math inline">\(l\)</span>行就是<span class="math inline">\(l\)</span>个有标记样本的标记向量。</p>
+<p>基于<span class="math inline">\(\mathbf{W}\)</span>构造一个标记传播矩阵<span class="math inline">\(\mathbf{S} = \mathbf{D}^{- \frac{1}{2}} \mathbf{W} \mathbf{D}^{- \frac{1}{2}}\)</span>，其中<span class="math inline">\(\mathbf{D}^{- \frac{1}{2}} = diag(\frac{1}{\sqrt{d_1}},\frac{1}{\sqrt{d_2}},\cdots,\frac{1}{\sqrt{d_{l+u}}})\)</span>，于是迭代计算式 <span class="math display">\[\mathbf{F}(t+1) = \alpha \mathbf{S} \mathbf{F}(t) + (1 - \alpha) \mathbf{Y}\]</span> 其中<span class="math inline">\(\alpha \in (0,1)\)</span>为用户指定的参数，用于对标记传播项<span class="math inline">\(\mathbf{S} \mathbf{F}(t)\)</span>与初始化项<span class="math inline">\(\mathbf{Y}\)</span>的重要性进行折中。基于上式迭代至收敛可得 <span class="math display">\[\mathbf{F}^* = \lim_{t \to \infty} \mathbf{F}(t) = (1 - \alpha) (\mathbf{I} - \alpha \mathbf{S})^{-1} \mathbf{Y}\]</span></p>
+<p>由<span class="math inline">\(\mathbf{F}^*\)</span>可获得<span class="math inline">\(D_u\)</span>中样本的标记<span class="math inline">\((\hat{y}_{l+1}, \hat{y}_{l+2}, \cdots, \hat{y}_{l+u})\)</span>。</p>
+<p>算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午2.10.56.png">
+
+</div>
+<p>上述算法对应于正则化框架： <span class="math display">\[\min_{\mathbf{F}} \frac{1}{2} \left( \sum_{i,j=1}^{l+u} (\mathbf{W})_{ij} \parallel \frac{1}{\sqrt{d_i}} \mathbf{F}_i - \frac{1}{\sqrt{d_j} \mathbf{F}_j} \parallel^2 \right) + \mu \sum_{i=1}^l \parallel \mathbf{F}_i - \mathbf{Y}_i \parallel^2 \tag{13.21}\]</span></p>
+<p>其中<span class="math inline">\(\mu &gt; 0\)</span>为正则化参数，当<span class="math inline">\(\mu = \frac{1 - \alpha}{\alpha}\)</span>时，上式的最优解为算法的迭代收敛解<span class="math inline">\(\mathbf{F}^*\)</span>。</p>
+<p>上式的第二项是迫使结果在有标记样本上的预测与真实标记尽可能相同，第一项则迫使相近样本具有相似的标记，这也是基于半监督学习的假设。</p>
+<p>式（13.21）考虑离散的类别标记，而式（13.12）则是考虑输出连续值。<br>
+图半监督学习方法在概念上比较清晰，且易于通过对所涉矩阵运算的分析来探索算法性质。但此类算法的缺陷也比较明显：</p>
+<ul>
+<li><strong>存储开销</strong>：若样本数为<span class="math inline">\(O(m)\)</span>，则算法中涉及的矩阵规模为<span class="math inline">\(O(m^2)\)</span>，此类算法很难直接处理大规模数据；</li>
+<li><strong>难以判知新样本在图中的位置</strong>：构图过程仅能考虑训练样本集，在接收到新样本时，或是将其加入原数据集对图进行重构并重新进行标记传播，或是引入额外的预测机制。例如将<span class="math inline">\(D_l\)</span>和经标记传播后得到标记的<span class="math inline">\(D_u\)</span>合并作为训练集，另外训练一个学习器例如SVM来对新样本进行预测。</li>
+</ul>
+<h2 id="基于分歧的方法">5. 基于分歧的方法</h2>
+<p>与生成式方法、半监督SVM、图半监督学习等基于单学习器利用未标记数据不同，<strong>基于分歧的方法（disagreement-based methods）使用多学习器，而学习器之间的“分歧”对未标记数据的利用至关重要</strong>。</p>
+<p><strong>协同训练（co-training）</strong>是此类方法的重要代表，它最初是针对“多视图”（multi-view）数据设计的，因此也被看作“多视图学习”（multi-view learning）的代表。</p>
+<p>很多现实应用中，一个数据对象往往同时拥有多个“属性集”，每个属性集就构成了一个“视图”。如一部电影拥有多个属性集：图像画面信息对应的属性集、声音信息对应的属性集、字幕信息对应的属性集、宣传评论对应的属性集……每个属性集可看作一个视图。假设<span class="math inline">\(\pmb{x}^1\)</span>为图像视图中的属性向量，<span class="math inline">\(\pmb{x}^2\)</span>为声音视图中的属性向量，<span class="math inline">\(y\)</span>为标记，如动作片，爱情片。<span class="math inline">\((&lt;\pmb{x}^1, \pmb{x}^2&gt;,y)\)</span>就是多视图数据。</p>
+<p>假设不同视图具有“相容性”，即其所包含的关于输出空间<span class="math inline">\(\mathscr{Y}\)</span>的信息是一致的：<span class="math inline">\(\mathscr{Y}^1\)</span>和<span class="math inline">\(\mathscr{Y}^2\)</span>分别是从<span class="math inline">\(\pmb{x}^1\)</span>和<span class="math inline">\(\pmb{x}^2\)</span>判别的标记空间，<span class="math inline">\(\mathscr{Y}^1 = \mathscr{Y}^2 = \{爱情片，动作片\}\)</span>。在此假设下，只从单一属性描述中判别其标记的确定性通常不及从多个属性描述中判别其标记，例如，仅凭图像信息认为“可能是动作片”，而仅凭声音信息也认为“可能是动作片”，当两者一起考虑时就有较大把握判别为“动作片”。<strong>在相容性的基础上，不同视图信息的互补性会给学习器的构建带来很多便利</strong>。</p>
+<p>协同训练很好的利用了多视图的“<strong>相容互补性</strong>”。假设数据拥有两个充分且条件独立视图，“充分”是指每个视图都包含足以产生最优学习器的信息；“条件独立”指在给定类别标记条件下两个视图独立。<br>
+在此情形下，可用一个简单的办法利用未标记数据：</p>
+<ol style="list-style-type: decimal">
+<li>首先在每个视图上基于有标记样本分别训练出一个分类器；</li>
+<li>让每个分类器分别去挑选自己“最有把握的”未标记样本赋予伪标记；</li>
+<li>将伪标记样本提供给另一个分类器作为新增的有标记样本用于训练更新；</li>
+<li>迭代进行上述过程，直到两个分类器不再发生变化，或达到预先设定的迭代次数为止。</li>
+</ol>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午3.24.51.png">
+
+</div>
+<p>若在每轮学习中都考察分类器在所有未标记样本上的分类置信度，会有很大的计算开销，因此在算法中使用了<strong>未标记样本缓冲池</strong>。分类置信度的估计则因基学习算法<span class="math inline">\(\mathscr{L}\)</span>而异，例如使用朴素贝叶斯分类器，则可将后验概率转化为分类置信度；如使用SVM，则可将间隔大小转化为分类置信度。</p>
+<p>理论证明显示出，<strong>若两个视图充分且条件独立，则可利用未标记样本通过协同训练将弱分类器的泛化性能提升到任意高</strong>。不过，视图的条件独立性在现实任务中通常很难满足，因此性能提升幅度不会那么大，但研究表明，<strong>即便在更弱的条件下，协同训练仍可有效地提升弱分类器的性能</strong>。</p>
+<p>协同训练算法本身是为多视图数据而设计的，但此后出现了一些能在单视图数据上使用的变体算法，它们或是使用不同的学习算法、或使用不同的数据采样、甚至使用不同的参数设置来产生不同的学习器，也能有效地利用未标记数据来提升性能。<strong>此类算法事实上无需数据拥有多视图，仅需弱学习器之间具有显著的分歧（或差异），即可通过相互提供未标记样本的方式来提升泛化性能。</strong>不通试图、不同算法、不同数据采样、不同参数设置等，都仅是产生差异的渠道，而非必备条件。</p>
+<p><strong>基于分歧的方法只需采用合适的基学习器，就能较少受到模型假设、损失函数非凸性和数据规模问题的影响，学习方法简单有效、理论基础相对坚实、适用范围较为广泛</strong>。</p>
+<h2 id="半监督聚类">6. 半监督聚类</h2>
+<p>聚类是一种典型的无监督学习任务，然而在显示聚类任务中往往能获得一些额外的监督信息，于是可通过半监督聚类（semi-supervised clustering）来利用监督信息以获得更好的聚类效果。<br>
+聚类任务中获得监督信息大致分为两种：</p>
+<ul>
+<li><strong>必连与勿连约束</strong>：必连指样本必属于同一个簇，勿连指样本必不属于同一个簇；</li>
+<li><strong>少量的标记样本</strong>：提供少量的标记样本。</li>
+</ul>
+<p><strong>约束k均值（Constrained k-means）算法</strong>是利用第一类监督信息的代表，给定样本集<span class="math inline">\(D = \{\pmb{x}_1, \pmb{x}_2, \cdots, \pmb{x}_m\}\)</span>以及“必连”关系集合<span class="math inline">\(\mathscr{M}\)</span>和“勿连”关系集合<span class="math inline">\(\mathscr{C}\)</span>，<span class="math inline">\((\pmb{x}_i, \pmb{x}_j) \in \mathscr{M}\)</span>表示<span class="math inline">\(\pmb{x}_i\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>必属于同簇，<span class="math inline">\((\pmb{x}_i, \pmb{x}_j) \in \mathscr{C}\)</span>表示<span class="math inline">\(\pmb{x}_i\)</span>与<span class="math inline">\(\pmb{x}_j\)</span>必不属于同簇。该算法是k均值算法的扩展，它在聚类过程中要确保<span class="math inline">\(\mathscr{M}\)</span>和<span class="math inline">\(\mathscr{C}\)</span>中的约束得以满足，否则将返回错误提示。</p>
+<p>算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午4.21.10.png">
+
+</div>
+<p>第二种监督信息是少量的有标记样本。给定样本集<span class="math inline">\(D = \{\pmb{x}_1, \pmb{x}_2, \cdots, \pmb{x}_m\}\)</span>，假定少量的有标记样本为<span class="math inline">\(S = \bigcup_{j=1}^k S_j \subset D\)</span>，其中<span class="math inline">\(S_j \neq \emptyset\)</span>为隶属于第<span class="math inline">\(j\)</span>个聚类簇的样本。</p>
+<p>使用：直接将有标记样本作为“种子”，用它们初始化k均值算法的k个聚类中心，并且在聚类簇迭代更新过程中不改变种子样本的簇隶属关系。这就得到了<strong>约束种子k均值（Constrained Seed k-means）算法</strong>。</p>
+<p>算法如下：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-28%20下午4.28.55.png">
+
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/半监督学习/" rel="tag"># 半监督学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/26/碎碎/矩阵、向量求导法则/" rel="next" title="矩阵、向量求导法则">
+                <i class="fa fa-chevron-left"></i> 矩阵、向量求导法则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#半监督学习"><span class="nav-number">1.</span> <span class="nav-text">半监督学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#未标记样本"><span class="nav-number">2.</span> <span class="nav-text">1. 未标记样本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成式方法"><span class="nav-number">2.1.</span> <span class="nav-text">2. 生成式方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#半监督svm"><span class="nav-number">2.2.</span> <span class="nav-text">3. 半监督SVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图半监督学习"><span class="nav-number">2.3.</span> <span class="nav-text">4. 图半监督学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二分类问题"><span class="nav-number">2.3.1.</span> <span class="nav-text">4.1. 二分类问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多分类问题"><span class="nav-number">2.3.2.</span> <span class="nav-text">4.2. 多分类问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于分歧的方法"><span class="nav-number">2.4.</span> <span class="nav-text">5. 基于分歧的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#半监督聚类"><span class="nav-number">2.5.</span> <span class="nav-text">6. 半监督聚类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
