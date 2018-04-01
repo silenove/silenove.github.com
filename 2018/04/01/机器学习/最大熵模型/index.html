@@ -103,18 +103,18 @@
   <meta name="keywords" content="机器学习," />
 
 
-<meta name="description" content="最大熵模型 最大熵模型（maximum entropy model）由最大熵原理推导实现。 1. 最大熵原理 最大熵原理是概率模型学习的一个准则。最大熵原理认为，学习概率模型时，在所有可能的概率模型（分布）中，熵最大的模型是最好的模型。通常用约束条件来确定概率模型的集合，所以，最大熵原理也可以表述为在满足约束条件的模型集合中选取熵最大的模型。 假设离散随机变量\(X\)的概率分布是\(P(X)\)">
+<meta name="description" content="最大熵模型 在真实的语言环境里，某一观测值对应的隐藏状态有上下文环境（观测、状态）决定，引入特征函数可使我们能够自由地选取特征（观测或状态的组合）。可以说是用特征（观测组合）来代替观测，避免生成模型HMM、朴素贝叶斯的观测独立性假设的局限性。 最大熵模型（maximum entropy model）由最大熵原理推导实现。 1. 最大熵原理 最大熵原理是概率模型学习的一个准则。最大熵原理认为，学习概">
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最大熵模型">
 <meta property="og:url" content="http://yoursite.com/2018/04/01/机器学习/最大熵模型/index.html">
 <meta property="og:site_name" content="silenove blogs">
-<meta property="og:description" content="最大熵模型 最大熵模型（maximum entropy model）由最大熵原理推导实现。 1. 最大熵原理 最大熵原理是概率模型学习的一个准则。最大熵原理认为，学习概率模型时，在所有可能的概率模型（分布）中，熵最大的模型是最好的模型。通常用约束条件来确定概率模型的集合，所以，最大熵原理也可以表述为在满足约束条件的模型集合中选取熵最大的模型。 假设离散随机变量\(X\)的概率分布是\(P(X)\)">
+<meta property="og:description" content="最大熵模型 在真实的语言环境里，某一观测值对应的隐藏状态有上下文环境（观测、状态）决定，引入特征函数可使我们能够自由地选取特征（观测或状态的组合）。可以说是用特征（观测组合）来代替观测，避免生成模型HMM、朴素贝叶斯的观测独立性假设的局限性。 最大熵模型（maximum entropy model）由最大熵原理推导实现。 1. 最大熵原理 最大熵原理是概率模型学习的一个准则。最大熵原理认为，学习概">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:updated_time" content="2018-04-01T11:38:43.616Z">
+<meta property="og:updated_time" content="2018-04-01T12:14:57.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大熵模型">
-<meta name="twitter:description" content="最大熵模型 最大熵模型（maximum entropy model）由最大熵原理推导实现。 1. 最大熵原理 最大熵原理是概率模型学习的一个准则。最大熵原理认为，学习概率模型时，在所有可能的概率模型（分布）中，熵最大的模型是最好的模型。通常用约束条件来确定概率模型的集合，所以，最大熵原理也可以表述为在满足约束条件的模型集合中选取熵最大的模型。 假设离散随机变量\(X\)的概率分布是\(P(X)\)">
+<meta name="twitter:description" content="最大熵模型 在真实的语言环境里，某一观测值对应的隐藏状态有上下文环境（观测、状态）决定，引入特征函数可使我们能够自由地选取特征（观测或状态的组合）。可以说是用特征（观测组合）来代替观测，避免生成模型HMM、朴素贝叶斯的观测独立性假设的局限性。 最大熵模型（maximum entropy model）由最大熵原理推导实现。 1. 最大熵原理 最大熵原理是概率模型学习的一个准则。最大熵原理认为，学习概">
 
 
 
@@ -326,6 +326,7 @@
 
       
         <h1 id="最大熵模型">最大熵模型</h1>
+<p>在真实的语言环境里，某一观测值对应的隐藏状态有上下文环境（观测、状态）决定，引入特征函数可使我们能够自由地选取特征（观测或状态的组合）。可以说是用特征（观测组合）来代替观测，<strong>避免生成模型HMM、朴素贝叶斯的观测独立性假设的局限性</strong>。</p>
 <p>最大熵模型（maximum entropy model）由最大熵原理推导实现。</p>
 <h2 id="最大熵原理">1. 最大熵原理</h2>
 <p>最大熵原理是概率模型学习的一个准则。最大熵原理认为，<strong>学习概率模型时，在所有可能的概率模型（分布）中，熵最大的模型是最好的模型</strong>。通常用约束条件来确定概率模型的集合，所以，最大熵原理也可以表述为在满足约束条件的模型集合中选取熵最大的模型。</p>
