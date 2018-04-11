@@ -103,33 +103,31 @@
   <meta name="keywords" content="机器学习,概率图模型," />
 
 
-<meta name="description" content="最大熵马尔可夫模型 最大熵模型是在已知经验分布的基础上求解有关特征函数\(f(\pmb{x},y)\)的最优的\(P(y|\pmb{x})\)概率分布，但它的随机变量\(y\)有相互独立性假设，所以不能很好地描述\(\pmb{x}_i, y_{i-1}\)和\(y_i\)的关系，而HMM又有观测独立性假设不能自由的选取特征。所以希望找到一个能同时服从马尔可夫性假设和服从最大熵假设的模型解决序列标注">
+<meta name="description" content="概率无向图模型 概率无向图模型（probabilistic undirected graphical model），又称为马尔可夫随机场（Markov random field），是一个可以由无向图表示的联合概率分布。 1. 模型定义 图是由结点及连接结点的边组成的集合，记作\(G = (V,E)\)，无向图是指没有方向的边。 概率图模型是由图表示的概率分布。设有联合概率分布\(P(Y)\)，\(">
 <meta name="keywords" content="机器学习,概率图模型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最大熵马尔可夫模型">
-<meta property="og:url" content="http://yoursite.com/2018/04/11/机器学习/最大熵马尔可夫模型/index.html">
+<meta property="og:title" content="概率无向图模型">
+<meta property="og:url" content="http://yoursite.com/2018/04/11/机器学习/概率无向图模型/index.html">
 <meta property="og:site_name" content="silenove blogs">
-<meta property="og:description" content="最大熵马尔可夫模型 最大熵模型是在已知经验分布的基础上求解有关特征函数\(f(\pmb{x},y)\)的最优的\(P(y|\pmb{x})\)概率分布，但它的随机变量\(y\)有相互独立性假设，所以不能很好地描述\(\pmb{x}_i, y_{i-1}\)和\(y_i\)的关系，而HMM又有观测独立性假设不能自由的选取特征。所以希望找到一个能同时服从马尔可夫性假设和服从最大熵假设的模型解决序列标注">
+<meta property="og:description" content="概率无向图模型 概率无向图模型（probabilistic undirected graphical model），又称为马尔可夫随机场（Markov random field），是一个可以由无向图表示的联合概率分布。 1. 模型定义 图是由结点及连接结点的边组成的集合，记作\(G = (V,E)\)，无向图是指没有方向的边。 概率图模型是由图表示的概率分布。设有联合概率分布\(P(Y)\)，\(">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午2.17.07.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.22.48.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.19.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.31.png">
-<meta property="og:updated_time" content="2018-04-11T11:42:41.975Z">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午8.30.17.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午8.43.18.png">
+<meta property="og:updated_time" content="2018-04-11T12:56:03.173Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="最大熵马尔可夫模型">
-<meta name="twitter:description" content="最大熵马尔可夫模型 最大熵模型是在已知经验分布的基础上求解有关特征函数\(f(\pmb{x},y)\)的最优的\(P(y|\pmb{x})\)概率分布，但它的随机变量\(y\)有相互独立性假设，所以不能很好地描述\(\pmb{x}_i, y_{i-1}\)和\(y_i\)的关系，而HMM又有观测独立性假设不能自由的选取特征。所以希望找到一个能同时服从马尔可夫性假设和服从最大熵假设的模型解决序列标注">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午2.17.07.png">
+<meta name="twitter:title" content="概率无向图模型">
+<meta name="twitter:description" content="概率无向图模型 概率无向图模型（probabilistic undirected graphical model），又称为马尔可夫随机场（Markov random field），是一个可以由无向图表示的联合概率分布。 1. 模型定义 图是由结点及连接结点的边组成的集合，记作\(G = (V,E)\)，无向图是指没有方向的边。 概率图模型是由图表示的概率分布。设有联合概率分布\(P(Y)\)，\(">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午8.30.17.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/11/机器学习/最大熵马尔可夫模型/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/11/机器学习/概率无向图模型/"/>
 
 
-  <title>最大熵马尔可夫模型 | silenove blogs</title>
+  <title>概率无向图模型 | silenove blogs</title>
   
 
 
@@ -264,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/机器学习/最大熵马尔可夫模型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/机器学习/概率无向图模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="silen Zhou">
@@ -281,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">最大熵马尔可夫模型</h1>
+          <h1 class="post-title" itemprop="name headline">概率无向图模型</h1>
         
 
         <div class="post-meta">
@@ -293,7 +291,7 @@
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T19:42:09+08:00">2018-04-11</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T20:55:35+08:00">2018-04-11</time>
             
 
             
@@ -330,45 +328,38 @@
       
 
       
-        <h1 id="最大熵马尔可夫模型">最大熵马尔可夫模型</h1>
-<p>最大熵模型是在已知经验分布的基础上求解有关特征函数<span class="math inline">\(f(\pmb{x},y)\)</span>的最优的<span class="math inline">\(P(y|\pmb{x})\)</span>概率分布，但它的随机变量<span class="math inline">\(y\)</span>有相互独立性假设，所以不能很好地描述<span class="math inline">\(\pmb{x}_i, y_{i-1}\)</span>和<span class="math inline">\(y_i\)</span>的关系，而HMM又有观测独立性假设不能自由的选取特征。所以希望找到一个<strong>能同时服从马尔可夫性假设和服从最大熵假设的模型解决序列标注的问题</strong>。</p>
-<h2 id="模型形式">1. 模型形式</h2>
-<p><strong>最大熵马尔可夫模型（Maximum Entropy Markov Model，MEMM）</strong>：在给定的观察状态和前一状态的条件下，出现当前状态的概率。</p>
-<p>对比隐马尔可夫模型HMM：<br>
-HMM模型包括状态序列<span class="math inline">\(I\)</span>和观测序列<span class="math inline">\(O\)</span>，状态转移概率矩阵<span class="math inline">\(A\)</span>，观测概率矩阵<span class="math inline">\(B\)</span>，初始概率向量<span class="math inline">\(\pi\)</span>。HMM依赖于已知数据的概率分布，从历史经验中决定现实决策，但实际能训练的数据是少量且稀疏的，无法枚举所有的数据分布情况，所以需要在数据稀疏的条件下估计未知变量的条件概率。</p>
-<p>最大熵马尔可夫模型MEMM：<br>
-MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代HMM中的两个条件概率分布，即两个概率矩阵。<span class="math inline">\(P(o_j | o_{j-1}, i_j)\)</span>表示从先前状态和当前观测值的条件下得到当前状态的概率，即根据前一状态和当前观测预测当前状态，每个分布函数<span class="math inline">\(P_{i_{j-1}}(i_j | o_j)\)</span>都是一个服从最大熵的指数模型。</p>
-<p><span class="math display">\[P_{i_{j-1}}(i_j | o_j) = \frac{1}{Z_{\bar{\lambda}}(o_j, i_{j-1})} \exp \left( \sum_q^m \lambda_a f_a (o_j, i_j) \right), \quad j=1,2,\cdots,T\]</span></p>
-<div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午2.17.07.png">
-
-</div>
-<p>左边为HMM模型，右边为MEMM模型，其中<span class="math inline">\(y\)</span>表示状态，<span class="math inline">\(x\)</span>表示观测。</p>
-<ul>
-<li>HMM双状态转移条件概率的输出独立性假设，在训练过程中通过统计<span class="math inline">\(i_j, i_{j-1}, o_j\)</span>的条件概率<span class="math inline">\(P(i_j| i_{j-1}), P(o_j|i_j)\)</span>，在解码中通过联合概率反向递推<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>；</li>
-<li>MEMM限定条件求最优条件概率分布，在训练过程中收敛一组有关特征函数<span class="math inline">\(f_a(o_j,i_j)\)</span>的参数向量<span class="math inline">\(\pmb{\lambda}\)</span>，以及有关<span class="math inline">\(o_j\)</span>和<span class="math inline">\(i_{j-1}\)</span>的正则化因子，在解码过程中直接求得条件概率<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>。</li>
-</ul>
-<div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.22.48.png">
-
-</div>
-<h2 id="优势和局限">2. 优势和局限</h2>
+        <h1 id="概率无向图模型">概率无向图模型</h1>
+<p><strong>概率无向图模型（probabilistic undirected graphical model）</strong>，又称为<strong>马尔可夫随机场（Markov random field）</strong>，是一个可以由无向图表示的联合概率分布。</p>
+<h2 id="模型定义">1. 模型定义</h2>
+<p>图是由结点及连接结点的边组成的集合，记作<span class="math inline">\(G = (V,E)\)</span>，无向图是指没有方向的边。</p>
+<p>概率图模型是由图表示的概率分布。设有联合概率分布<span class="math inline">\(P(Y)\)</span>，<span class="math inline">\(Y \in \mathscr{Y}\)</span>是一组随机变量。由无向图<span class="math inline">\(G=(V,E)\)</span>表示概率分布<span class="math inline">\(P(Y)\)</span>，即在图<span class="math inline">\(G\)</span>中，结点<span class="math inline">\(v \in V\)</span>表示一个随机变量<span class="math inline">\(Y_v\)</span>，<span class="math inline">\(Y = (Y_v)_{v \in V}\)</span>；边<span class="math inline">\(e \in E\)</span>表示随机变量之间的概率依赖关系。</p>
+<p>给定一个联合概率分布<span class="math inline">\(P(Y)\)</span>和表示它的无向图<span class="math inline">\(G\)</span>。首先定义无向图表示的随机变量之间存在的成对马尔可夫性、局部马尔可夫性和全局马尔可夫性：</p>
 <ol style="list-style-type: decimal">
-<li>HMM因为其严格的观测独立性假设，对于具有多个相互作用的观测状态组合以及中场范围的元素依赖的数据环境识别特征的能力有限，而最大熵模型特征选择灵活，且不需要额外的独立性假设或内在约束；</li>
-<li>HMM是生成模型，学习的是联合概率，必须列举所有的观察序列的可能值，而MEMM可以在不完整信息下推导出未知数据；</li>
-<li>MEMM的本质是有向概率图模型，每个特征组合<span class="math inline">\(P(i_j, i_{j-1}, o_j)\)</span>之间独立且做局部归一，可能存在<strong>标记偏置（label bias）</strong>的问题。</li>
+<li><strong>成对马尔可夫性</strong>：设<span class="math inline">\(u\)</span>和<span class="math inline">\(v\)</span>是无向图<span class="math inline">\(G\)</span>中任意两个没有边连接的结点，结点<span class="math inline">\(u\)</span>和<span class="math inline">\(v\)</span>分别对应随机变量<span class="math inline">\(Y_u\)</span>和<span class="math inline">\(Y_v\)</span>。其他所有节点为<span class="math inline">\(O\)</span>，对应随机变量组是<span class="math inline">\(Y_O\)</span>。成对马尔可夫性是指给定随机变量组<span class="math inline">\(Y_O\)</span>的条件下随机变量<span class="math inline">\(Y_u\)</span>和<span class="math inline">\(Y_v\)</span>是条件独立的，即 <span class="math display">\[P(Y_u,Y_v|Y_O) = P(Y_u|Y_O) P(Y_v|Y_O)\]</span></li>
+<li><strong>局部马尔可夫性</strong>：设<span class="math inline">\(v \in V\)</span>是无向图<span class="math inline">\(G\)</span>中任意一个结点，<span class="math inline">\(W\)</span>是与<span class="math inline">\(v\)</span>有边连接的所有结点，<span class="math inline">\(O\)</span>是<span class="math inline">\(v,W\)</span>以外的其他所有结点。<span class="math inline">\(v\)</span>表示的随机变量是<span class="math inline">\(Y_v\)</span>，<span class="math inline">\(W\)</span>表示的随机变量组是<span class="math inline">\(Y_W\)</span>，<span class="math inline">\(O\)</span>表示的随机变量组是<span class="math inline">\(Y_O\)</span>。局部马尔可夫性是指在给定随机变量组<span class="math inline">\(Y_W\)</span>的条件下随机变量<span class="math inline">\(Y_v\)</span>与随机变量组<span class="math inline">\(Y_O\)</span>是独立的，即 <span class="math display">\[P(Y_v, Y_O|Y_W) = P(Y_v|Y_W) P(Y_O|Y_W)\]</span> 在<span class="math inline">\(P(Y_O|Y_W) &gt; 0\)</span>时，等价地， <span class="math display">\[P(Y_v|Y_W) = P(Y_v | Y_W, Y_O)\]</span></li>
+<li><strong>全局马尔可夫性</strong>：设结点集合<span class="math inline">\(A,B\)</span>是在无向图<span class="math inline">\(G\)</span>中被结点集合<span class="math inline">\(C\)</span>分开的任意结点集合，如下图所示。结点集合<span class="math inline">\(A,B\)</span>和<span class="math inline">\(C\)</span>所对应的随机变量组分别是<span class="math inline">\(Y_A,Y_B\)</span>和<span class="math inline">\(Y_C\)</span>。全局马尔可夫性是指在给定随机变量组<span class="math inline">\(Y_C\)</span>的条件下随机变量组<span class="math inline">\(Y_A\)</span>和<span class="math inline">\(Y_B\)</span>是条件独立的，即 <span class="math display">\[P(Y_A,Y_B|Y_C) = P(Y_A|Y_C) P(Y_B|Y_C)\]</span></li>
 </ol>
-<h2 id="标记偏置问题">3. 标记偏置问题</h2>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.19.png">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午8.30.17.png">
 
 </div>
+<p>上述成对的、局部的、全局的马尔可夫性定义是等价的。</p>
+<p><strong>概率无向图模型</strong>：设有联合概率分布<span class="math inline">\(P(Y)\)</span>，由无向图<span class="math inline">\(G=(V,E)\)</span>表示，在图<span class="math inline">\(G\)</span>中，结点表示随机变量，边表示随机变量之间的依赖关系。如果联合概率分布<span class="math inline">\(P(Y)\)</span>满足成对、局部或全局马尔可夫性，就称此联合概率分布为概率无向图模型，或马尔可夫随机场。</p>
+<p>对于给定的概率无向图模型，我们希望将整体的联合概率写成若干子联合概率的乘积的形式，也就是将联合概率进行因子分解，这样便于模型的学习与计算。事实上，<strong>概率无向图模型的最大特点就是易于因子分解</strong>。</p>
+<h2 id="概率无向图模型的因子分解">2. 概率无向图模型的因子分解</h2>
+<p><strong>团与最大团</strong>：无向图<span class="math inline">\(G\)</span>中任何两个结点均有边连接的结点子集称为团（clique）。若<span class="math inline">\(C\)</span>是无向图<span class="math inline">\(G\)</span>的一个团，并且不能再加进任何一个<span class="math inline">\(G\)</span>的结点使其成为一个更大的团，则称此<span class="math inline">\(C\)</span>为最大团（maximal clique）。</p>
+<p>下图表示由4个结点组成的无向图。图中2个结点组成的团有5个：<span class="math inline">\(\{Y_1,Y_2\},\{Y_2,Y_3\},\{Y_3,Y_4\},\{Y_4,Y_2\}\)</span>和<span class="math inline">\(\{Y_1,Y_3\}\)</span>。有2个最大团<span class="math inline">\(\{Y_1,Y_2,Y_3\}\)</span>和<span class="math inline">\(\{Y_2,Y_3,Y_4\}\)</span>。而<span class="math inline">\(\{Y_1,Y_2,Y_3,Y_4\}\)</span>不是一个团，因为<span class="math inline">\(Y_1\)</span>和<span class="math inline">\(Y_4\)</span>没有边相连。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.31.png">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午8.43.18.png">
 
 </div>
-<p><strong>MEMM只能达到局部最优解，而不能达到全局最优解，因此MEMM虽然解决了HMM输出独立性假设的问题，但却存在标记偏置问题。</strong></p>
-<p><strong>改进：条件随机场</strong></p>
+<p>将概率无向图模型的联合概率分布表示为其最大团上的随机变量的函数的乘积形式的操作，称为概率无向图模型的因子分解。</p>
+<p>给定概率无向图模型，设其无向图为<span class="math inline">\(G\)</span>，<span class="math inline">\(C\)</span>为<span class="math inline">\(G\)</span>上的最大团，<span class="math inline">\(Y_C\)</span>表示<span class="math inline">\(C\)</span>对应的随机变量。那么概率无向图模型的联合概率分布<span class="math inline">\(P(Y)\)</span>可写作图中所有最大团<span class="math inline">\(C\)</span>上的函数<span class="math inline">\(\Psi_C(Y_C)\)</span>的乘积形式，即 <span class="math display">\[P(Y) = \frac{1}{Z} \prod_C \Psi_C(Y_C)\]</span> 其中<span class="math inline">\(Z\)</span>为规范化因子， <span class="math display">\[Z = \sum_Y \prod_C \Psi_C (Y_C)\]</span> 规范化因子保证<span class="math inline">\(P(Y)\)</span>构成一个概率分布。函数<span class="math inline">\(\Psi_C(Y_C)\)</span>称为势函数（potential function）。这里要求势函数<span class="math inline">\(\Psi_C(Y_C)\)</span>是严格正的，通常定义为指数函数： <span class="math display">\[\Psi_C(Y_C) = \exp \{ - E(Y_C) \}\]</span> 概率无向图模型的因子分解由下述定理来保证：<br>
+<strong>Hammersley-Clifford定理</strong>：概率无向图模型的联合概率分布<span class="math inline">\(P(Y)\)</span>可以表示为如下形式：<br>
+<span class="math display">\[\begin{equation}
+    P(Y) = \frac{1}{Z} \prod_C \Psi_C(Y_C) \nonumber \\
+    Z = \sum_Y \prod_C \Psi_C (Y_C) \nonumber
+\end{equation}\]</span> 其中，<span class="math inline">\(C\)</span>是无向图的最大团，<span class="math inline">\(Y_C\)</span>是<span class="math inline">\(C\)</span>的结点对应的随机变量，<span class="math display">\[\Psi_C(Y_C)\]</span>是<span class="math inline">\(C\)</span>上定义的严格正函数，乘积是在无向图所有的最大团上进行的。</p>
 
       
     </div>
@@ -401,8 +392,8 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/01/机器学习/最大熵模型/" rel="next" title="最大熵模型">
-                <i class="fa fa-chevron-left"></i> 最大熵模型
+              <a href="/2018/04/11/机器学习/最大熵马尔可夫模型/" rel="next" title="最大熵马尔可夫模型">
+                <i class="fa fa-chevron-left"></i> 最大熵马尔可夫模型
               </a>
             
           </div>
@@ -410,10 +401,6 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/11/机器学习/概率无向图模型/" rel="prev" title="概率无向图模型">
-                概率无向图模型 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -536,7 +523,7 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最大熵马尔可夫模型"><span class="nav-number">1.</span> <span class="nav-text">最大熵马尔可夫模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型形式"><span class="nav-number">1.1.</span> <span class="nav-text">1. 模型形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优势和局限"><span class="nav-number">1.2.</span> <span class="nav-text">2. 优势和局限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记偏置问题"><span class="nav-number">1.3.</span> <span class="nav-text">3. 标记偏置问题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概率无向图模型"><span class="nav-number">1.</span> <span class="nav-text">概率无向图模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型定义"><span class="nav-number">1.1.</span> <span class="nav-text">1. 模型定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率无向图模型的因子分解"><span class="nav-number">1.2.</span> <span class="nav-text">2. 概率无向图模型的因子分解</span></a></li></ol></li></ol></div>
             
 
           </div>
