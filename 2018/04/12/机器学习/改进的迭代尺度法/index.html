@@ -103,15 +103,20 @@
   <meta name="keywords" content="机器学习,算法," />
 
 
+<meta name="description" content="改进的迭代尺度法 改进的迭代尺度法（improved iterative scaling，IIS）是一种最大熵模型学习的最优化算法。 已知最大熵模型为 \[P_{\pmb{w}} (y|\pmb{x}) = \frac{1}{Z_{\pmb{w}}(\pmb{x})} \exp \left( \sum_{i=1}^n w_i f_i(\pmb{x},y) \right)\] 其中 \[Z_{\pm">
 <meta name="keywords" content="机器学习,算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="改进的迭代尺度法">
 <meta property="og:url" content="http://yoursite.com/2018/04/12/机器学习/改进的迭代尺度法/index.html">
 <meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="改进的迭代尺度法 改进的迭代尺度法（improved iterative scaling，IIS）是一种最大熵模型学习的最优化算法。 已知最大熵模型为 \[P_{\pmb{w}} (y|\pmb{x}) = \frac{1}{Z_{\pmb{w}}(\pmb{x})} \exp \left( \sum_{i=1}^n w_i f_i(\pmb{x},y) \right)\] 其中 \[Z_{\pm">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:updated_time" content="2018-04-12T09:11:32.897Z">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-12%20下午4.56.19.png">
+<meta property="og:updated_time" content="2018-04-12T09:18:29.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改进的迭代尺度法">
+<meta name="twitter:description" content="改进的迭代尺度法 改进的迭代尺度法（improved iterative scaling，IIS）是一种最大熵模型学习的最优化算法。 已知最大熵模型为 \[P_{\pmb{w}} (y|\pmb{x}) = \frac{1}{Z_{\pmb{w}}(\pmb{x})} \exp \left( \sum_{i=1}^n w_i f_i(\pmb{x},y) \right)\] 其中 \[Z_{\pm">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-12%20下午4.56.19.png">
 
 
 
@@ -322,7 +327,26 @@
       
 
       
-        
+        <h2 id="改进的迭代尺度法">改进的迭代尺度法</h2>
+<p><strong>改进的迭代尺度法（improved iterative scaling，IIS）是一种最大熵模型学习的最优化算法</strong>。</p>
+<p>已知最大熵模型为 <span class="math display">\[P_{\pmb{w}} (y|\pmb{x}) = \frac{1}{Z_{\pmb{w}}(\pmb{x})} \exp \left( \sum_{i=1}^n w_i f_i(\pmb{x},y) \right)\]</span> 其中 <span class="math display">\[Z_{\pmb{w}} (\pmb{x}) = \sum_{\pmb{y}} \exp \left( \sum_{i=1}^n w_i f_i(\pmb{x},y) \right)\]</span> 对数似然函数为 <span class="math display">\[L(\pmb{w}) = \sum_{\pmb{x},y} \tilde{P} (\pmb{x},y) \sum_{i=1}^n w_i f_i(\pmb{x},y) - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \log Z_{\pmb{w}} (\pmb{x})\]</span> 目标是通过极大似然估计学习模型参数，即求对数似然函数的极大值<span class="math inline">\(\hat{\pmb{w}}\)</span>。</p>
+<p><strong>IIS的想法</strong>：假设最大熵模型当前的参数向量是<span class="math inline">\(\pmb{w} = (w_1,w_2,\cdots,w_n)^T\)</span>，我们希望找到一个新的参数向量<span class="math inline">\(\pmb{w}+\pmb{\delta} = (w_1+\delta_1,w_2+\delta_2,\cdots,w_n+\delta_n)^T\)</span>，使得模型的对数似然函数值增大。如果能有这样一种参数向量更新的方法<span class="math inline">\(\tau:\pmb{w} \to \pmb{w} + \pmb{\delta}\)</span>，那么就可以重复使用这一方法，直至找到对数似然函数的最大值。</p>
+<p>对于给定的经验分布<span class="math inline">\(\tilde{P}(\pmb{x},y)\)</span>，模型参数从<span class="math inline">\(\pmb{w}\)</span>到<span class="math inline">\(\pmb{w}+\pmb{\delta}\)</span>，对数似然函数的改变量是 <span class="math display">\[\begin{align}
+    L(\pmb{w}+\pmb{\delta}) - L(\pmb{w}) &amp;= \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \log P_{\pmb{w}+\pmb{\delta}}(y|\pmb{x}) - \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \log P_{\pmb{w}} (y|\pmb{x}) \nonumber \\
+    &amp;= \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \log \frac{Z_{\pmb{w}+\pmb{\delta}}(\pmb{x})}{Z_{\pmb{w}}(\pmb{x})} \nonumber
+\end{align}\]</span></p>
+<p>利用不等式 <span class="math display">\[- \log \alpha \geqslant 1 - \alpha, \quad \alpha &gt; 0\]</span> 建立对数似然函数改变量的下界： <span class="math display">\[\begin{align}
+    L(\pmb{w}+\pmb{\delta}) - L(\pmb{w}) &amp; \geqslant \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) + 1 - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \log \frac{Z_{\pmb{w}+\pmb{\delta}}(\pmb{x})}{Z_{\pmb{w}}(\pmb{x})} \nonumber \\
+    &amp;= \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) + 1 - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_{\pmb{y}} P_{\pmb{w}} (\pmb{y}|\pmb{x}) \exp \sum_{i=1}^n \delta_i f_i(\pmb{x},y) \nonumber
+\end{align}\]</span> 将右端记为 <span class="math display">\[A(\pmb{\delta}|\pmb{w}) = \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) + 1 - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_{\pmb{y}} P_{\pmb{w}} (\pmb{y}|\pmb{x}) \exp \sum_{i=1}^n \delta_i f_i(\pmb{x},y)\]</span> 于是有 <span class="math display">\[L(\pmb{w}+\pmb{\delta}) - L(\pmb{w}) \geqslant A(\pmb{\delta}|\pmb{w})\]</span> 即<span class="math inline">\(A(\pmb{\delta}|\pmb{w})\)</span>是对数似然函数改变量的一个下界。</p>
+<p>如果能找到适当的<span class="math inline">\(\pmb{\delta}\)</span>使下界<span class="math inline">\(A(\pmb{\delta}|\pmb{w})\)</span>提高，那么对数似然函数也会提高。然而，函数<span class="math inline">\(A(\pmb{\delta}|\pmb{w})\)</span>中的<span class="math inline">\(\pmb{\delta}\)</span>是一个向量，含有多个变量，不易同时优化。IIS试图一次只优化其中一个变量<span class="math inline">\(\delta_i\)</span>，而固定其他变量<span class="math inline">\(\delta_j,i \neq j\)</span>。</p>
+<p>为了达到这一目的，IIS进一步降低下界<span class="math inline">\(A(\pmb{\delta}|\pmb{w})\)</span>。具体地，IIS引进一个量<span class="math inline">\(f^{\sharp}(\pmb{x},y)\)</span>， <span class="math display">\[f^{\sharp}(\pmb{x},y) = \sum_i f_i (\pmb{x},y)\]</span> 因为<span class="math inline">\(f_i\)</span>是二值函数，故<span class="math inline">\(f^{\sharp}(\pmb{x},y)\)</span>表示所有特征在<span class="math inline">\((\pmb{x},y)\)</span>出现的次数。这样，<span class="math inline">\(A(\pmb{\delta}|\pmb{w})\)</span>可以改写为 <span class="math display">\[A(\pmb{\delta}|\pmb{w}) = \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) + 1 - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_{\pmb{y}} P_{\pmb{w}} (\pmb{y}|\pmb{x}) \exp \left( f^{\sharp}(\pmb{x},y) \sum_{i=1}^n \frac{\delta_i f_i(\pmb{x},y)}{f^{\sharp}(\pmb{x},y)} \right) \tag{6.30}\]</span></p>
+<p>利用指数函数的凸性以及对任意<span class="math inline">\(i\)</span>，有<span class="math inline">\(\frac{f_i(\pmb{x},y)}{f^{\sharp}(\pmb{x},y)} \geqslant 0\)</span>且<span class="math inline">\(\sum_{i=1}^n \frac{f_i(\pmb{x},y)}{f^{\sharp}(\pmb{x},y)} = 1\)</span>这一事实，根据Jensen不等式，得到 <span class="math display">\[\exp \left( \sum_{i=1}^n \frac{f_i(\pmb{x},y)}{f^{\sharp}(\pmb{x},y)} \delta_i f^{\sharp}(\pmb{x},y)\right) \leqslant \sum_{i=1}^n \frac{f_i(\pmb{x},y)}{f^{\sharp}(\pmb{x},y)} \exp (\delta_i f^{\sharp}(\pmb{x},y))\]</span> 则公式（6.30）可改写为 <span class="math display">\[A(\pmb{\delta}|\pmb{w}) \geqslant \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) + 1 - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_{\pmb{y}} P_{\pmb{w}} (\pmb{y}|\pmb{x}) \sum_{i=1}^n \left( \frac{f_i(\pmb{x},y)}{f^{\sharp} (\pmb{x},y)} \right) \exp (\delta_i f^{\sharp}(\pmb{x},y))\]</span></p>
+<p>将不等式右端记为 <span class="math display">\[B(\pmb{\delta}|\pmb{w}) = \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) + 1 - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_{\pmb{y}} P_{\pmb{w}} (\pmb{y}|\pmb{x}) \sum_{i=1}^n \left( \frac{f_i(\pmb{x},y)}{f^{\sharp} (\pmb{x},y)} \right) \exp (\delta_i f^{\sharp}(\pmb{x},y))\]</span> 于是得到 <span class="math display">\[L(\pmb{w}+\pmb{\delta}) - L(\pmb{w}) \geqslant B(\pmb{\delta}|\pmb{w})\]</span></p>
+<p>这里，<span class="math inline">\(B(\pmb{\delta}|\pmb{w})\)</span>是对数似然函数改变量一个新的（相对不紧的）下界。</p>
+<p>求<span class="math inline">\(B(\pmb{\delta}|\pmb{w})\)</span>对<span class="math inline">\(\delta_i\)</span>的偏导数： <span class="math display">\[\frac{\partial B(\pmb{\delta}|\pmb{w})}{\partial \delta_i} = \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y)f_i(\pmb{x},y) - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_y P_{\pmb{w}}(y|\pmb{x})f_i(\pmb{x},y) \exp(\delta_i f^{\sharp}(\pmb{x},y))\]</span> 上式中，除<span class="math inline">\(\delta_i\)</span>外不含任何其他变量，令偏导数为0得到 <span class="math display">\[\sum_{\pmb{x},y} \tilde{P}(\pmb{x}) P_{\pmb{w}}(y|\pmb{x})f_i(\pmb{x},y) \exp(\delta_i f^{\sharp}(\pmb{x},y)) = E_{\tilde{P}}(f_i)\]</span> 于是，依次对<span class="math inline">\(\delta_i\)</span>求解上述方程可以求出<span class="math inline">\(\delta\)</span>。</p>
+<p>算法如下： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-12%20下午4.56.19.png"></p>
+<p>算法关键的一步是（a），即求解方程中的<span class="math inline">\(\delta_i\)</span>，如果<span class="math inline">\(f^{\sharp}(\pmb{x},y)\)</span>是常数，即对任意<span class="math inline">\(\pmb{x},y\)</span>，有<span class="math inline">\(f^{\sharp}(\pmb{x},y) = M\)</span>，那么<span class="math inline">\(\delta_i\)</span>可以显示地表示为 <span class="math display">\[\delta_i = \frac{1}{M} \log \frac{E_{\tilde{P}}(f_i)}{E_P(f_i)}\]</span> 如果<span class="math inline">\(f^{\sharp}(\pmb{x},y)\)</span>不是常数，那么必须通过数值计算求<span class="math inline">\(\delta_i\)</span>，简单有效的方法是牛顿法，以<span class="math inline">\(g(\delta_i) = 0\)</span>表示偏导数方程，牛顿法通过迭代求得<span class="math inline">\(\delta_i^*\)</span>，使得<span class="math inline">\(g(\delta_i^*) = 0\)</span>。迭代公式是 <span class="math display">\[\delta_i^{(k+1)} = \delta_i^{(k)} - \frac{g(\delta_i^{(k)})}{g&#39;(\delta_i^{(k)})}\]</span> 只要适当的选取初始值<span class="math inline">\(\delta_i^{(0)}\)</span>，由于<span class="math inline">\(\delta_i\)</span>的方程有单根，因此牛顿法恒收敛，而且收敛速度很快。</p>
 
       
     </div>
@@ -412,8 +436,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -467,6 +500,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#改进的迭代尺度法"><span class="nav-number">1.</span> <span class="nav-text">改进的迭代尺度法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
