@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="碎碎,统计学," />
+
+
+<meta name="description" content="Gamma分布 指数分布解决的问题是：要等到一个随机事件发生，需要经历多久的时间； Gamma分布解决的问题是：要等到n个随机事件都发生，需要经历多久的时间。 Gamma分布即为多个独立同分布的指数分布变量的和的分布。 指数分布和\(\chi^2\)分布都是Gamma分布的特例。 Gamma分布 概率密度函数为： \[f(x) = \begin{cases}     \frac{\beta^{\a">
+<meta name="keywords" content="碎碎,统计学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gamma分布">
+<meta property="og:url" content="http://yoursite.com/2018/05/17/碎碎/Gamma分布/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="Gamma分布 指数分布解决的问题是：要等到一个随机事件发生，需要经历多久的时间； Gamma分布解决的问题是：要等到n个随机事件都发生，需要经历多久的时间。 Gamma分布即为多个独立同分布的指数分布变量的和的分布。 指数分布和\(\chi^2\)分布都是Gamma分布的特例。 Gamma分布 概率密度函数为： \[f(x) = \begin{cases}     \frac{\beta^{\a">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-05-16%20下午9.20.48.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-05-16%20下午9.08.01.png">
+<meta property="og:updated_time" content="2018-05-17T03:14:20.600Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gamma分布">
+<meta name="twitter:description" content="Gamma分布 指数分布解决的问题是：要等到一个随机事件发生，需要经历多久的时间； Gamma分布解决的问题是：要等到n个随机事件都发生，需要经历多久的时间。 Gamma分布即为多个独立同分布的指数分布变量的和的分布。 指数分布和\(\chi^2\)分布都是Gamma分布的特例。 Gamma分布 概率密度函数为： \[f(x) = \begin{cases}     \frac{\beta^{\a">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-05-16%20下午9.20.48.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/17/碎碎/Gamma分布/"/>
+
+
+  <title>Gamma分布 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/17/碎碎/Gamma分布/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Gamma分布</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-17T11:12:11+08:00">2018-05-17</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="gamma分布">Gamma分布</h1>
+<p>指数分布解决的问题是：要等到一个随机事件发生，需要经历多久的时间； Gamma分布解决的问题是：要等到n个随机事件都发生，需要经历多久的时间。</p>
+<p><strong>Gamma分布即为多个独立同分布的指数分布变量的和的分布。</strong></p>
+<p><strong>指数分布和<span class="math inline">\(\chi^2\)</span>分布都是Gamma分布的特例。</strong></p>
+<h2 id="gamma分布-1">Gamma分布</h2>
+<p>概率密度函数为： <span class="math display">\[f(x) = \begin{cases}
+    \frac{\beta^{\alpha}}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x &gt; 0 \\
+    0, \qquad \qquad \qquad 其他
+\end{cases}\]</span></p>
+<p>其中Gamma函数<span class="math inline">\(\Gamma(x) = \int_0^{+\infty} t^{x-1} e^{-t} dt\)</span>，图像为 <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-05-16%20下午9.20.48.png"></p>
+<p>当<span class="math inline">\(x=1\)</span>时， <span class="math display">\[\Gamma(1) = \int_0^{+ \infty} e^{-t} dt = 1\]</span> 并且<span class="math inline">\(\Gamma(\frac{1}{2}) = \sqrt{\pi}\)</span>，根据<span class="math inline">\(\Gamma(x+1) = x \Gamma(x)\)</span>这一规则可求得其他值。</p>
+<p>Gamma分布中的<span class="math inline">\(\alpha\)</span>为称为形状参数，<span class="math inline">\(\frac{1}{\beta}\)</span>称为尺度参数。</p>
+<p><span class="math display">\[E(X) = \frac{\alpha}{\lambda}, \quad D(X) = \frac{\alpha}{\lambda^2}\]</span></p>
+<p>概率密度函数图像： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-05-16%20下午9.08.01.png"></p>
+<h2 id="gamma分布的可加性">Gamma分布的可加性</h2>
+<p>两个独立随机变量<span class="math inline">\(X\)</span>和<span class="math inline">\(Y\)</span>，且<span class="math inline">\(X \sim Ga(\alpha_1, \beta)\)</span>，<span class="math inline">\(Y \sim Ga(\alpha_2, \beta)\)</span>，则<span class="math inline">\(Z = X+Y \sim Ga(\alpha_1 + \alpha_2, \beta)\)</span>，<span class="math inline">\(X\)</span>和<span class="math inline">\(Y\)</span>的尺度参数必须相同。</p>
+<h2 id="gamma分布的特殊形式">Gamma分布的特殊形式</h2>
+<ol style="list-style-type: decimal">
+<li>当形状参数<span class="math inline">\(\alpha = 1\)</span>时，Gamma分布转化为指数分布；</li>
+<li>当<span class="math inline">\(\alpha = \frac{n}{2}, \beta = \frac{1}{2}\)</span>时，Gamma分布转化为自由度为<span class="math inline">\(n\)</span>的<span class="math inline">\(\chi^2\)</span>分布。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/碎碎/" rel="tag"># 碎碎</a>
+          
+            <a href="/tags/统计学/" rel="tag"># 统计学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/17/碎碎/指数分布/" rel="next" title="指数分布">
+                <i class="fa fa-chevron-left"></i> 指数分布
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/17/碎碎/抽样分布/" rel="prev" title="抽样分布">
+                抽样分布 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gamma分布"><span class="nav-number">1.</span> <span class="nav-text">Gamma分布</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gamma分布-1"><span class="nav-number">1.1.</span> <span class="nav-text">Gamma分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gamma分布的可加性"><span class="nav-number">1.2.</span> <span class="nav-text">Gamma分布的可加性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gamma分布的特殊形式"><span class="nav-number">1.3.</span> <span class="nav-text">Gamma分布的特殊形式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
