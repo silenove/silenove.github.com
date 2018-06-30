@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-EN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.2" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.2" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.0.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="强化学习," />
+
+
+<meta name="description" content="强化学习——策略学习 给定策略\(\pi\)，状态估值函数的贝尔曼方程： \[v_{\pi}(s) = \sum_a \pi(a|s) \sum_{s&amp;#39;,r} p(s&amp;#39;,r|s,a) \Big[ r+\gamma v_{\pi}(s&amp;#39;) \Big], \quad \text{for all} \; s \in S\] 状态估值函数的贝尔曼最优性方程： \[\begin{al">
+<meta name="keywords" content="强化学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习——策略学习">
+<meta property="og:url" content="http://yoursite.com/2018/06/30/机器学习/强化学习——策略学习/index.html">
+<meta property="og:site_name" content="silenove blogs">
+<meta property="og:description" content="强化学习——策略学习 给定策略\(\pi\)，状态估值函数的贝尔曼方程： \[v_{\pi}(s) = \sum_a \pi(a|s) \sum_{s&amp;#39;,r} p(s&amp;#39;,r|s,a) \Big[ r+\gamma v_{\pi}(s&amp;#39;) \Big], \quad \text{for all} \; s \in S\] 状态估值函数的贝尔曼最优性方程： \[\begin{al">
+<meta property="og:locale" content="zh-EN">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午8.09.15.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午8.10.22.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午8.53.18.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午9.04.20.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午9.06.36.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午3.40.11.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午3.53.48.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午3.57.51.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午4.13.43.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午4.38.52.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.07.45.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.14.56.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.17.21.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.22.16.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.29.17.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.50.09.png">
+<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.53.30.png">
+<meta property="og:updated_time" content="2018-06-30T07:36:03.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="强化学习——策略学习">
+<meta name="twitter:description" content="强化学习——策略学习 给定策略\(\pi\)，状态估值函数的贝尔曼方程： \[v_{\pi}(s) = \sum_a \pi(a|s) \sum_{s&amp;#39;,r} p(s&amp;#39;,r|s,a) \Big[ r+\gamma v_{\pi}(s&amp;#39;) \Big], \quad \text{for all} \; s \in S\] 状态估值函数的贝尔曼最优性方程： \[\begin{al">
+<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午8.09.15.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/30/机器学习/强化学习——策略学习/"/>
+
+
+  <title>强化学习——策略学习 | silenove blogs</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-EN">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">silenove blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">沿路旅程如歌褪变</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/30/机器学习/强化学习——策略学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="silen Zhou">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="silenove blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">强化学习——策略学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-30T15:35:21+08:00">2018-06-30</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="强化学习策略学习">强化学习——策略学习</h1>
+<p>给定策略<span class="math inline">\(\pi\)</span>，状态估值函数的贝尔曼方程： <span class="math display">\[v_{\pi}(s) = \sum_a \pi(a|s) \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r+\gamma v_{\pi}(s&#39;) \Big], \quad \text{for all} \; s \in S\]</span></p>
+<p>状态估值函数的贝尔曼最优性方程： <span class="math display">\[\begin{align}
+    v_*(s) &amp;= \max_a E \Big[ R_{t+1} + \gamma v_*(S_{t+1}) \Big| S_t=s,A_t=a \Big] \nonumber \\
+    &amp;= \max_a \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r+\gamma v_*(s&#39;) \Big] \nonumber
+\end{align}\]</span></p>
+<h2 id="动态规划方法">1. 动态规划方法</h2>
+<p>给定策略下状态估值函数的更新规则： <span class="math display">\[v_{\pi}(s) = \sum_a \pi(a|s) \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r+\gamma v_{\pi}(s&#39;) \Big], \quad \text{for all} \; s \in S\]</span> 上式为策略迭代的基础。</p>
+<p>最优状态估值函数的更新规则： <span class="math display">\[\begin{align}
+    v_*(s) &amp;= \max_a E \Big[ R_{t+1} + \gamma v_*(S_{t+1}) \Big| S_t=s,A_t=a \Big] \nonumber \\
+    &amp;= \max_a \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r+\gamma v_*(s&#39;) \Big] \nonumber
+\end{align}\]</span> 上式是估值迭代的基础。</p>
+<p><strong>注意</strong>：上述两个公式中的等号表示“赋值”，不是贝尔曼方程中的“相等”。</p>
+<h3 id="策略估值">1.1. 策略估值</h3>
+<p>给定策略<span class="math inline">\(\pi\)</span>，该策略下的状态估值函数满足 <span class="math display">\[v_{\pi}(s) \doteq \sum_a \pi(a|s) \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r+\gamma v_{\pi}(s&#39;) \Big]\]</span></p>
+<p>假如环境<span class="math inline">\(p(s&#39;,r|s,a)\)</span>已知，状态估值函数的求解方式有：</p>
+<ul>
+<li>求解线性方程组（计算开销大）；</li>
+<li>寻找不动点——迭代策略估值。</li>
+</ul>
+<h3 id="迭代策略估值">1.2. 迭代策略估值</h3>
+<p>迭代策略估值的更新规则： <span class="math display">\[\begin{align}
+    v_{k+1}(s) &amp; \doteq E_{\pi} \Big[ R_{t+1} + \gamma v_k(S_{t+1}) \Big| S_t=s \Big] \nonumber \\
+    &amp;= \sum_a \pi(a|s) \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r+\gamma v_k (s&#39;) \Big] \nonumber
+\end{align}\]</span> 也被称为“期望更新”。</p>
+<p>Tip：状态<span class="math inline">\(s\)</span>新一轮的估值是基于<span class="math inline">\(s\)</span><strong>所有可能的下一状态<span class="math inline">\(s&#39;\)</span>的期望</strong>计算得到的。</p>
+<h3 id="迭代策略估值的实现">1.3. 迭代策略估值的实现</h3>
+<p>两种实现方式： * 同步更新：两个数组存放“新”和“旧”的状态估值； * 异步更新：收敛速度快一些，今早利用了新信息（只存放一个数组）。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午8.09.15.png">
+
+</div>
+<p>迭代策略估值示例：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午8.10.22.png">
+
+</div>
+<p>从上述示例中可以看出到<span class="math inline">\(k=3\)</span>时其对应的贪心策略已经收敛，但是状态估值函数还没收敛。强化学习的目的是寻找最优策略，遍历所有的策略并计算其估值函数来寻找最优策略的计算量过大，所以提出策略提升的方法。</p>
+<h3 id="策略提升">1.4. 策略提升</h3>
+<p>策略估值的目标是为了寻找更优的策略（策略提升）：</p>
+<ul>
+<li>策略<span class="math inline">\(\pi\)</span>到估值函数<span class="math inline">\(v\)</span>。</li>
+</ul>
+<p><strong>策略提升</strong>：</p>
+<ul>
+<li>根据当前策略的估值函数，寻找更优的策略（如果存在），逐步寻找到最优策略；
+<ul>
+<li>根据策略<span class="math inline">\(\pi\)</span>的估值函数<span class="math inline">\(v\)</span>到更优策略<span class="math inline">\(\pi&#39;\)</span>；</li>
+</ul></li>
+<li>提升方法：
+<ul>
+<li>给定一个确定策略<span class="math inline">\(\pi\)</span>，在状态<span class="math inline">\(s\)</span>下选择行动<span class="math inline">\(a\)</span>，后续按照策略<span class="math inline">\(\pi\)</span>进行所得的估值<span class="math inline">\(q_{\pi}(s,a)\)</span>是否高于完全按照策略<span class="math inline">\(\pi\)</span>得到的估值<span class="math inline">\(v_{\pi}(s)\)</span>： <span class="math display">\[\begin{align}
+q_{\pi}(s,a) &amp; \doteq E \Big[ R_{t+1} + \gamma v_{\pi} (S_{t+1}) \Big| S_t=s,A_t=a \Big] \nonumber \\
+&amp;= \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r + \gamma v_{\pi} (s&#39;) \Big] \nonumber 
+\end{align}\]</span></li>
+</ul></li>
+</ul>
+<p><strong>策略提升定理</strong>：<br>
+对于两个确定式策略<span class="math inline">\(\pi\)</span>和<span class="math inline">\(\pi&#39;\)</span>，如果对于所有状态<span class="math inline">\(s\)</span>均满足 <span class="math display">\[q_{\pi}(s,\pi&#39;(s)) \geqslant v_{\pi}(s)\]</span> 则策略<span class="math inline">\(\pi&#39;\)</span>优于策略<span class="math inline">\(\pi\)</span>，即 <span class="math display">\[v_{\pi&#39;}(s) \geqslant v_{\pi}(s)\]</span></p>
+<p>给定策略<span class="math inline">\(\pi\)</span>，按照贪心方式得到更优策略<span class="math inline">\(\pi&#39;\)</span>： <span class="math display">\[\begin{align}
+    \pi&#39;(s) &amp; \doteq \mathop{\arg \max}_a q_{\pi}(s,a) \nonumber \\
+    &amp;= \mathop{\arg \max}_a E \Big[ R_{t+1} + \gamma v_{\pi}(S_{t+1}) \Big|S_t=s,A_t=a \Big] \nonumber \\
+    &amp;= \mathop{\arg \max}_a \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r + \gamma v_{\pi}(s&#39;) \Big] \nonumber
+\end{align}\]</span></p>
+<p>对于策略<span class="math inline">\(\pi&#39;\)</span>，进行策略估值： <span class="math display">\[\begin{align}
+    v_{\pi&#39;}(s) &amp;= \max_a E \Big[ R_{t+1} + \gamma v_{\pi&#39;}(s_{t+1}) \Big| S_t=s, A_t=a \Big] \nonumber \\
+    &amp;= \max_a \sum_{s&#39;,r} p(s&#39;,r|s,a) \Big[ r+ \gamma v_{\pi&#39;} (s&#39;) \Big] \nonumber
+\end{align}\]</span></p>
+<h3 id="策略迭代">1.5. 策略迭代</h3>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午8.53.18.png">
+
+</div>
+<p><strong>分析</strong>：策略迭代过程中，策略估值需要多次扫描更新状态估值，精确估计当前策略的状态估值耗费了大量计算时间，是否可以在不精确的状态估值下，进行策略提升。</p>
+<h3 id="估值迭代">1.6. 估值迭代</h3>
+<p>从初始策略<span class="math inline">\(v_0\)</span>开始，进行估值迭代，找到最优状态估值<span class="math inline">\(v_*\)</span>，进而根据<span class="math inline">\(v_*\)</span>按照贪心方式得到最优策略<span class="math inline">\(\pi_*\)</span>：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午9.04.20.png">
+
+</div>
+<h3 id="广义策略迭代">1.7. 广义策略迭代</h3>
+<p>迭代进行两个阶段：</p>
+<ul>
+<li>策略估值：让新的估值和当前的策略保持一致；</li>
+<li>策略提升：根据当前估值，得到相应的贪心策略。</li>
+</ul>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-27%20下午9.06.36.png">
+
+</div>
+<h3 id="动态规划小结">1.8 动态规划小结</h3>
+<ul>
+<li>动态规划方法只不过是把贝尔曼方程转变为更新规则；
+<ul>
+<li>四个贝尔曼方程对应着四个更新规则（<span class="math inline">\(v_{\pi},v_*,q_{\pi},q_*\)</span>）；</li>
+</ul></li>
+<li>动态规划方法是一种“自举”（bootstrapping）方法；</li>
+<li>优势：动态规划方法计算效率高；</li>
+<li>缺点：动态规划方法需要知道关于环境的完整模型。</li>
+</ul>
+<h2 id="蒙特卡洛方法">2. 蒙特卡洛方法</h2>
+<h3 id="动机">2.1. 动机</h3>
+<ul>
+<li>动态规划方法需要知道关于<strong>环境的完整模型</strong>；</li>
+<li>大部分情况下没有关于环境的完整模型，或模型过于复杂。</li>
+</ul>
+<p>蒙特卡洛方法：</p>
+<ul>
+<li>从真实或者模拟的经验（experience）中计算状态（行动）估值函数；</li>
+<li>不需要关于环境的完整模型。</li>
+</ul>
+<h3 id="蒙特卡洛方法-1">2.2. 蒙特卡洛方法</h3>
+<p><strong>状态估值</strong>：从某个状态<span class="math inline">\(s\)</span>出发，使用当前策略<span class="math inline">\(\pi\)</span>通过蒙特卡洛模拟的方式生成多个episode，使用这些episode的平均回报值近似状态估值函数<span class="math inline">\(v_{\pi}(s)\)</span>。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午3.40.11.png">
+
+</div>
+<p>收敛速度大约为：<span class="math inline">\(\frac{1}{\sqrt{n}}\)</span>（<span class="math inline">\(n\)</span>表示蒙特卡洛模拟次数）。</p>
+<h3 id="优势">2.3. 优势</h3>
+<ul>
+<li>直接根据真实经验或模拟经验计算状态估值函数；</li>
+<li>不同状态的估值在计算时是独立的。</li>
+</ul>
+<h3 id="基于蒙特卡洛方法的策略迭代">2.4. 基于蒙特卡洛方法的策略迭代</h3>
+<ul>
+<li>在完整的环境模型未知时，仅有状态估值<span class="math inline">\(v_{\pi}(s)\)</span>无法得出策略<span class="math inline">\(\pi\)</span>；</li>
+<li>大多数情况下，直接使用蒙特卡洛方法计算行为估值函数<span class="math inline">\(q_{\pi}(s,a)\)</span>，进而采用贪心方法得到策略<span class="math inline">\(\pi\)</span>。</li>
+</ul>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午3.53.48.png">
+
+</div>
+<h3 id="面临的问题">2.5. 面临的问题</h3>
+<p><strong>问题</strong>：部分“状态-行为”在蒙特卡洛模拟中可能不出现。</p>
+<p><strong>解决</strong>：Exploring Start：每个“状态-行为”对都以一定的概率作为蒙特卡洛模拟的起始点。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午3.57.51.png">
+
+</div>
+<h3 id="摒弃exploring-start">2.6. 摒弃Exploring Start</h3>
+<ol style="list-style-type: decimal">
+<li><strong>On-policy方法</strong>：
+<ul>
+<li>在每个状态<span class="math inline">\(s\)</span>下保持对所有行为<span class="math inline">\(A(s)\)</span>进行探索的可能性（<span class="math inline">\(\varepsilon\)</span>贪心）：
+<ul>
+<li>以<span class="math inline">\(1- \varepsilon + \frac{\varepsilon}{A(s)}\)</span>选择贪心行为，以<span class="math inline">\(\frac{\varepsilon}{A(s)}\)</span>的概率选择任意非贪心行为；</li>
+</ul></li>
+<li>缺点：最终得到的最优策略仅仅是<span class="math inline">\(\varepsilon\)</span>最优策略（<span class="math inline">\(\varepsilon\)</span>-soft policy）。</li>
+</ul></li>
+<li><strong>Off-policy方法</strong>：
+<ul>
+<li>使用两个策略：目标策略<span class="math inline">\(\pi\)</span>和行为策略<span class="math inline">\(b\)</span>；</li>
+<li>目标策略是待优化的策略，以贪心方式进行；</li>
+<li>探索策略保证在每个状态下对所有行为进行探索的可能性。</li>
+</ul></li>
+</ol>
+<h3 id="on-policy蒙特卡洛方法">2.7. On-policy蒙特卡洛方法</h3>
+<p><strong>On-policy方式部分放弃了最优性来换取对策略的探索</strong>：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午4.13.43.png">
+
+</div>
+<h3 id="off-policy蒙特卡洛方法">2.8. Off-policy蒙特卡洛方法</h3>
+<p><strong>保证寻找最优策略，在优化目标策略<span class="math inline">\(\pi\)</span>时，用行为策略<span class="math inline">\(b\)</span>进行策略探索</strong>：</p>
+<ul>
+<li>行为策略需要确保对行为的覆盖度（coverage）；
+<ul>
+<li>对于所有<span class="math inline">\(\pi(a|s)&gt;0\)</span>，需要有<span class="math inline">\(b(a|s)&gt;0\)</span>；</li>
+</ul></li>
+<li>缺点：方差比较大，收敛慢；</li>
+<li>行为策略的选择影响收敛速度和方差；
+<ul>
+<li>通过重要度采样方式对蒙特卡洛模拟结果进行加权。</li>
+</ul></li>
+</ul>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-28%20下午4.38.52.png">
+
+</div>
+<h3 id="小结">2.9. 小结</h3>
+<ul>
+<li>从经验中学习，不需要知道完整的环境模型；</li>
+<li>适用于环境模型未知或者环境模型复杂的情形；</li>
+<li>收敛性由大数定理保证；</li>
+<li>On-policy和Off-policy两种实现；
+<ul>
+<li>平衡exploitation和exploration。</li>
+</ul></li>
+</ul>
+<h2 id="时序差分方法">3. 时序差分方法</h2>
+<p><strong>非平稳情形下的蒙特卡洛方法（恒定步长）</strong>： <span class="math display">\[V(S_t) \gets V(S_t) + \alpha [G_t - V(S_t)]\]</span> 其中<span class="math inline">\(G_t\)</span>表示第<span class="math inline">\(t\)</span>轮蒙特卡洛模拟的回报，<span class="math inline">\(V(S_t)\)</span>表示第<span class="math inline">\(t\)</span>轮对状态<span class="math inline">\(S_t\)</span>的估值。</p>
+<p><strong>时序差分方法（Temporal Difference：TD）</strong>： <span class="math display">\[V(S_t) \gets V(S_t) + \alpha [R_{t+1} + \gamma V(S_{t+1}) - V(S_t)]\]</span></p>
+<p>不需要根据完整的episode计算<span class="math inline">\(G_t\)</span>，只需要模拟几步（此处为1步）之后更新状态估值。</p>
+<h3 id="实现">3.1. 实现</h3>
+<p>一步时序差分方法<span class="math inline">\(TD(0)\)</span>的实现</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.07.45.png">
+
+</div>
+<h3 id="分析">3.2. 分析</h3>
+<p><strong>时序差分方法是强化学习中最核心的策略学习方法。</strong></p>
+<ul>
+<li>TD和蒙特卡洛方法的联系和区别：
+<ul>
+<li>联系：都是从经验中学习；
+<ul>
+<li>非平稳情形下的蒙特卡洛方法是TD的特例；</li>
+</ul></li>
+<li>区别：蒙特卡洛方法需要episode完整的信息，TD只需要episode的部分信息；</li>
+</ul></li>
+<li>TD和动态规划方法的联系和区别：
+<ul>
+<li>联系：TD和动态规划方法都采用自举的方法；</li>
+<li>区别：动态规划方法依赖于完整的环境模型进行估计，TD依赖于经验进行估计。</li>
+</ul></li>
+</ul>
+<p>时序差分方法是<strong>“learn a guess from a guess”</strong>。</p>
+<p>时序差分方法的收敛性并没有理论证明，只是经验收敛。</p>
+<h3 id="基于时序差分方法的on-policy策略优化">3.3. 基于时序差分方法的On-policy策略优化</h3>
+<p><strong>Sarsa</strong>：估计行为估值函数</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.14.56.png">
+
+</div>
+<h3 id="基于时序差分方法的off-policy策略优化">3.4. 基于时序差分方法的Off-policy策略优化</h3>
+<p><strong>Q-Learning</strong>（Watkins，1989）：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.17.21.png">
+
+</div>
+<p>On-policy和Off-policy的区别：</p>
+<ul>
+<li>On-policy：优化和探索的为同一函数；</li>
+<li>Off-policy：优化和探索的为不同函数。</li>
+</ul>
+<h3 id="小结-1">3.5. 小结</h3>
+<ul>
+<li>一种在线的从经验中进行策略学习的方法；</li>
+<li>一般直接学习行为估值函数完成策略学习；</li>
+<li>适用于状态和行为空间比较小的问题。</li>
+</ul>
+<p><strong>动态规划/蒙特卡洛/时序差分对比</strong>：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.22.16.png">
+
+</div>
+<h2 id="参数近似方法">4. 参数近似方法</h2>
+<p>当状态空间或行为空间比较大时，采用表格方式存放状态估值或行为估值不可行。<strong>需要对状态估值或行为估值进行参数化近似（parameterized approximation）</strong>。</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.29.17.png">
+
+</div>
+<h3 id="参数化近似方法">4.1. 参数化近似方法</h3>
+<p>参数化的函数形式：</p>
+<ul>
+<li>广义线性模型
+<ul>
+<li>参数是特征的权重</li>
+</ul></li>
+<li>决策树
+<ul>
+<li>参数是叶子节点的取值，和树节点分裂的阈值</li>
+</ul></li>
+<li>神经网络
+<ul>
+<li>每层的连接圈中</li>
+</ul></li>
+</ul>
+<p><strong>一般要求：</strong>参数个数要小于状态（或状态-行为）的个数。</p>
+<h3 id="参数学习">4.2. 参数学习</h3>
+<p>训练样本形式：</p>
+<ul>
+<li>动态规划方法：<span class="math inline">\(s \rightarrowtail E_{\pi}[R_{t+1} + \gamma \hat{v}(S_{t+1},\pmb{w_t})|S_t=s]\)</span>；</li>
+<li>蒙特卡洛方法：<span class="math inline">\(S_t \rightarrowtail G_t\)</span>；</li>
+<li>时序差分方法：<span class="math inline">\(S_t \rightarrowtail R_{t+1} + \gamma \hat{v} (S_{t+1},\pmb{w}_t)\)</span>；</li>
+</ul>
+<p>适合强化学习参数学习的监督学习方法：</p>
+<ul>
+<li>能够进行在线训练，应对目标函数的不平稳或训练样本标注的不平稳；</li>
+<li>不能依赖于对训练样本的多次扫描。</li>
+</ul>
+<h3 id="损失函数">4.3. 损失函数</h3>
+<p>平均平方估值误差（Mean Squared Value Error）： <span class="math display">\[\overline{VE}(\pmb{w}) \doteq \sum_{s \in S} \mu(s) [v_{\pi}(s) - \hat{v}(s,\pmb{w})]^2 \]</span></p>
+<p><span class="math inline">\(\mu(s)\)</span>刻画状态<span class="math inline">\(s\)</span>的重要程度（如状态被访问到的次数）。</p>
+<h3 id="模型训练">4.4. 模型训练</h3>
+<p>随机梯度下降（SGD）： <span class="math display">\[\begin{align}
+    \pmb{w}_{t+1} &amp; \doteq \pmb{w}_t - \frac{1}{2} \alpha \nabla[v_{\pi}(S_t) - \hat{v}(S_t,\pmb{w}_t)]^2 \nonumber \\
+    &amp; = \pmb{w}_t + \alpha [v_{\pi} (S_t) - \hat{v}(S_t,\pmb{w}_t)] \nabla \hat{v}(S_t,\pmb{w}_t) \nonumber
+\end{align}\]</span></p>
+<p><span class="math inline">\(\alpha\)</span>是学习步长。</p>
+<p>当目标值<span class="math inline">\(v_{\pi}(S_t)\)</span>观测不到、只观测到其近似值<span class="math inline">\(U_t\)</span>时 <span class="math display">\[\pmb{w}_{t+1} \doteq \pmb{w}_t + \alpha [U_t - \hat{v}(S_t,\pmb{w}_t)] \nabla \hat{v}(S_t,\pmb{w}_t)\]</span></p>
+<p>示例：</p>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.50.09.png">
+
+</div>
+<h3 id="半随机梯度下降">4.5. “半”随机梯度下降</h3>
+<p>在“自举”式观测值情况下：</p>
+<ul>
+<li>以时序差分方法TD(0)为例，此时的观测值为 <span class="math display">\[U_t \doteq R_{t+1} + \gamma \hat{v}(S_{t+1},\pmb{w})\]</span> 此时观测值也是关于参数<span class="math inline">\(\pmb{w}\)</span>的函数。</li>
+</ul>
+<div class="figure">
+<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-29%20下午7.53.30.png">
+
+</div>
+<p><strong>半随机梯度不保障收敛，在线性函数下收敛性尚好。</strong></p>
+<h3 id="参数近似q">4.6. 参数近似Q</h3>
+<p><strong>半梯度Sarsa</strong>：一种On-policy的TD(0)；</p>
+<ul>
+<li>目标： <span class="math display">\[\hat{q}(s,a,\pmb{w}) \approx q_*(s,a)\]</span></li>
+<li>参数学习过程： <span class="math display">\[\begin{align}
+\pmb{w}_{t+1} &amp; \doteq \pmb{w}_t + \alpha [U_t - \hat{q}(S_t,A_t,\pmb{w}_t)] \nabla \hat{q} (S_t,A_t,\pmb{w}_t) \nonumber \\
+&amp;= \pmb{w}_t + \alpha [R_{t+1} + \gamma \hat{q} (S_{t+1},A_{t+1},\pmb{w}_t) - \hat{q} (S_t,A_t,\pmb{w}_t)] \nabla \hat{q} (S_t,A_t,\pmb{w}_t) \nonumber
+\end{align}\]</span></li>
+</ul>
+<h3 id="策略梯度">4.7. 策略梯度</h3>
+<ul>
+<li>策略梯度（policy gradient） <span class="math display">\[\pi(a|s,\pmb{\theta}) = Pr\{A_t=a|S_t=s, \theta_t=\theta \}\]</span></li>
+<li>一般情况下目标函数<span class="math inline">\(J(\pmb{\theta)}\)</span>定义为策略的表现性能
+<ul>
+<li>采用随机梯度上升法进行优化 <span class="math display">\[\pmb{\theta}_{t+1} = \pmb{\theta}_t + \alpha \widehat{\nabla j(\pmb{\theta}_t)} \]</span></li>
+</ul></li>
+<li>Actor-Critic方法
+<ul>
+<li>同时学习参数化的状态估值函数<span class="math inline">\(v(s,w)\)</span>和策略<span class="math inline">\(\pi(a|s,\pmb{\theta})\)</span></li>
+</ul></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/强化学习/" rel="tag"># 强化学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/27/机器学习/马尔可夫决策过程/" rel="next" title="马尔可夫决策过程">
+                <i class="fa fa-chevron-left"></i> 马尔可夫决策过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">silen Zhou</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#强化学习策略学习"><span class="nav-number">1.</span> <span class="nav-text">强化学习——策略学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态规划方法"><span class="nav-number">1.1.</span> <span class="nav-text">1. 动态规划方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#策略估值"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1. 策略估值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代策略估值"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2. 迭代策略估值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代策略估值的实现"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3. 迭代策略估值的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略提升"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4. 策略提升</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略迭代"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5. 策略迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#估值迭代"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6. 估值迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广义策略迭代"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7. 广义策略迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态规划小结"><span class="nav-number">1.1.8.</span> <span class="nav-text">1.8 动态规划小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蒙特卡洛方法"><span class="nav-number">1.2.</span> <span class="nav-text">2. 蒙特卡洛方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1. 动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#蒙特卡洛方法-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2. 蒙特卡洛方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优势"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3. 优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于蒙特卡洛方法的策略迭代"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4. 基于蒙特卡洛方法的策略迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面临的问题"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5. 面临的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#摒弃exploring-start"><span class="nav-number">1.2.6.</span> <span class="nav-text">2.6. 摒弃Exploring Start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#on-policy蒙特卡洛方法"><span class="nav-number">1.2.7.</span> <span class="nav-text">2.7. On-policy蒙特卡洛方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#off-policy蒙特卡洛方法"><span class="nav-number">1.2.8.</span> <span class="nav-text">2.8. Off-policy蒙特卡洛方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.2.9.</span> <span class="nav-text">2.9. 小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时序差分方法"><span class="nav-number">1.3.</span> <span class="nav-text">3. 时序差分方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1. 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2. 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于时序差分方法的on-policy策略优化"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3. 基于时序差分方法的On-policy策略优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于时序差分方法的off-policy策略优化"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4. 基于时序差分方法的Off-policy策略优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结-1"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5. 小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数近似方法"><span class="nav-number">1.4.</span> <span class="nav-text">4. 参数近似方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数化近似方法"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1. 参数化近似方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数学习"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2. 参数学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3. 损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型训练"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4. 模型训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#半随机梯度下降"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5. “半”随机梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数近似q"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6. 参数近似Q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#策略梯度"><span class="nav-number">1.4.7.</span> <span class="nav-text">4.7. 策略梯度</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">silen Zhou</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.2"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
