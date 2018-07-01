@@ -120,7 +120,7 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.27.41.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午1.45.24.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-21%20下午7.41.12.png">
-<meta property="og:updated_time" content="2018-03-22T10:12:27.063Z">
+<meta property="og:updated_time" content="2018-07-01T07:50:52.295Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据降维">
 <meta name="twitter:description" content="数据降维 在高维情形下出现的数据样本稀疏、距离计算困难等问题，是所有机器学习方法共同面临的严重障碍，被称为“维数灾难”（curse of dimensionality）。 缓解维数灾难的一个重要途径就是降维（dimension reduction），也成为“维数约简”，即通过某种数学变换将原始高维属性空间转变为一个低维“子空间”（subspace），在这个子空间中样本密度大幅提高，距离计算也变得更">
@@ -219,13 +219,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
         </li>
       
 
@@ -296,7 +296,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Diposting di</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-21T19:44:45+08:00">2018-03-21</time>
             
@@ -432,7 +432,7 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
 
 </div>
 <p>非线性降维的一种常用方法，是基于核技巧对线性降维方法进行“核化”，下面将以<strong>核主成分分析（Kernelized PCA，KPCA）</strong>进行说明。</p>
-<p>假设将在高维特征数据中把数据投影到由<span class="math inline">\(\mathbf{W} = (\pmb{w}_1, \pmb{w}_2, \cdots, \pmb{w}_d)\)</span>确定的超平面上，则对于<span class="math inline">\(\pmb{w}_j\)</span>，有 <span class="math display">\[(\sum_{i=1}^m \pmb{z}_i \pmb{z}_i^T) \pmb{w}_j = \lambda_j \pmb{w}_j\]</span> 其中<span class="math inline">\(\pmb{z}_i\)</span>是样本点<span class="math inline">\(\pmb{x}_i\)</span>在高维特征空间中的像，所以有 <span class="math display">\[\pmb{w}_j = \frac{1}{\lambda_j} (\sum_{i=1}^m \pmb{z}_i \pmb{z}_i^T) \pmb{w}_j = \sum_{i=1}^m \pmb{z}_i \frac{\pmb{z}_i^T \pmb{w}_j}{\lambda_j} = \sum_{i=1}^m \pmb{z}_i \alpha_i^j\]</span> 其中<span class="math inline">\(\alpha_i^j = \frac{\pmb{z}_i^T \pmb{w}_j}{\lambda_j}\)</span>是<span class="math inline">\(\pmb{\alpha}_i\)</span>的第<span class="math inline">\(j\)</span>个分量，假定<span class="math inline">\(\pmb{z}_i\)</span>是由原始属性空间中的样本点<span class="math inline">\(\pmb{x}_i\)</span>通过映射<span class="math inline">\(\phi\)</span>产生，即<span class="math inline">\(\pmb{z}_i = \phi(\pmb{x}_i),i=1,2,\cdots,m\)</span>。若<span class="math inline">\(\phi\)</span>能被显式表达出来，则通过它将样本映射到高维特征空间，再在特征空间中实施PCA即可。公式变换为 <span class="math display">\[(\sum_{i=1}^m \phi(\pmb{x}_i) \phi(\pmb{x}_i)^T) \pmb{w}_j = \lambda_j \pmb{w}_j \tag{1}\]</span> 同时有 <span class="math display">\[\pmb{w}_j = \sum_{i=1}^m \phi(\pmb{x}_i) \alpha_i^j \tag(2)\]</span> 一般情况下，不清楚<span class="math inline">\(\phi\)</span>的具体形式，于是引入核函数 <span class="math display">\[\kappa(\pmb{x}_i, \pmb{x}_j) = \phi(\pmb{x}_i)^T \phi(\pmb{x}_j) \tag{3}\]</span> 将上述式（2）、（3）带入式（1）中化简，令<span class="math inline">\(\mathbf{Z} = (\phi(\pmb{x}_1),\phi(\pmb{x}_2),\cdots,\phi(\pmb{x}_m))\)</span>，得到 <span class="math display">\[\begin{equation}
+<p>假设将在高维特征数据中把数据投影到由<span class="math inline">\(\mathbf{W} = (\pmb{w}_1, \pmb{w}_2, \cdots, \pmb{w}_d)\)</span>确定的超平面上，则对于<span class="math inline">\(\pmb{w}_j\)</span>，有 <span class="math display">\[(\sum_{i=1}^m \pmb{z}_i \pmb{z}_i^T) \pmb{w}_j = \lambda_j \pmb{w}_j\]</span> 其中<span class="math inline">\(\pmb{z}_i\)</span>是样本点<span class="math inline">\(\pmb{x}_i\)</span>在高维特征空间中的像，所以有 <span class="math display">\[\pmb{w}_j = \frac{1}{\lambda_j} (\sum_{i=1}^m \pmb{z}_i \pmb{z}_i^T) \pmb{w}_j = \sum_{i=1}^m \pmb{z}_i \frac{\pmb{z}_i^T \pmb{w}_j}{\lambda_j} = \sum_{i=1}^m \pmb{z}_i \alpha_i^j\]</span> 其中<span class="math inline">\(\alpha_i^j = \frac{\pmb{z}_i^T \pmb{w}_j}{\lambda_j}\)</span>是<span class="math inline">\(\pmb{\alpha}_i\)</span>的第<span class="math inline">\(j\)</span>个分量，假定<span class="math inline">\(\pmb{z}_i\)</span>是由原始属性空间中的样本点<span class="math inline">\(\pmb{x}_i\)</span>通过映射<span class="math inline">\(\phi\)</span>产生，即<span class="math inline">\(\pmb{z}_i = \phi(\pmb{x}_i),i=1,2,\cdots,m\)</span>。若<span class="math inline">\(\phi\)</span>能被显式表达出来，则通过它将样本映射到高维特征空间，再在特征空间中实施PCA即可。公式变换为 <span class="math display">\[(\sum_{i=1}^m \phi(\pmb{x}_i) \phi(\pmb{x}_i)^T) \pmb{w}_j = \lambda_j \pmb{w}_j \tag{1}\]</span> 同时有 <span class="math display">\[\pmb{w}_j = \sum_{i=1}^m \phi(\pmb{x}_i) \alpha_i^j \tag{2}\]</span> 一般情况下，不清楚<span class="math inline">\(\phi\)</span>的具体形式，于是引入核函数 <span class="math display">\[\kappa(\pmb{x}_i, \pmb{x}_j) = \phi(\pmb{x}_i)^T \phi(\pmb{x}_j) \tag{3}\]</span> 将上述式（2）、（3）带入式（1）中化简，令<span class="math inline">\(\mathbf{Z} = (\phi(\pmb{x}_1),\phi(\pmb{x}_2),\cdots,\phi(\pmb{x}_m))\)</span>，得到 <span class="math display">\[\begin{equation}
     (\sum_{i=1}^m \phi(\pmb{x}_i) \phi(\pmb{x}_i)^T) \pmb{w}_j = \lambda_j \pmb{w}_j \nonumber \\
     (\sum_{i=1}^m \phi(\pmb{x}_i) \phi(\pmb{x}_i)^T) \sum_{i=1}^m \phi(\pmb{x}_i) \alpha_i^j = \lambda_j \sum_{i=1}^m \phi(\pmb{x}_i) \alpha_i^j \nonumber \\
     \mathbf{Z} \mathbf{Z}^T (\mathbf{Z}· \pmb{\alpha}^j) = \lambda_j (\mathbf{Z}· \pmb{\alpha}^j) \nonumber \\
@@ -608,10 +608,10 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Daftar Isi
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Ikhtisar
           </li>
         </ul>
       
@@ -632,7 +632,7 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">posting</span>
                   </a>
                 </div>
               
@@ -722,7 +722,7 @@ dist_{··}^2 &amp;= \frac{1}{m^2} \sum_{i=1}^m \sum_{j=1}^m dist_{ij}^2 \nonumb
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 
