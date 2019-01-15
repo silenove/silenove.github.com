@@ -111,13 +111,13 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="指数分布 泊松分布是描述单位时间内随机事件发生次数的概率，而指数分布是描述独立随机事件发生的时间间隔。 指数分布有如下的适用条件：  \(x\)是两个事件发生的时间间隔，并且\(x &amp;gt; 0\)； 事件之间是相互独立的； 事件发生的频率是稳定的； 两个事情不能发生在同一瞬间。  指数分布公式可以通过泊松分布推导出来：如果事件发生的时间间隔为\(t\)，也就是说在\(t\)时间段内事件发生的次数">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/指数分布概率密度.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/指数函数分布函数.png">
-<meta property="og:updated_time" content="2018-05-17T03:13:48.418Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/指数分布概率密度.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/指数函数分布函数.png">
+<meta property="og:updated_time" content="2019-01-15T08:49:43.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="指数分布">
 <meta name="twitter:description" content="指数分布 泊松分布是描述单位时间内随机事件发生次数的概率，而指数分布是描述独立随机事件发生的时间间隔。 指数分布有如下的适用条件：  \(x\)是两个事件发生的时间间隔，并且\(x &amp;gt; 0\)； 事件之间是相互独立的； 事件发生的频率是稳定的； 两个事情不能发生在同一瞬间。  指数分布公式可以通过泊松分布推导出来：如果事件发生的时间间隔为\(t\)，也就是说在\(t\)时间段内事件发生的次数">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/指数分布概率密度.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/指数分布概率密度.png">
 
 
 
@@ -212,13 +212,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -289,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-17T11:12:02+08:00">2018-05-17</time>
             
@@ -344,11 +344,11 @@
     0, \qquad \quad x \leqslant 0
 \end{cases}\]</span></p>
 <p>其中<span class="math inline">\(\lambda&gt;0\)</span>是分布的一个参数，常被称为率参数（rate parameter），即单位时间内发生事件的次数。<br>
-<img src="http://p35icynkw.bkt.clouddn.com/指数分布概率密度.png"></p>
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/指数分布概率密度.png"></p>
 <p><strong>累计分布函数：</strong> <span class="math display">\[F(x) = \begin{cases}
     1 - e^{- \lambda x}, \quad x \geqslant 0 \\
     0, \qquad \qquad x &lt; 0
-\end{cases}\]</span> <img src="http://p35icynkw.bkt.clouddn.com/指数函数分布函数.png"></p>
+\end{cases}\]</span> <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/指数函数分布函数.png"></p>
 <p><strong>指数分布的均值为<span class="math inline">\(\frac{1}{\lambda}\)</span>，方差为<span class="math inline">\(\frac{1}{\lambda^2}\)</span>。</strong></p>
 <p>推导： <span class="math display">\[E(X) = \int_{- \infty}^{+\infty} xf(x) dx = \int_0^{+\infty} x \cdot \lambda e^{- \lambda x} dx = \frac{1}{\lambda} \int_0^{+\infty} x \cdot \lambda e^{- \lambda x} d(\lambda x)\]</span> 令<span class="math inline">\(u = \lambda x\)</span>，得到 <span class="math display">\[E(X) = \frac{1}{\lambda} \int_0^{+\infty} u e^{- u} du = \frac{1}{\lambda}\]</span></p>
 <p><span class="math display">\[E(X^2) = \int_0^{+\infty} x^2 \cdot \lambda e^{- \lambda x} dx = \frac{1}{\lambda^2} \int_0^{+\infty} (\lambda x)^2 e^{- \lambda x} d(\lambda x)\]</span> 令<span class="math inline">\(u = \lambda x\)</span>，得到 <span class="math display">\[E(X^2) = \frac{1}{\lambda} \int_0^{+\infty} u^2 e^{- u} du = \frac{1}{\lambda^2} [-2e^{-u} - 2ue^{-u} - u^2e^{-u}]|_0^{+\infty} = \frac{2}{\lambda^2}\]</span> <span class="math display">\[D(X) = E(X^2) - (E(X))^2 = \frac{2}{\lambda^2} - (\frac{1}{\lambda})^2 = \frac{1}{\lambda^2}\]</span></p>
@@ -447,10 +447,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -471,7 +471,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -561,7 +561,7 @@
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

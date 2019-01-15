@@ -111,13 +111,13 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="特征选择 1. 子集搜索与评价 对于一个学习任务来说，给定属性集，其中有些属性可能很关键，而另一些属性则可能没什么用。这里将属性称为“特征”，对当前学习任务有用的属性称为“相关特征”（relevant feature），没什么用的属性称为“无关特征”（irrelevant feature），从给定的特征集合中选择出相关特征子集的过程，称为特征选择（feature selection）。 特征选择是">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-22%20下午1.18.13.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-22%20下午1.49.53.png">
-<meta property="og:updated_time" content="2018-03-22T10:12:07.003Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-22%20下午1.18.13.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-22%20下午1.49.53.png">
+<meta property="og:updated_time" content="2019-01-15T08:45:18.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="特征选择">
 <meta name="twitter:description" content="特征选择 1. 子集搜索与评价 对于一个学习任务来说，给定属性集，其中有些属性可能很关键，而另一些属性则可能没什么用。这里将属性称为“特征”，对当前学习任务有用的属性称为“相关特征”（relevant feature），没什么用的属性称为“无关特征”（irrelevant feature），从给定的特征集合中选择出相关特征子集的过程，称为特征选择（feature selection）。 特征选择是">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-22%20下午1.18.13.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-22%20下午1.18.13.png">
 
 
 
@@ -212,13 +212,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -289,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-22T18:11:22+08:00">2018-03-22</time>
             
@@ -372,7 +372,7 @@
 一般而言，由于包裹式特征选择方法直接针对给定学习器进行优化，因此从最终学习器性能来看，包裹式特征选择比过滤式特征选择更好。但另一方面，由于在特征选择过程中需多次训练学习器，因此包裹式特征选择的计算开销通常比过滤式特征选择大的多。<br>
 <strong>LVW（Las Vegas Wrapper）</strong>是一个典型的包裹式特征选择方法。它在拉斯维加斯方法（Las Vegas method）框架下使用随机策略进行子集搜索，并以最终分类器的误差为特征子集评价准则，算法如下：</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-22%20下午1.18.13.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-22%20下午1.18.13.png">
 
 </div>
 <p>需要注意的是，由于LVW算法中特征子集搜索采用了随机策略，而每次特征子集评价都需训练学习器，计算开销很大，因此算法设置了停止条件控制参数<span class="math inline">\(T\)</span>。然而，整个LVW算法是基于拉斯维加斯方法框架，若初始特征数很多（即<span class="math inline">\(|A|\)</span>很大）、<span class="math inline">\(T\)</span>设置较大，则算法可能运行很长时间都达不到停止条件，即若有运行时间限制，则可能无法产生解。</p>
@@ -388,7 +388,7 @@
 <span class="math inline">\(L_1\)</span>范数和<span class="math inline">\(L_2\)</span>范数正则化有助于降低过拟合风险，<span class="math inline">\(L_1\)</span>范数还有一个额外的好处：<span class="math inline">\(L_1\)</span>范数比<span class="math inline">\(L_2\)</span>范数更易于获得“稀疏”（sparse）解，即它求得的<span class="math inline">\(\pmb{w}\)</span>会有更少的非零分量。</p>
 <p><strong>事实上，对<span class="math inline">\(\pmb{w}\)</span>施加“系数约束”（即希望非零分量尽可能少）最自然的是使用<span class="math inline">\(L_0\)</span>范数，但<span class="math inline">\(L_0\)</span>范数不连续，难以优化求解，因此常用<span class="math inline">\(L_1\)</span>范数来近似</strong>。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-22%20下午1.49.53.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-22%20下午1.49.53.png">
 
 </div>
 <p>分别引入<span class="math inline">\(L_1\)</span>和<span class="math inline">\(L_2\)</span>的目标函数的解要在平方误差项与正则化项之间折中，即出现在图中平方误差项等值线与正则化项等值线相交处。从上图可以看出，采用<span class="math inline">\(L_1\)</span>范数时平方误差项等值线与正则化项等值线的交点常出现在坐标轴上，即<span class="math inline">\(w_1\)</span>或<span class="math inline">\(w_2\)</span>为0；而在采用<span class="math inline">\(L_2\)</span>范数时，两者的焦点常出现在某个象限中，即<span class="math inline">\(w_1\)</span>和<span class="math inline">\(w_2\)</span>均非0。<strong>采用<span class="math inline">\(L_1\)</span>范数比<span class="math inline">\(L_2\)</span>范数更易于得到稀疏解</strong>。</p>
@@ -520,10 +520,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -544,7 +544,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -634,7 +634,7 @@
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

@@ -111,17 +111,17 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="随机森林 1. 原理 随机森林（Random Forest，RF）是Bagging的一个扩展变体。RF在以决策树为基学习器（CART）构建Bagging集成的基础上，进一步在决策树的训练过程中引入了随机属性选择。 具体来说，传统决策树在选择划分属性时是在当前节点的属性集合（假定有\(d\)个属性）中选择一个最优属性；而在RF中，对基决策树的每个节点，先从该节点的属性结合中随机选择一个包含\(k\)">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.42.46.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午8.19.45.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午8.59.19.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午9.00.06.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午9.00.40.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午9.01.19.png">
-<meta property="og:updated_time" content="2018-03-13T13:04:00.511Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午7.42.46.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午8.19.45.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午8.59.19.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午9.00.06.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午9.00.40.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午9.01.19.png">
+<meta property="og:updated_time" content="2019-01-15T08:45:08.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随机森林">
 <meta name="twitter:description" content="随机森林 1. 原理 随机森林（Random Forest，RF）是Bagging的一个扩展变体。RF在以决策树为基学习器（CART）构建Bagging集成的基础上，进一步在决策树的训练过程中引入了随机属性选择。 具体来说，传统决策树在选择划分属性时是在当前节点的属性集合（假定有\(d\)个属性）中选择一个最优属性；而在RF中，对基决策树的每个节点，先从该节点的属性结合中随机选择一个包含\(k\)">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.42.46.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午7.42.46.png">
 
 
 
@@ -216,13 +216,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -293,7 +293,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-13T19:41:38+08:00">2018-03-13</time>
             
@@ -338,7 +338,7 @@
 具体来说，传统决策树在选择划分属性时是在当前节点的属性集合（假定有<span class="math inline">\(d\)</span>个属性）中选择一个最优属性；而在RF中，对基决策树的每个节点，先从该节点的属性结合中随机选择一个包含<span class="math inline">\(k\)</span>（<span class="math inline">\(k \leq d\)</span>）个属性的子集，然后再从这个子集中选择一个最优属性用于划分。这里的参数<span class="math inline">\(k\)</span>控制了随机性的引入程度：若令<span class="math inline">\(k=d\)</span>，则基决策树的构建与传统决策树相同；若令<span class="math inline">\(k=1\)</span>，则是随机选择一个属性用于划分；一般情况下，推荐值<span class="math inline">\(k = \log_2 d\)</span>。<br>
 随机森林对Bagging只做了小改动，但是与Bagging中基学习器的“多样性”仅通过样本扰动（通过对初始训练集采样）而来不同，随机森林中基学习器的多样性不仅来自样本扰动，还来自属性扰动，这使得最终集成的泛化性能可通过个体学习器之间差异度的增加而进一步提升。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.42.46.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午7.42.46.png">
 
 </div>
 <h2 id="算法流程">2. 算法流程</h2>
@@ -372,7 +372,7 @@ TRTE在数据转化的过程中也是用了类似RF的方法，建立<span class
 </ul>
 <p>IForest算法：</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午8.19.45.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午8.19.45.png">
 
 </div>
 <p>训练完模型之后，我们得到了<span class="math inline">\(T\)</span>棵决策树，对于测试样本<span class="math inline">\(\pmb{x}\)</span>，计算其在每棵决策树上所属叶子节点的深度，从而可以计算出平均深度<span class="math inline">\(h(\pmb{x})\)</span>，之后用一下公式计算<span class="math inline">\(\pmb{x}\)</span>是异常点的概率： <span class="math display">\[s(\pmb{x},n) = 2^{- \frac{E[h(\pmb{x})]}{c(n)}}\]</span> 其中，<span class="math inline">\(c(n) = 2H(n-1)-(2(n-1)/n)\)</span>，这里<span class="math inline">\(H(·)\)</span>为调和级数，<span class="math inline">\(H(i) = \ln(i) + 0.5772156649\)</span>，<span class="math inline">\(n\)</span>为样本个数。<br>
@@ -405,17 +405,17 @@ TRTE在数据转化的过程中也是用了类似RF的方法，建立<span class
 <p>RandomForestRegressor：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">ensemble</span>.<span class="title">RandomForestRegressor</span><span class="params">(n_estimators=<span class="number">10</span>, criterion=’mse’, max_depth=None, min_samples_split=<span class="number">2</span>, min_samples_leaf=<span class="number">1</span>, min_weight_fraction_leaf=<span class="number">0.0</span>, max_features=’auto’, max_leaf_nodes=None, min_impurity_decrease=<span class="number">0.0</span>, min_impurity_split=None, bootstrap=True, oob_score=False, n_jobs=<span class="number">1</span>, random_state=None, verbose=<span class="number">0</span>, warm_start=False)</span></span></span><br></pre></td></tr></table></figure>
 <p><strong>框架参数</strong><br>
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午8.59.19.png"></p>
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午8.59.19.png"></p>
 <p><strong>弱分类器参数</strong>：即CART的参数<br>
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午9.00.06.png"></p>
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午9.00.06.png"></p>
 <p><strong>函数</strong></p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午9.00.40.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午9.00.40.png">
 
 </div>
 <p><strong>属性</strong></p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午9.01.19.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-13%20下午9.01.19.png">
 
 </div>
 
@@ -515,10 +515,10 @@ TRTE在数据转化的过程中也是用了类似RF的方法，建立<span class
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -539,7 +539,7 @@ TRTE在数据转化的过程中也是用了类似RF的方法，建立<span class
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -629,7 +629,7 @@ TRTE在数据转化的过程中也是用了类似RF的方法，建立<span class
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

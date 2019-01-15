@@ -111,12 +111,12 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="改进的迭代尺度法 改进的迭代尺度法（improved iterative scaling，IIS）是一种最大熵模型学习的最优化算法。 已知最大熵模型为 \[P_{\pmb{w}} (y|\pmb{x}) = \frac{1}{Z_{\pmb{w}}(\pmb{x})} \exp \left( \sum_{i=1}^n w_i f_i(\pmb{x},y) \right)\] 其中 \[Z_{\pm">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-12%20下午4.56.19.png">
-<meta property="og:updated_time" content="2018-04-12T09:18:29.692Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-12%20下午4.56.19.png">
+<meta property="og:updated_time" content="2019-01-15T08:42:39.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改进的迭代尺度法">
 <meta name="twitter:description" content="改进的迭代尺度法 改进的迭代尺度法（improved iterative scaling，IIS）是一种最大熵模型学习的最优化算法。 已知最大熵模型为 \[P_{\pmb{w}} (y|\pmb{x}) = \frac{1}{Z_{\pmb{w}}(\pmb{x})} \exp \left( \sum_{i=1}^n w_i f_i(\pmb{x},y) \right)\] 其中 \[Z_{\pm">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-12%20下午4.56.19.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-12%20下午4.56.19.png">
 
 
 
@@ -211,13 +211,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -288,7 +288,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-12T17:08:10+08:00">2018-04-12</time>
             
@@ -345,7 +345,7 @@
 <p>将不等式右端记为 <span class="math display">\[B(\pmb{\delta}|\pmb{w}) = \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y) \sum_{i=1}^n \delta_i f_i(\pmb{x},y) + 1 - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_{\pmb{y}} P_{\pmb{w}} (\pmb{y}|\pmb{x}) \sum_{i=1}^n \left( \frac{f_i(\pmb{x},y)}{f^{\sharp} (\pmb{x},y)} \right) \exp (\delta_i f^{\sharp}(\pmb{x},y))\]</span> 于是得到 <span class="math display">\[L(\pmb{w}+\pmb{\delta}) - L(\pmb{w}) \geqslant B(\pmb{\delta}|\pmb{w})\]</span></p>
 <p>这里，<span class="math inline">\(B(\pmb{\delta}|\pmb{w})\)</span>是对数似然函数改变量一个新的（相对不紧的）下界。</p>
 <p>求<span class="math inline">\(B(\pmb{\delta}|\pmb{w})\)</span>对<span class="math inline">\(\delta_i\)</span>的偏导数： <span class="math display">\[\frac{\partial B(\pmb{\delta}|\pmb{w})}{\partial \delta_i} = \sum_{\pmb{x},y} \tilde{P}(\pmb{x},y)f_i(\pmb{x},y) - \sum_{\pmb{x}} \tilde{P}(\pmb{x}) \sum_y P_{\pmb{w}}(y|\pmb{x})f_i(\pmb{x},y) \exp(\delta_i f^{\sharp}(\pmb{x},y))\]</span> 上式中，除<span class="math inline">\(\delta_i\)</span>外不含任何其他变量，令偏导数为0得到 <span class="math display">\[\sum_{\pmb{x},y} \tilde{P}(\pmb{x}) P_{\pmb{w}}(y|\pmb{x})f_i(\pmb{x},y) \exp(\delta_i f^{\sharp}(\pmb{x},y)) = E_{\tilde{P}}(f_i)\]</span> 于是，依次对<span class="math inline">\(\delta_i\)</span>求解上述方程可以求出<span class="math inline">\(\delta\)</span>。</p>
-<p>算法如下： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-12%20下午4.56.19.png"></p>
+<p>算法如下： <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-12%20下午4.56.19.png"></p>
 <p>算法关键的一步是（a），即求解方程中的<span class="math inline">\(\delta_i\)</span>，如果<span class="math inline">\(f^{\sharp}(\pmb{x},y)\)</span>是常数，即对任意<span class="math inline">\(\pmb{x},y\)</span>，有<span class="math inline">\(f^{\sharp}(\pmb{x},y) = M\)</span>，那么<span class="math inline">\(\delta_i\)</span>可以显示地表示为 <span class="math display">\[\delta_i = \frac{1}{M} \log \frac{E_{\tilde{P}}(f_i)}{E_P(f_i)}\]</span> 如果<span class="math inline">\(f^{\sharp}(\pmb{x},y)\)</span>不是常数，那么必须通过数值计算求<span class="math inline">\(\delta_i\)</span>，简单有效的方法是牛顿法，以<span class="math inline">\(g(\delta_i) = 0\)</span>表示偏导数方程，牛顿法通过迭代求得<span class="math inline">\(\delta_i^*\)</span>，使得<span class="math inline">\(g(\delta_i^*) = 0\)</span>。迭代公式是 <span class="math display">\[\delta_i^{(k+1)} = \delta_i^{(k)} - \frac{g(\delta_i^{(k)})}{g&#39;(\delta_i^{(k)})}\]</span> 只要适当的选取初始值<span class="math inline">\(\delta_i^{(0)}\)</span>，由于<span class="math inline">\(\delta_i\)</span>的方程有单根，因此牛顿法恒收敛，而且收敛速度很快。</p>
 
       
@@ -442,10 +442,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -466,7 +466,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -556,7 +556,7 @@
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

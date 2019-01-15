@@ -111,15 +111,15 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="多臂赌博机 一台赌博机有多个摇臂，每个摇臂摇出的奖励（reward）大小不确定，玩家希望摇固定次数的臂所获得的期望累计奖励最大。 1. 问题形式化  行为：摇哪个臂 奖励：每次摇臂获得的奖金 \(A_t\)表示第\(t\)轮的行为，\(R_t\)表示第\(t\)轮获得的奖励 采取行为\(a\)的期望奖励为：\(q_*(a) \doteq E[R_t | A_t = a]\)  2. 贪心策略 一般">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午7.54.39.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午8.05.10.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午8.49.36.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午9.00.04.png">
-<meta property="og:updated_time" content="2018-06-26T13:05:10.359Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午7.54.39.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午8.05.10.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午8.49.36.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午9.00.04.png">
+<meta property="og:updated_time" content="2019-01-15T08:41:02.824Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多臂赌博机">
 <meta name="twitter:description" content="多臂赌博机 一台赌博机有多个摇臂，每个摇臂摇出的奖励（reward）大小不确定，玩家希望摇固定次数的臂所获得的期望累计奖励最大。 1. 问题形式化  行为：摇哪个臂 奖励：每次摇臂获得的奖金 \(A_t\)表示第\(t\)轮的行为，\(R_t\)表示第\(t\)轮获得的奖励 采取行为\(a\)的期望奖励为：\(q_*(a) \doteq E[R_t | A_t = a]\)  2. 贪心策略 一般">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午7.54.39.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午7.54.39.png">
 
 
 
@@ -214,13 +214,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -291,7 +291,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-26T21:04:36+08:00">2018-06-26</time>
             
@@ -371,7 +371,7 @@
 <li><span class="math inline">\(\varepsilon\)</span>的取值取决于<span class="math inline">\(q_*(a)\)</span>的方差，方差越大<span class="math inline">\(\varepsilon\)</span>取值越大。</li>
 </ul>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午7.54.39.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午7.54.39.png">
 
 </div>
 <h3 id="贪心策略的增量式实现">6. 贪心策略的增量式实现</h3>
@@ -387,7 +387,7 @@ Q_{n+1} &amp;= \frac{1}{n} \sum_{i=1}^n R_i \nonumber \\
 <p>此时只需要记录<span class="math inline">\(Q_n\)</span>和<span class="math inline">\(n\)</span>两个值。</p>
 <p><strong>伪代码：</strong></p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午8.05.10.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午8.05.10.png">
 
 </div>
 <p>bandit(A)：采取行动A，返回这次行动获得的奖励。</p>
@@ -458,7 +458,7 @@ Q_{n+1} &amp;= \frac{1}{n} \sum_{i=1}^n R_i \nonumber \\
 </ul>
 <p>UCB策略一般会优于<span class="math inline">\(\varepsilon\)</span>贪心策略，不过最初几轮相对较差。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午8.49.36.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午8.49.36.png">
 
 </div>
 <p><strong>UCB策略实现起来比<span class="math inline">\(\varepsilon\)</span>贪心策略要复杂，在多臂赌博机之外的强化学习场景中使用较少。</strong></p>
@@ -476,7 +476,7 @@ H_{t+1}(a) \doteq H_t(a) - \alpha (R_t - \bar{R}_t) \pi_t(a), \quad \text{for al
 <h3 id="不同策略对比">12. 不同策略对比</h3>
 <p>UCB策略表现相对较好。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-06-26%20下午9.00.04.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-06-26%20下午9.00.04.png">
 
 </div>
 <h3 id="多臂赌博机的应用案例">13. 多臂赌博机的应用案例</h3>
@@ -589,10 +589,10 @@ H_{t+1}(a) \doteq H_t(a) - \alpha (R_t - \bar{R}_t) \pi_t(a), \quad \text{for al
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -613,7 +613,7 @@ H_{t+1}(a) \doteq H_t(a) - \alpha (R_t - \bar{R}_t) \pi_t(a), \quad \text{for al
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -703,7 +703,7 @@ H_{t+1}(a) \doteq H_t(a) - \alpha (R_t - \bar{R}_t) \pi_t(a), \quad \text{for al
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

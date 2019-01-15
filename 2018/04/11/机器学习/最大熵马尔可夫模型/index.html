@@ -111,15 +111,15 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="最大熵马尔可夫模型 最大熵模型是在已知经验分布的基础上求解有关特征函数\(f(\pmb{x},y)\)的最优的\(P(y|\pmb{x})\)概率分布，但它的随机变量\(y\)有相互独立性假设，所以不能很好地描述\(\pmb{x}_i, y_{i-1}\)和\(y_i\)的关系，而HMM又有观测独立性假设不能自由的选取特征。所以希望找到一个能同时服从马尔可夫性假设和服从最大熵假设的模型解决序列标注">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午2.17.07.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.22.48.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.19.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.31.png">
-<meta property="og:updated_time" content="2018-04-11T11:42:41.975Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午2.17.07.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午7.22.48.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午7.37.19.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午7.37.31.png">
+<meta property="og:updated_time" content="2019-01-15T08:46:56.944Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大熵马尔可夫模型">
 <meta name="twitter:description" content="最大熵马尔可夫模型 最大熵模型是在已知经验分布的基础上求解有关特征函数\(f(\pmb{x},y)\)的最优的\(P(y|\pmb{x})\)概率分布，但它的随机变量\(y\)有相互独立性假设，所以不能很好地描述\(\pmb{x}_i, y_{i-1}\)和\(y_i\)的关系，而HMM又有观测独立性假设不能自由的选取特征。所以希望找到一个能同时服从马尔可夫性假设和服从最大熵假设的模型解决序列标注">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午2.17.07.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午2.17.07.png">
 
 
 
@@ -214,13 +214,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -291,7 +291,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T19:42:09+08:00">2018-04-11</time>
             
@@ -340,7 +340,7 @@ HMM模型包括状态序列<span class="math inline">\(I\)</span>和观测序列
 MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代HMM中的两个条件概率分布，即两个概率矩阵。<span class="math inline">\(P(o_j | o_{j-1}, i_j)\)</span>表示从先前状态和当前观测值的条件下得到当前状态的概率，即根据前一状态和当前观测预测当前状态，每个分布函数<span class="math inline">\(P_{i_{j-1}}(i_j | o_j)\)</span>都是一个服从最大熵的指数模型。</p>
 <p><span class="math display">\[P_{i_{j-1}}(i_j | o_j) = \frac{1}{Z_{\bar{\lambda}}(o_j, i_{j-1})} \exp \left( \sum_q^m \lambda_a f_a (o_j, i_j) \right), \quad j=1,2,\cdots,T\]</span></p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午2.17.07.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午2.17.07.png">
 
 </div>
 <p>左边为HMM模型，右边为MEMM模型，其中<span class="math inline">\(y\)</span>表示状态，<span class="math inline">\(x\)</span>表示观测。</p>
@@ -349,7 +349,7 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
 <li>MEMM限定条件求最优条件概率分布，在训练过程中收敛一组有关特征函数<span class="math inline">\(f_a(o_j,i_j)\)</span>的参数向量<span class="math inline">\(\pmb{\lambda}\)</span>，以及有关<span class="math inline">\(o_j\)</span>和<span class="math inline">\(i_{j-1}\)</span>的正则化因子，在解码过程中直接求得条件概率<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>。</li>
 </ul>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.22.48.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午7.22.48.png">
 
 </div>
 <h2 id="优势和局限">2. 优势和局限</h2>
@@ -360,11 +360,11 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
 </ol>
 <h2 id="标记偏置问题">3. 标记偏置问题</h2>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.19.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午7.37.19.png">
 
 </div>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-11%20下午7.37.31.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-11%20下午7.37.31.png">
 
 </div>
 <p><strong>MEMM只能达到局部最优解，而不能达到全局最优解，因此MEMM虽然解决了HMM输出独立性假设的问题，但却存在标记偏置问题。</strong></p>
@@ -464,10 +464,10 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -488,7 +488,7 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -578,7 +578,7 @@ MEMM用一个<span class="math inline">\(P(i_j | i_{j-1}, o_j)\)</span>来替代
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

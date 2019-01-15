@@ -111,13 +111,13 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="EM算法 1. 概念 概率模型有时既含有观测变量（observable variable），又含有隐变量（hidden variable）或潜在变量（latent variable），如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计法，或者贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单的使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计法，或极">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-02%20下午4.30.54.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-03%20下午11.06.02.png">
-<meta property="og:updated_time" content="2018-02-03T15:12:38.533Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-02%20下午4.30.54.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-03%20下午11.06.02.png">
+<meta property="og:updated_time" content="2019-01-15T08:47:32.666Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EM算法">
 <meta name="twitter:description" content="EM算法 1. 概念 概率模型有时既含有观测变量（observable variable），又含有隐变量（hidden variable）或潜在变量（latent variable），如果概率模型的变量都是观测变量，那么给定数据，可以直接用极大似然估计法，或者贝叶斯估计法估计模型参数。但是，当模型含有隐变量时，就不能简单的使用这些估计方法。EM算法就是含有隐变量的概率模型参数的极大似然估计法，或极">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-02%20下午4.30.54.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-02%20下午4.30.54.png">
 
 
 
@@ -212,13 +212,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -289,7 +289,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-29T15:05:32+08:00">2018-01-29</time>
             
@@ -369,7 +369,7 @@ EM算法通过迭代逐步近似极大化<span class="math inline">\(L(\theta)\)
     &amp;= \arg \max_{\theta} Q(\theta, \theta^{(i)}) \nonumber
     \end{align}\]</span> 上式等价于EM算法的一次迭代，即求Q函数及其极大化，EM算法通过不断求解下界的极大化逼近求解对数似然函数极大化的算法。<br>
 EM算法可以用于生成模型的非监督学习。<br>
-下图给出EM算法的直观解释： <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-02%20下午4.30.54.png"></p>
+下图给出EM算法的直观解释： <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-02%20下午4.30.54.png"></p>
 <h2 id="收敛性">3. 收敛性</h2>
 <p><strong>定理1：</strong>设<span class="math inline">\(P(Y|\theta)\)</span>为观测数据的似然函数，<span class="math inline">\(\theta^{(i)}(i=1,2,\cdots)\)</span>为EM算法得到的参数估计序列，<span class="math inline">\(P(Y|\theta^{(i)})(i=1,2,\cdots)\)</span>为对应的似然函数序列，则<span class="math inline">\(P(Y|\theta^{(i)})\)</span>是单调递增的，即 <span class="math display">\[P(Y|\theta^{(i+1)}) \geq P(Y|\theta^{(i)})\]</span> <strong>证明：</strong>由于 <span class="math display">\[P(Y|\theta) = \frac{P(Y,Z|\theta)}{P(Z|Y,\theta)}\]</span> 取对数有 <span class="math display">\[\log{P(Y|\theta)} = \log{P(Y,Z|\theta)} - \log{P(Z|Y,\theta)}\]</span> Q函数定义为： <span class="math display">\[Q(\theta, \theta^{(i)}) = \sum_Z \log{P(Y,Z|\theta)P(Z|Y,\theta^{(i)})}\]</span> 令 <span class="math display">\[H(\theta,\theta^{(i)}) = \sum_Z \log{P(Z|Y,\theta)P(Z,|Y,\theta^{(i)})}\]</span> 于是对数似然函数可以写成 <span class="math display">\[\log{P(Y|\theta)} = Q(\theta,\theta^{(i)}) - H(\theta,\theta^{(i)})\]</span> 将上式中分别取<span class="math inline">\(\theta\)</span>为<span class="math inline">\(\theta^{(i)}\)</span>和<span class="math inline">\(\theta^{(i+1)}\)</span>并相减，有 <span class="math display">\[\log{P(Y|\theta^{(i+1)})} - \log{P(Y|\theta^{(i)})} = [Q(\theta^{(i+1)},\theta^{(i)})-Q(\theta^{(i)},\theta^{(i)})] - [H(\theta^{(i+1)},\theta^{(i)})-H(\theta^{(i)},\theta^{(i)})]\]</span> 为证明定理中的不等式成立，只需证明上式中右端的式子非负，对于第1项，由于<span class="math inline">\(\theta^{(i+1)}\)</span>使<span class="math inline">\(Q(\theta,\theta^{(i)})\)</span>达到极大，所以有 <span class="math display">\[Q(\theta^{(i+1)},\theta^{(i)}) - Q(\theta^{(i)},\theta^{(i)}) \geq 0\]</span> 对于第2项，可得 <span class="math display">\[\begin{align}
     H(\theta^{(i+1)},\theta^{(i)})-H(\theta^{(i)},\theta^{(i)}) &amp;= \sum_Z \{\log{\frac{P(Z|Y,\theta^{(i+1)})}{P(Z,Y,\theta^{(i)})}}\}P(Z|Y,\theta^{(i)}) \nonumber \\
@@ -417,7 +417,7 @@ EM算法可以用于生成模型的非监督学习。<br>
     \hat{\alpha}_k = \frac{n_k}{N} = \frac{\sum_{j=1}^N \hat{\gamma}_{jk}}{N}，k=1,2,\cdots,K \nonumber
 \end{equation}\]</span> 重复以上计算，直到对数似然函数值不再有明显变化。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-03%20下午11.06.02.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-03%20下午11.06.02.png">
 
 </div>
 
@@ -515,10 +515,10 @@ EM算法可以用于生成模型的非监督学习。<br>
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -539,7 +539,7 @@ EM算法可以用于生成模型的非监督学习。<br>
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -629,7 +629,7 @@ EM算法可以用于生成模型的非监督学习。<br>
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

@@ -111,17 +111,17 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="隐马尔可夫模型 概率图模型大致分为两类：  第一类使用有向无环图表示变量之间的关系，称为有向图模型或贝叶斯网； 第二类使用无向图表示变量间的相关关系，称为无向图模型或马尔可夫网。  隐马尔可夫模型（Hidden Markov Model，HMM）是结构最简单的d动态贝叶斯网，可用于标注问题的统计学习模型，描述由隐藏的马尔科夫链随机生成观测序列的过程，属于生成模型。 1. 基本概念 1.1. 定义">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午8.43.31.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午9.02.47.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午9.08.03.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午9.15.13.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-01%20上午10.47.27.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-01%20上午11.27.54.png">
-<meta property="og:updated_time" content="2018-04-03T03:54:40.489Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午8.43.31.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午9.02.47.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午9.08.03.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午9.15.13.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-01%20上午10.47.27.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-01%20上午11.27.54.png">
+<meta property="og:updated_time" content="2019-01-15T08:46:30.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="隐马尔可夫模型">
 <meta name="twitter:description" content="隐马尔可夫模型 概率图模型大致分为两类：  第一类使用有向无环图表示变量之间的关系，称为有向图模型或贝叶斯网； 第二类使用无向图表示变量间的相关关系，称为无向图模型或马尔可夫网。  隐马尔可夫模型（Hidden Markov Model，HMM）是结构最简单的d动态贝叶斯网，可用于标注问题的统计学习模型，描述由隐藏的马尔科夫链随机生成观测序列的过程，属于生成模型。 1. 基本概念 1.1. 定义">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午8.43.31.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午8.43.31.png">
 
 
 
@@ -216,13 +216,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -293,7 +293,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-01T11:30:21+08:00">2018-04-01</time>
             
@@ -362,7 +362,7 @@
 </ul>
 <h3 id="观测序列的生成过程">1.2. 观测序列的生成过程</h3>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午8.43.31.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午8.43.31.png">
 
 </div>
 <h3 id="个基本问题">1.3. 3个基本问题</h3>
@@ -377,18 +377,18 @@
 <h3 id="前向算法">2.1. 前向算法</h3>
 <p><strong>前向概率</strong>：给定马尔可夫模型<span class="math inline">\(\lambda\)</span>，定义到时刻<span class="math inline">\(t\)</span>部分观测序列为<span class="math inline">\(o_1,o_2,\cdots,o_t\)</span>且状态为<span class="math inline">\(q_i\)</span>的概率为前向概率，记作 <span class="math display">\[\alpha_t (i) = P(o_1, o_2, \cdots, o_t, i_t = q_i | \lambda)\]</span> 可以递推地求得前向概率<span class="math inline">\(\alpha_t(i)\)</span>即观察序列概率<span class="math inline">\(P(O|\lambda)\)</span>。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午9.02.47.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午9.02.47.png">
 
 </div>
 <p>如下图所示，前向算法实际上是基于<strong>状态序列的路径结构</strong>递推计算<span class="math inline">\(P(O|\lambda)\)</span>的算法。前向算法高效的关键是其<strong>局部计算前向概率，然后利用路径结构将前向概率“递推”到全局</strong>，得到<span class="math inline">\(P(O|\lambda)\)</span>。减少计算量的原因在于<strong>每一次计算直接引用前一个时刻的计算结果，避免重复计算</strong>。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午9.08.03.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午9.08.03.png">
 
 </div>
 <h3 id="后向算法">2.2. 后向算法</h3>
 <p><strong>后向概率</strong>：给定马尔可夫模型<span class="math inline">\(\lambda\)</span>，定义在时刻<span class="math inline">\(t\)</span>状态为<span class="math inline">\(q_i\)</span>的条件下，从<span class="math inline">\(t+1\)</span>到<span class="math inline">\(T\)</span>的部分观测序列为<span class="math inline">\(o_{t+1},o_{t+2},\cdots,o_T\)</span>的概率为后向概率，记作 <span class="math display">\[\beta_t(i) = P(o_{t+1},o_{t+2},\cdots,o_T | i_t = q_i, \lambda)\]</span> 可以用递推的方法求得后向概率<span class="math inline">\(\beta_t(i)\)</span>即观测序列概率<span class="math inline">\(P(O|\lambda)\)</span>。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-29%20下午9.15.13.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-29%20下午9.15.13.png">
 
 </div>
 <p>利用前向概率和后向概率的定义可以将观测序列概率<span class="math inline">\(P(O| \lambda)\)</span>统一写成 <span class="math display">\[P(O | \lambda) = \sum_{i=1}^N \sum_{i=1}^N \alpha_t(i) a_{ij} b_j (o_{t+1}) \beta_{t+1} (j) , \quad t = 1,2,\cdots, T-1\]</span> 当<span class="math inline">\(t=1\)</span>和<span class="math inline">\(t=T-1\)</span>时分别为式（10.21）和式（10.17）。</p>
@@ -437,7 +437,7 @@ Q(\lambda, \bar{\lambda}) = &amp; \sum_I \log \pi_{i_1} P(O,I|\bar{\lambda}) \no
 \end{align}\]</span> 其中，<span class="math inline">\(\gamma_t(i)\)</span>和<span class="math inline">\(\xi_t (i,j)\)</span>分别由式（10.24）和式（10.26）给出。</p>
 <p>算法如下：</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-01%20上午10.47.27.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-01%20上午10.47.27.png">
 
 </div>
 <h2 id="预测算法">4. 预测算法</h2>
@@ -458,7 +458,7 @@ Q(\lambda, \bar{\lambda}) = &amp; \sum_I \log \pi_{i_1} P(O,I|\bar{\lambda}) \no
 <p>定义在时刻<span class="math inline">\(t\)</span>状态为<span class="math inline">\(i\)</span>的所有单个路径<span class="math inline">\((i_1,i_2,\cdots,i_{t-1},i)\)</span>中概率最大的路径的第<span class="math inline">\(t-1\)</span>个节点为 <span class="math display">\[\psi_t(i) = \mathop{\arg \max}_{1 \leqslant j \leqslant N} [\delta_{t-1} (j) a_{ji}], \quad i=1,2,\cdots,N\]</span></p>
 <p>算法如下：</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-04-01%20上午11.27.54.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-04-01%20上午11.27.54.png">
 
 </div>
 
@@ -556,10 +556,10 @@ Q(\lambda, \bar{\lambda}) = &amp; \sum_I \log \pi_{i_1} P(O,I|\bar{\lambda}) \no
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -580,7 +580,7 @@ Q(\lambda, \bar{\lambda}) = &amp; \sum_I \log \pi_{i_1} P(O,I|\bar{\lambda}) \no
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -670,7 +670,7 @@ Q(\lambda, \bar{\lambda}) = &amp; \sum_I \log \pi_{i_1} P(O,I|\bar{\lambda}) \no
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

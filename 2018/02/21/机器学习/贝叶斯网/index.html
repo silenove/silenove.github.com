@@ -111,14 +111,14 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="贝叶斯网 贝叶斯网（Bayesian network）也称作“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，CPT）来描述属性之间的联合概率分布。（条件概率表用于属性为离散型的数据，对于连续属性，条件概率表可推广为条件概率密度函">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.59.39.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午10.05.28.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-21%20下午9.56.33.png">
-<meta property="og:updated_time" content="2018-04-16T09:27:50.541Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-20%20下午9.59.39.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-20%20下午10.05.28.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-21%20下午9.56.33.png">
+<meta property="og:updated_time" content="2019-01-15T08:41:06.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="贝叶斯网">
 <meta name="twitter:description" content="贝叶斯网 贝叶斯网（Bayesian network）也称作“信念网”（belief network），它借助有向无环图（Directed Acyclic Graph，DAG）来刻画属性之间的依赖关系，并使用条件概率表（Conditional Probability Table，CPT）来描述属性之间的联合概率分布。（条件概率表用于属性为离散型的数据，对于连续属性，条件概率表可推广为条件概率密度函">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.59.39.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-20%20下午9.59.39.png">
 
 
 
@@ -213,13 +213,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -290,7 +290,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-21T10:38:10+08:00">2018-02-21</time>
             
@@ -335,12 +335,12 @@
 <h2 id="结构">1. 结构</h2>
 <p>贝叶斯网结构有效地表达了属性间的条件独立性。给定父节点集，贝叶斯网假设每个属性与它的非后裔属性独立，于是<span class="math inline">\(B = &lt;G, \Theta&gt;\)</span>将属性<span class="math inline">\(x_1,x_2,\cdots,x_d\)</span>的联合概率分布定义为 <span class="math display">\[P_B(x_1,x_2,\cdots,x_d) = \prod_{i=1}^d P_B(x_i|\pi_i) = \prod_{i=1}^d \theta_{x_i|\pi_i}\]</span></p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午9.59.39.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-20%20下午9.59.39.png">
 
 </div>
 <p>以上图为例，联合概率分布定义为 <span class="math display">\[P(x_1,x_2,x_3,x_4,x_5) = P(x_1)P(x_2)P(x_3|x_1)P(x_4|x_1,x_2)P(x_5|x_2)\]</span> 可以看出，<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_4\)</span>在给定<span class="math inline">\(x_1\)</span>的取值时独立，<span class="math inline">\(x_4\)</span>和<span class="math inline">\(x_5\)</span>在给定<span class="math inline">\(x_2\)</span>的取值时独立，分别记为<span class="math inline">\(x_3 \perp x_4 | x_1\)</span>和<span class="math inline">\(x_4 \perp x_5 | x_2\)</span>。</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-20%20下午10.05.28.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-20%20下午10.05.28.png">
 
 </div>
 <ul>
@@ -378,7 +378,7 @@
 <p>贝叶斯网训练好之后就能用来回答“查询”，即通过一些属性变量的观测值来推测其他属性变量的取值，这样通过已知变量观测值来推测待查询变量的过程称为“推断”，已知变量观测值称为“证据”。<br>
 最理想的是直接根据贝叶斯网定义的联合概率分布来精确计算后验概率，然而这样的“精确判断”已被证明是NP难的。当网络节点较多、链接稠密时，难以进行精确推断，此时需要“近似推断”，通过降低精度要求，在有限时间内求得近似解，在现实应用中，贝叶斯网的近似推断常使用吉布斯采样（Gibbs sampling）来完成，这是一种随机采样方法。<br>
 令<span class="math inline">\(\pmb{Q} = \{Q_1,Q_2,\cdots, Q_n\}\)</span>表示待查询变量，<span class="math inline">\(\pmb{E} = \{E_1,E_2,\cdots,E_k\}\)</span>为证据变量，已知其取值为<span class="math inline">\(\pmb{e} = \{e_1,e_2,\cdots,e_k\}\)</span>，目标是计算后验概率<span class="math inline">\(P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e})\)</span>，其中<span class="math inline">\(\pmb{q} = \{q_1,q_2,\cdots,q_n\}\)</span>是待查询变量的一组取值。以西瓜问题为例，待查询变量为<span class="math inline">\(\pmb{Q}=\{好瓜，甜度\}\)</span>，证据变量为<span class="math inline">\(\pmb{E}=\{色泽，敲声，根蒂\}\)</span>且已知其取值为<span class="math inline">\(\pmb{e}=\{青绿，浊响，蜷缩\}\)</span>，查询的目标值是<span class="math inline">\(\pmb{q}=\{是，高\}\)</span>，即这是好瓜且甜度高的概率有多大。<br>
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-02-21%20下午9.56.33.png"></p>
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-02-21%20下午9.56.33.png"></p>
 <p>由上图可知，吉布斯采样算法先随机产生一个与证据<span class="math inline">\(\pmb{E} = \pmb{e}\)</span>一致的样本<span class="math inline">\(\pmb{q}^0\)</span>作为初始点，然后每步从当前样本出发产生下一个样本。具体来说，在第<span class="math inline">\(t\)</span>次采样中，算法先假设<span class="math inline">\(\pmb{q}^t = \pmb{q}^{t-1}\)</span>，然后对非证据变量逐个进行采样改变其取值，采样概率根据贝叶斯网<span class="math inline">\(B\)</span>和其他变量的当前取值（即<span class="math inline">\(\pmb{Z} = \pmb{z}\)</span>）计算获得。假定经过<span class="math inline">\(T\)</span>次采样得到的与<span class="math inline">\(\pmb{q}\)</span>一致的样本共有<span class="math inline">\(n_q\)</span>个，则可近似估算出后验概率 <span class="math display">\[P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e}) \simeq \frac{n_q}{T}\]</span> 实质上，吉布斯采样是在贝叶斯网所有变量的联合状态空间与证据<span class="math inline">\(\pmb{E} = \pmb{e}\)</span>一致的子空间中进行“随机漫步”。每一步仅依赖于前一步的状态，这是一个“马尔科夫链”。在一定条件下，无论从什么状态开始，马尔科夫链第<span class="math inline">\(t\)</span>步的状态分布在<span class="math inline">\(t \to \infty\)</span>时必收敛于一个平稳分布；对于吉布斯采样来说，这个分布恰好是<span class="math inline">\(P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e})\)</span>。因此，在<span class="math inline">\(T\)</span>很大时，吉布斯采样相当于根据<span class="math inline">\(P(\pmb{Q}|\pmb{E}=\pmb{e})\)</span>采样，从而保证公式收敛于<span class="math inline">\(P(\pmb{Q} = \pmb{q}|\pmb{E} = \pmb{e})\)</span>。</p>
 
       
@@ -475,10 +475,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -499,7 +499,7 @@
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -589,7 +589,7 @@
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 

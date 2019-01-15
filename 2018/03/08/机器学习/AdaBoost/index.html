@@ -111,18 +111,18 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="AdaBoost 1. AdaBoost算法 Boosting是一种常用的统计学习方法，应用广泛且有效，在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。 AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两个问题需要解决：  在每一轮中如何改变训练数据的权值或概率分布； 如何将弱分类器组合成一个强分类器。  AdaBoost">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午4.47.11.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午9.17.20.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.28.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.44.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.14.07.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.36.55.png">
-<meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.37.26.png">
-<meta property="og:updated_time" content="2018-03-08T11:17:28.883Z">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-07%20下午4.47.11.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-07%20下午9.17.20.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午3.31.28.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午3.31.44.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午1.14.07.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午1.36.55.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午1.37.26.png">
+<meta property="og:updated_time" content="2019-01-15T08:47:19.357Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdaBoost">
 <meta name="twitter:description" content="AdaBoost 1. AdaBoost算法 Boosting是一种常用的统计学习方法，应用广泛且有效，在分类问题中，它通过改变训练样本的权重，学习多个分类器，并将这些分类器进行线性组合，提高分类的性能。 AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两个问题需要解决：  在每一轮中如何改变训练数据的权值或概率分布； 如何将弱分类器组合成一个强分类器。  AdaBoost">
-<meta name="twitter:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午4.47.11.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-07%20下午4.47.11.png">
 
 
 
@@ -217,13 +217,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
         </li>
       
 
@@ -294,7 +294,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Diposting di</span>
+                <span class="post-meta-item-text">Posted on</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-08T13:43:36+08:00">2018-03-08</time>
             
@@ -359,7 +359,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 </ul>
 <p>现在叙述AdaBoost算法，假设给定一个二类分类的训练数据集 <span class="math display">\[T = \{(\pmb{x}_1,y_1), (\pmb{x}_2,y_2), \cdots, (\pmb{x}_N,y_N)\}\]</span> 其中，每个样例点由实例和标记组成，实例<span class="math inline">\(\pmb{x}_i \in \mathbf{R}^n\)</span>，标记<span class="math inline">\(y_i \in \{-1,+1\}\)</span>，AdaBoost算法如下：</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午4.47.11.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-07%20下午4.47.11.png">
 
 </div>
 <p>对AdaBoost算法作如下说明： 步骤（1）假设训练数据集具有均匀的权值分布，即每个训练样本在基分类器的学习中作用相同，这一假设保证第1步能够在原始数据上学习基本分类器<span class="math inline">\(G_1(\pmb{x})\)</span>。<br>
@@ -405,7 +405,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 在给定训练数据及损失函数<span class="math inline">\(L(y,f(\pmb{x}))\)</span>的条件下，学习算法模型<span class="math inline">\(f(\pmb{x})\)</span>称为经验风险最小化即损失函数极小化问题： <span class="math display">\[\min_{\beta_m,\gamma_m} \sum_{i=1}^N L(y_i, \sum_{m=1}^M \beta_m b(\pmb{x}_i;\gamma_m))\]</span> 通常这是一个复杂的优化问题。前向分步算法（forward stagewise algorithm）求解这一优化问题的想法：因为学习的是加法模型，如果能够从前向后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数式，那么就可以简化优化的复杂度。<br>
 具体地，每步只需要优化如下损失函数： <span class="math display">\[\min_{\beta,\gamma} \sum_{i=1}^N L(y_i,\beta b(\pmb{x}_i;\gamma))\]</span> 给定训练数据集<span class="math inline">\(T=\{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots, (\pmb{x}_N,y_N)\}\)</span>，<span class="math inline">\(\pmb{x} \in \mathbf{R}^n\)</span>，<span class="math inline">\(y_i \in \{-1,+1\}\)</span>，损失函数<span class="math inline">\(L(y,f(\pmb{x}))\)</span>和基函数的集合<span class="math inline">\(\{b(\pmb{x};\gamma)\}\)</span>，学习加法模型<span class="math inline">\(f(\pmb{x})\)</span>的前向分步算法如下：</p>
 <div class="figure">
-<img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-07%20下午9.17.20.png">
+<img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-07%20下午9.17.20.png">
 
 </div>
 <p>这样，前向分步算法将同时求解从<span class="math inline">\(m=1\)</span>到<span class="math inline">\(M\)</span>所有的参数<span class="math inline">\(\beta_m,\gamma_m\)</span>的优化问题简化为逐次求解各个<span class="math inline">\(\beta_m,\gamma_m\)</span>的优化问题。</p>
@@ -437,8 +437,8 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 <h3 id="多分类">4.1. 多分类</h3>
 <p>原始的AdaBoost算法是针对二分类问题的，多分类问题采用的也是将其分解为多个二分类问题。而SAMME和SAMME.R算法不采用这种思路，只是二分类的推广，也是加法模型，指数损失函数和前向分步算法，而且每个弱分类器的正确率只要大于0.5即可。<br>
 假设训练集<span class="math inline">\(T = \{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_n,y_n)\}\)</span>，训练集在第<span class="math inline">\(k\)</span>个弱分类器上的样本权重是<span class="math inline">\((w_{k1},w_{k2},\cdots,w_{kn}),w_{1i} = \frac{1}{n},i=1,2,\cdots,n\)</span>，输出<span class="math inline">\(y_i \in \{1,2,\cdots,K\}\)</span>，<span class="math inline">\(K\)</span>是类别个数。</p>
-<p><strong>SAMME</strong> <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.28.png" alt="-c500"></p>
-<p><strong>SAMME.R</strong> <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午3.31.44.png"></p>
+<p><strong>SAMME</strong> <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午3.31.28.png" alt="-c500"></p>
+<p><strong>SAMME.R</strong> <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午3.31.44.png"></p>
 <p>参考文献：Zhu J, Zou H, Rosset S, et al. Multi-class AdaBoost[J]. Statistics &amp; Its Interface, 2006, 2(3):349-360.</p>
 <h3 id="回归">4.2. 回归</h3>
 <p>假设训练集为<span class="math inline">\(T=\{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),\cdots,(\pmb{x}_N,y_N)\}\)</span>。<br>
@@ -462,10 +462,10 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">ensemble</span>.<span class="title">AdaboostClassifier</span><span class="params">(base_estimator=None, n_estimators=<span class="number">50</span>, learning_rate=<span class="number">1.0</span>, algorithm=<span class="string">'SAMME.R'</span>, random_state=None)</span></span></span><br></pre></td></tr></table></figure>
 <p>AdaBoostRegressor:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sklearn</span>.<span class="title">ensemble</span>.<span class="title">AdaBoostRegressor</span><span class="params">(base_estimator=None, n_estimators=<span class="number">50</span>, learning_rate=<span class="number">1.0</span>, loss=’linear’, random_state=None)</span></span></span><br></pre></td></tr></table></figure>
-<p><strong>框架参数</strong> <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.14.07.png"></p>
+<p><strong>框架参数</strong> <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午1.14.07.png"></p>
 <p><strong>algorithm</strong>：AdaBoostClassifier中有一个algorithm参数，而在AdaBoostRegressor中没有。这是因为sklearn中实现了两种AdaBoost分类算法，SAMME和SAMME.R。两者的主要区别是弱学习器权重的度量，SAMME使用的是上文介绍过的二分类AdaBoost算法的扩展，即用对样本集分类效果作为弱学习器的权重。而SAMME.R使用了概率度量的连续值，迭代一般比SAMME快，因此AdaBoostClassifier的默认算法algorithm的值为SAMME.R。如果使用SAMME.R，则弱分类学习器base_estimator必须限制使用支持概率预测的分类器，而SAMME算法则没有这个限制。</p>
-<p><strong>函数</strong> <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.36.55.png"></p>
-<p><strong>属性</strong> <img src="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-08%20下午1.37.26.png"></p>
+<p><strong>函数</strong> <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午1.36.55.png"></p>
+<p><strong>属性</strong> <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-08%20下午1.37.26.png"></p>
 
       
     </div>
@@ -563,10 +563,10 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Daftar Isi
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Ikhtisar
+            Overview
           </li>
         </ul>
       
@@ -587,7 +587,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posting</span>
+                    <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
@@ -677,7 +677,7 @@ AdaBoost算法是Boosting中的代表算法。对于提升方法来说，有两�
 
 
 
-  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 
