@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="silenove blogs">
 <meta property="og:description" content="XGBoost XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。 XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失">
 <meta property="og:locale" content="zh-EN">
-<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/屏幕快照%202018-03-11%20下午7.32.44.png">
+<meta property="og:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-11%20下午7.32.44.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午8.26.19.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-11%20下午8.36.19.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-12%20下午11.06.29.png">
@@ -122,11 +122,11 @@
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.46.39.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午6.51.41.png">
 <meta property="og:image" content="http://p35icynkw.bkt.clouddn.com/屏幕快照%202018-03-13%20下午7.16.18.png">
-<meta property="og:updated_time" content="2019-01-15T08:27:51.448Z">
+<meta property="og:updated_time" content="2019-01-15T08:36:21.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XGBoost">
 <meta name="twitter:description" content="XGBoost XGBoost是大规模并行Boosted Tree的工具，也是目前较为好用的开源Boosted Tree工具包，其计算速度比常见的算法要快约10倍左右。在数据科学方面，许多选手使用XGBoost进行数据挖掘比赛；在工业界，由于其分布式版本拥有广泛的可移植性，k恶意很好地解决工业界的实际问题。 XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多细节上的改进，包括损失">
-<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/屏幕快照%202018-03-11%20下午7.32.44.png">
+<meta name="twitter:image" content="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-11%20下午7.32.44.png">
 
 
 
@@ -221,13 +221,13 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Beranda</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Arsip</a>
         </li>
       
 
@@ -298,7 +298,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Diposting di</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-11T20:02:38+08:00">2018-03-11</time>
             
@@ -350,7 +350,7 @@ XGBoost算法较为复杂，主要是针对于传统的GBDT算法进行了很多
     \tilde{\mathscr{L}}^{(t)} &amp;= \sum_{i=1}^n [g_i f_t(\pmb{x}_i) + \frac{1}{2} h_i f_t^2 (\pmb{x}_i)] + \gamma T + \frac{1}{2} \lambda \sum_{j=1}^T w_j^2 \nonumber \\
     &amp;= \sum_{j=1}^T [(\sum_{i \in I_j} g_i)w_j + \frac{1}{2} (\sum_{i \in I_j} h_i + \lambda) w_j^2] + \gamma T \nonumber
 \end{align} \tag{4}\]</span> 为了构建最优的树结构，我们可以对上面的公式求导，计算叶节点<span class="math inline">\(j\)</span>对应的最优的权重<span class="math inline">\(w_j^*\)</span>： <span class="math display">\[w_j^* = - \frac{\sum_{i \in I_j} g_i}{\sum_{i \in I_j} h_i + \lambda} \tag{5}\]</span> 对应的最优目标函数值为 <span class="math display">\[\tilde{\mathscr{L}}^{(t)} (q) = - \frac{1}{2} \sum_{j=1}^T \frac{(\sum_{i \in I_j} g_i)^2}{\sum_{i \in I_j} h_i + \lambda} + \gamma T \tag{6}\]</span> 上述公式可以作为评分函数来衡量一个结构为<span class="math inline">\(q\)</span>的树的质量，<strong>分数越低，树结构越好</strong>。</p>
-<p>下图说明了该分数如何计算： <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/屏幕快照%202018-03-11%20下午7.32.44.png"></p>
+<p>下图说明了该分数如何计算： <img src="https://silence-1258055104.cos.ap-beijing.myqcloud.com/mweb_media/屏幕快照%202018-03-11%20下午7.32.44.png"></p>
 <p>通常情况下，很难枚举出所有可能的树结构，而是使用一种贪心的算法从一个单一的叶节点迭代的增加分支。假设<span class="math inline">\(I_L\)</span>和<span class="math inline">\(I_R\)</span>分别表示切分后左节点包含的样例和右节点包含的样例，令<span class="math inline">\(I = I_L \cup I_R\)</span>，切分后的损失函数可写为 <span class="math display">\[\mathscr{L}_{split} = \frac{1}{2} [\frac{(\sum_{i \in I_L} g_i)^2}{\sum_{i \in I_L} h_i + \lambda} + \frac{(\sum_{i \in I_R} g_i)^2}{\sum_{i \in I_R} h_i + \lambda} - \frac{(\sum_{i \in I} g_i)^2}{\sum_{i \in I} h_i + \lambda}] - \gamma \tag{7}\]</span> 这个公式通常用来选择用于切分的特征。</p>
 <h2 id="shrinkage和column-subsampling">2. Shrinkage和Column Subsampling</h2>
 <h3 id="shrinkage">2.1. Shrinkage</h3>
@@ -549,10 +549,10 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            Daftar Isi
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            Ikhtisar
           </li>
         </ul>
       
@@ -573,7 +573,7 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
                   <a href="/archives/">
                 
                     <span class="site-state-item-count">47</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">posting</span>
                   </a>
                 </div>
               
@@ -663,7 +663,7 @@ exact greedy算法思想：<strong>枚举所有特征的所有可能的切分点
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
+  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.2</div>
 
 
 
